@@ -11,7 +11,7 @@
       "items": [42, 45, 48, 58],
       "cutoff": 10,
       "interpretive_text_en": "The client reports episodes of suddenly finding themselves in a situation without knowing how they got there, reflecting periods of fugue or 'lost time.'",
-      "interpretive_text_uk": "Пацієнт повідомляє про епізоди, коли раптово опиняється в певній ситуації, не знаючи, як туди потрапив, — що відображає періоди фуги або «втраченого часу»."
+      "interpretive_text_uk": "Пацієнт повідомляє про епізоди, коли раптово опиняється в певній ситуації, не знаючи, як туди потрапив, — що характерно для епізодів дисоціативної фуги або «втраченого часу»."
     },
     "AlterPerson": {
       "display_name_en": "DID / OSDD-1: Subjective awareness of alter personalities and self-states",

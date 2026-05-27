@@ -228,7 +228,7 @@
     <div class="card">
       <h2 data-i18n="administration">Адміністрування</h2>
       <div class="client-meta">
-        <label data-i18n-key="meta_client">Пацієнт (ініціали / код)<input id="meta-client" type="text" placeholder="необов'язково"></label>
+        <label data-i18n-key="meta_client">Пацієнт (ініціали / код)<input id="meta-client" type="text" placeholder="за бажанням"></label>
         <label data-i18n-key="meta_dob">Дата народження<input id="meta-dob" type="date"></label>
         <label data-i18n-key="meta_date">Дата проведення<input id="meta-date" type="date"></label>
       </div>
@@ -280,7 +280,7 @@
         <div class="field"><b data-i18n="rep_total">Загальний середній бал (0–100)</b><span id="rep-total">—</span></div>
         <div class="field"><b data-i18n="rep_pct_comm">Перцентиль (загальна популяція)</b><span id="rep-pct-comm">—</span></div>
         <div class="field"><b data-i18n="rep_pct_clin">Перцентиль (клінічна вибірка)</b><span id="rep-pct-clin">—</span></div>
-        <div class="field"><b data-i18n="rep_descriptor">Тяжкість</b><span id="rep-descriptor">—</span></div>
+        <div class="field"><b data-i18n="rep_descriptor">Ступінь тяжкості</b><span id="rep-descriptor">—</span></div>
       </div>
 
       <div id="rep-safety" class="safety-block hidden"></div>
@@ -297,14 +297,14 @@
             <th data-i18n="col_subscale">Підшкала</th>
             <th data-i18n="col_mean">Середній бал (0–100)</th>
             <th data-i18n="col_cutoff">Межа</th>
-            <th data-i18n="col_in_range">У клінічному діапазоні?</th>
+            <th data-i18n="col_in_range">Перевищує межу?</th>
             <th data-i18n="col_items">Пункти у клін. діапазоні</th>
           </tr>
         </thead>
         <tbody id="rep-subscale-tbody"></tbody>
       </table>
 
-      <h3 data-i18n="bar_chart">Стовпчикова діаграма</h3>
+      <h3 data-i18n="bar_chart">Профіль підшкал</h3>
       <div class="bar-chart" id="rep-bar-chart"></div>
     </div>
 
@@ -378,7 +378,7 @@ var UI = {
     meta_client: 'Пацієнт (ініціали / код)',
     meta_dob: 'Дата народження',
     meta_date: 'Дата проведення',
-    meta_placeholder: "необов'язково",
+    meta_placeholder: "за бажанням",
     instructions_header: 'Інструкція',
     items_header: '60 пунктів',
     item_col: 'Пункт',
@@ -402,17 +402,17 @@ var UI = {
     rep_total: 'Загальний середній бал (0–100)',
     rep_pct_comm: 'Перцентиль (загальна популяція)',
     rep_pct_clin: 'Перцентиль (клінічна вибірка)',
-    rep_descriptor: 'Тяжкість',
+    rep_descriptor: 'Ступінь тяжкості',
     subscale_results: 'Результати за підшкалами',
     col_family: 'Діагностична група',
     col_subscale: 'Підшкала',
     col_mean: 'Середній бал (0–100)',
     col_cutoff: 'Межа',
-    col_in_range: 'У клінічному діапазоні?',
+    col_in_range: 'Перевищує межу?',
     col_items: 'Пункти у клін. діапазоні',
     yes: 'Так',
     no: 'Ні',
-    bar_chart: 'Стовпчикова діаграма',
+    bar_chart: 'Профіль підшкал',
     responses_header: 'Відповіді пацієнта, згруповані за підшкалами',
     response_short: 'Бал',
     clinical_use_h: 'Клінічне застосування',
