@@ -48,6 +48,7 @@
       var m = (sum / ids.length) * 10;
       subMeans[key] = m;
       atCutoff[key] = m >= sub.cutoff;
+      itemsAtThreshold[key] = nAtItemThreshold;
       // ВАЖЛИВО: точна формула NovoPsych для item-level threshold
       // непублічна (OSF doc p. 13 каже лише «respective item-level clinical
       // thresholds»). Ми використовуємо `resp * 10 >= cutoff` (тобто
