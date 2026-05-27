@@ -50,7 +50,9 @@ python3 -m http.server 8080
 3. **Ймовірний профіль** — 16 категорій, hierarchical від найтяжчого. Це **гіпотеза для верифікації**, не діагноз.
 4. **Топ-підшкали** за композитним ранжуванням (tightness + breadth) + інтерпретативні абзаци.
 
-Повний клінічний гід (опис 16 профілів, 12 підшкал, маршрутизація до SCID-D / DDIS / TADS-I, DD-confounds) — **[docs/INTERPRETATION.md](docs/INTERPRETATION.md)**.
+**Повний клінічний гід для лікаря** (22 стор., UK, PDF) — **[docs/MID-60-clinical-guide.pdf](docs/MID-60-clinical-guide.pdf)**. Конспект OSF Technical Paper (Kate & Hegarty 2026) українською: опис інструменту, психометрика, підрахунок, дескриптори, 16-категорійна класифікація з критеріями, 12 підшкал з cutoff'ами та confound'ами, ранжування підвищених підшкал, протокол safety items, маршрутизація до SCID-D / DDIS / TADS-I, диференціація з BPD / психозом / СДУГ / ЧМТ, повна перцентильна таблиця 0–100, references.
+
+Допоміжний markdown-гід (з нашою практичною інтерпретацією): **[docs/INTERPRETATION.md](docs/INTERPRETATION.md)**.
 
 ## Структура
 
@@ -65,9 +67,12 @@ mid60-tools/
     percentiles.json      # OSF percentile table (стор. 11)
     templates.json        # шаблони звіту + застереження
   docs/
-    SOURCE.md             # звірка контенту з OSF сторінками
-    test-engine.js        # тести алгоритму (звірка з OSF Sample Report)
-    sample_responses.json # тестові відповіді для ?debug=1
+    SOURCE.md                       # звірка контенту з OSF сторінками
+    INTERPRETATION.md               # внутрішній markdown-гід (наша практика)
+    clinical-guide.typ              # вихідник клінічного PDF (typst)
+    MID-60-clinical-guide.pdf       # клінічний гід для лікаря (UK, 22 стор.)
+    test-engine.js                  # тести алгоритму (звірка з OSF Sample Report)
+    sample_responses.json           # тестові відповіді для ?debug=1
 ```
 
 ## Ліцензія та джерела

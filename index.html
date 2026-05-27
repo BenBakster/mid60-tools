@@ -52,6 +52,18 @@
     border-left-color: #b88a3e;
     background: #fbf6ec;
   }
+  .resources { margin: .8rem 0 1rem; font-size: .9rem; }
+  .resources a {
+    display: inline-block;
+    padding: .5rem .85rem;
+    background: #eef4f8;
+    border: 1px solid #cbd6dd;
+    border-radius: 4px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .resources a:hover { background: #dde8ef; border-color: var(--accent); }
   .card {
     background: var(--card);
     border: 1px solid var(--line);
@@ -231,6 +243,12 @@
     Якщо спрацьовують пункти безпеки 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.
   </div>
 
+  <div class="resources no-print">
+    <a href="docs/MID-60-clinical-guide.pdf" target="_blank" rel="noopener">
+      <span data-i18n="clinical_guide_link">📘 Клінічний гід для лікаря (PDF, UK, 22 стор.)</span>
+    </a>
+  </div>
+
   <div id="uk-translation-note" class="disclaimer uk-translation"></div>
 
   <!-- ============== FORM VIEW ============== -->
@@ -397,6 +415,7 @@ var UI = {
     title: 'MID-60 — Багатовимірний опитувальник дисоціації, 60-пунктова версія',
     subtitle: 'Локальний підрахунок (Kate & Hegarty 2026, відкрита ліцензія). Дані пацієнта не зберігаються.',
     clinical_disclaimer: 'MID-60 — це <b>лише скринінговий інструмент</b>. Він не може бути єдиною підставою для діагнозу; його завжди слід інтерпретувати разом із клінічним судженням кваліфікованого фахівця. Якщо спрацьовують пункти безпеки 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.',
+    clinical_guide_link: '📘 Клінічний гід для лікаря (PDF, UK, 22 стор.)',
     administration: 'Адміністрування',
     meta_client: 'Пацієнт (ініціали / код)',
     meta_dob: 'Дата народження',
@@ -460,6 +479,7 @@ var UI = {
     title: 'MID-60 — Multidimensional Inventory of Dissociation, 60-item version',
     subtitle: 'Self-hosted scoring (Kate & Hegarty 2026, open licence). No PHI leaves this browser.',
     clinical_disclaimer: 'The MID-60 is a <b>screening instrument only</b>. It is not designed to be the sole basis for diagnosis and should always be interpreted alongside clinical judgment by a qualified clinician. If safety items 22 / 44 / 58 are endorsed, follow standard suicide risk assessment protocols.',
+    clinical_guide_link: '📘 Clinical guide (PDF, in Ukrainian, 22 pp.)',
     administration: 'Administration',
     meta_client: 'Client (initials / code)',
     meta_dob: 'Date of birth',
