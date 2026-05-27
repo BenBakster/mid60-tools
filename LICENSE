@@ -1,0 +1,48 @@
+MID-60-tools — self-hosted scoring engine for the Multidimensional Inventory
+of Dissociation, 60-item version.
+
+Software in this repository: MIT licence (see below).
+
+Instrument content (item wording, subscale assignments, clinical cut-offs,
+16-category profile classification rules, percentile tables and interpretive
+text) is reproduced from:
+
+  Kate, M.-A. & Hegarty, D. L. (2026). A Review of the Clinical Utility and
+  Psychometric Properties of the Multidimensional Inventory of Dissociation
+  – 60-item Version (MID-60): Norms, Percentile Rankings, and Qualitative
+  Descriptors. https://doi.org/10.17605/OSF.IO/E83KC
+
+That technical paper carries an open-source licence (p. 2): "The information
+in this document can be used without permission by researchers and clinicians
+and distributed under an open source licence." The MID-60 itself was
+developed by Kate, M.-A., Jamieson, G., Dorahy, M. J., & Middleton, W.
+(2021), J Trauma & Dissociation 22(3): 265-287
+(https://doi.org/10.1080/15299732.2020.1792024), as a short version of the
+218-item MID (Dell, 2006).
+
+This is a screening instrument only. It is not designed to be the sole
+basis for diagnosis and should always be interpreted alongside clinical
+judgment by a qualified clinician.
+
+----------------------------------------------------------------------------
+MIT License
+
+Copyright (c) 2026 Anton Vilenchyk
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

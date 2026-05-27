@@ -1,0 +1,191 @@
+{
+  "_source": "Kate & Hegarty 2026 OSF Technical Paper, Supporting Information, pp. 8-9. Original rules: Kate (2025).",
+  "_evaluation_order": "Hierarchical (descending clinical severity). Respondent is assigned to the first category for which criteria are met.",
+  "_key_variables": {
+    "IdentityCount": "count of {AlterPerson, AngryIntrusion, PersecIntrusion} at cutoff (range 0-3)",
+    "DissocRelevant": "ANY of {AlterPerson, AngryIntrusion, PersecIntrusion, DeperDereal, AutoMemory, Amnesia} at cutoff",
+    "OCSDMet": "MID-60 total >= 15 AND DissocRelevant",
+    "HasConversion": "Seizures OR BodySymptoms at cutoff"
+  },
+  "profiles": [
+    {
+      "id": 1,
+      "name": "Dissociative Identity Disorder (DID)",
+      "family": "Dissociative",
+      "criteria": {
+        "total_min": 21,
+        "at_cutoff": ["Amnesia"],
+        "identity_count_min": 2
+      }
+    },
+    {
+      "id": 2,
+      "name": "Other Specified Dissociative Disorder (OSDD-1)",
+      "family": "Dissociative",
+      "criteria": {
+        "not_at_cutoff": ["Amnesia"],
+        "any_of": [
+          {"total_min": 31, "identity_count_min": 1},
+          {"total_min": 21, "at_cutoff": ["AlterPerson"], "any_at_cutoff": ["AngryIntrusion", "PersecIntrusion"]}
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Dissociative Subtype of PTSD with Dissociative Amnesia (dPTSD with DA)",
+      "family": "Dissociative",
+      "criteria": {
+        "total_min": 15,
+        "at_cutoff": ["Flashbacks", "DeperDereal", "AutoMemory"]
+      }
+    },
+    {
+      "id": 4,
+      "name": "Dissociative Amnesia with Depersonalisation/Derealisation (DA with DP/DR)",
+      "family": "Dissociative",
+      "criteria": {
+        "total_min": 15,
+        "at_cutoff": ["AutoMemory", "DeperDereal"],
+        "not_at_cutoff": ["Flashbacks"]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Dissociative Amnesia with PTSD (DA with PTSD)",
+      "family": "Dissociative",
+      "criteria": {
+        "total_min": 15,
+        "at_cutoff": ["AutoMemory", "Flashbacks"],
+        "not_at_cutoff": ["DeperDereal"]
+      }
+    },
+    {
+      "id": 6,
+      "name": "Dissociative Amnesia (DA only)",
+      "family": "Dissociative",
+      "criteria": {
+        "total_min": 15,
+        "at_cutoff": ["AutoMemory"],
+        "not_at_cutoff": ["Flashbacks", "DeperDereal"]
+      }
+    },
+    {
+      "id": 7,
+      "name": "Dissociative Subtype of PTSD (dPTSD)",
+      "family": "Dissociative",
+      "criteria": {
+        "total_min": 15,
+        "at_cutoff": ["Flashbacks", "DeperDereal"],
+        "not_at_cutoff": ["AutoMemory"]
+      }
+    },
+    {
+      "id": 8,
+      "name": "Depersonalisation/Derealisation Disorder (DP/DR disorder)",
+      "family": "Dissociative",
+      "criteria": {
+        "total_min": 15,
+        "at_cutoff": ["DeperDereal"],
+        "not_at_cutoff": ["Flashbacks", "AutoMemory"]
+      }
+    },
+    {
+      "id": 9,
+      "name": "Other Clinically Significant Dissociative Symptoms (OCSD)",
+      "family": "Dissociative",
+      "criteria": {
+        "total_min": 15,
+        "dissoc_relevant_min": 1,
+        "not_at_cutoff": ["Flashbacks"],
+        "no_conversion": true
+      }
+    },
+    {
+      "id": 10,
+      "name": "PTSD with Other Clinically Significant Dissociative Symptoms (PTSD + OCSD)",
+      "family": "PTSD",
+      "criteria": {
+        "at_cutoff": ["Flashbacks"],
+        "ocsd_met": true,
+        "no_conversion": true
+      }
+    },
+    {
+      "id": 11,
+      "name": "PTSD with Functional Neurological Symptoms and OCSD (PTSD + Conversion + OCSD)",
+      "family": "PTSD",
+      "criteria": {
+        "at_cutoff": ["Flashbacks"],
+        "ocsd_met": true,
+        "has_conversion": true
+      }
+    },
+    {
+      "id": 12,
+      "name": "PTSD with Functional Neurological Symptom Disorder (PTSD + Conversion)",
+      "family": "PTSD",
+      "criteria": {
+        "at_cutoff": ["Flashbacks"],
+        "has_conversion": true,
+        "ocsd_met": false
+      }
+    },
+    {
+      "id": 13,
+      "name": "PTSD",
+      "family": "PTSD",
+      "criteria": {
+        "at_cutoff": ["Flashbacks"],
+        "not_at_cutoff": ["DeperDereal", "AutoMemory"],
+        "no_conversion": true,
+        "ocsd_met": false
+      }
+    },
+    {
+      "id": 14,
+      "name": "Functional Neurological Disorder with OCSD",
+      "family": "Conversion",
+      "criteria": {
+        "has_conversion": true,
+        "ocsd_met": true,
+        "not_at_cutoff": ["Flashbacks"]
+      }
+    },
+    {
+      "id": 15,
+      "name": "Functional Neurological Disorder",
+      "family": "Conversion",
+      "criteria": {
+        "has_conversion": true,
+        "dissoc_relevant_min": 0,
+        "not_at_cutoff": ["Flashbacks"]
+      }
+    },
+    {
+      "id": 16,
+      "name": "No Dissociative Disorder Indicated",
+      "family": "Non-Clinical",
+      "criteria": {
+        "default": true
+      }
+    }
+  ],
+  "_diagnostic_subscales": {
+    "1": ["Amnesia", "AlterPerson", "AngryIntrusion", "PersecIntrusion"],
+    "2": ["AlterPerson", "AngryIntrusion", "PersecIntrusion"],
+    "3": ["Flashbacks", "DeperDereal", "AutoMemory"],
+    "4": ["AutoMemory", "DeperDereal"],
+    "5": ["AutoMemory", "Flashbacks"],
+    "6": ["AutoMemory"],
+    "7": ["Flashbacks", "DeperDereal"],
+    "8": ["DeperDereal"],
+    "9": ["AlterPerson", "AngryIntrusion", "PersecIntrusion", "DeperDereal", "AutoMemory", "Amnesia"],
+    "10": ["Flashbacks"],
+    "11": ["Flashbacks"],
+    "12": ["Flashbacks"],
+    "13": ["Flashbacks"],
+    "14": [],
+    "15": [],
+    "16": []
+  }
+}

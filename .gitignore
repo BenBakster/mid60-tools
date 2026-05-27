@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+*.swp
+*.tmp
+.env
+.env.local
+
+# PHI — никогда не коммитим ответы пациентов
+responses/
+*.responses.json
+*.session.json
+private/

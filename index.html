@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MID-60 — Multidimensional Inventory of Dissociation</title>
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --card: #ffffff;
+    --ink: #1b1d23;
+    --muted: #5b6172;
+    --line: #d8d3c9;
+    --accent: #2f6f87;
+    --accent-soft: #d6e6ec;
+    --warn-bg: #fdecec;
+    --warn-ink: #a4202a;
+    --shaded: #fce6e6;
+    --shaded-cell: #fbe7ea;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Inter, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+  header.title h1 { font-size: 1.55rem; margin: 0 0 .25rem; }
+  header.title .subtitle { color: var(--muted); font-size: .9rem; }
+  .disclaimer {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    padding: .75rem 1rem;
+    margin: 1rem 0;
+    font-size: .88rem;
+    color: var(--muted);
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 1.1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  .card h2 { margin: 0 0 .65rem; font-size: 1.1rem; }
+  .card h3 { margin: 1rem 0 .35rem; font-size: 1rem; }
+  .instructions { font-size: .92rem; }
+
+  .client-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: .75rem; }
+  .client-meta label { display: flex; flex-direction: column; font-size: .8rem; color: var(--muted); }
+  .client-meta input {
+    margin-top: .25rem;
+    padding: .4rem .55rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font: inherit;
+  }
+
+  .items table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  .items th, .items td {
+    border-bottom: 1px solid var(--line);
+    padding: .35rem .25rem;
+    vertical-align: middle;
+  }
+  .items th { font-weight: 600; text-align: center; background: #f1ede4; }
+  .items th.text-col, .items td.text-col { text-align: left; padding-right: .5rem; }
+  .items td.num { width: 1.6rem; text-align: center; color: var(--muted); }
+  .items td.radio-col { text-align: center; width: 2.1rem; }
+  .items td.radio-col input { transform: scale(1.05); cursor: pointer; }
+  .items tr.unanswered td.num { color: var(--warn-ink); font-weight: 700; }
+  .items tr.safety td.text-col::after {
+    content: " ⚠";
+    color: var(--warn-ink);
+    font-weight: bold;
+  }
+
+  .buttons { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1rem; }
+  button {
+    font: inherit;
+    padding: .55rem 1rem;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    cursor: pointer;
+  }
+  button.primary { background: var(--accent); color: white; border-color: var(--accent); }
+  button.primary:disabled { background: #9bb6c0; border-color: #9bb6c0; cursor: not-allowed; }
+  button.warn { color: var(--warn-ink); border-color: var(--warn-ink); background: #fff; }
+
+  .progress { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
+  .progress strong { color: var(--ink); }
+
+  /* ---------- report ---------- */
+  .report-meta { display: flex; flex-wrap: wrap; gap: .5rem 2rem; font-size: .9rem; }
+  .report-meta div { min-width: 14rem; }
+  .report-meta b { color: var(--muted); font-weight: 500; }
+
+  .classification-row {
+    display: flex; gap: 1.5rem; flex-wrap: wrap;
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    padding: .8rem 0; margin: 1rem 0;
+  }
+  .classification-row .field b { display:block; color: var(--muted); font-weight: 500; font-size: .8rem; }
+  .classification-row .field span { font-size: 1.05rem; font-weight: 600; }
+
+  .safety-block {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-ink);
+    color: var(--warn-ink);
+    padding: .8rem 1rem;
+    border-radius: 4px;
+    margin: 1rem 0;
+  }
+  .safety-block h3 { margin: 0 0 .4rem; color: var(--warn-ink); }
+  .safety-block ul { margin: .25rem 0 .5rem 1.1rem; padding: 0; }
+
+  table.subscale-table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: .5rem 0 1rem; }
+  table.subscale-table th, table.subscale-table td {
+    border: 1px solid var(--line); padding: .4rem .6rem; text-align: left;
+  }
+  table.subscale-table th { background: #f1ede4; font-weight: 600; }
+  table.subscale-table td.cutoff-yes { background: var(--shaded-cell); }
+
+  .bar-chart { margin: 1rem 0; }
+  .bar-row {
+    display: grid; grid-template-columns: 13rem 1fr 4rem;
+    align-items: center; gap: .5rem;
+    font-size: .85rem;
+    padding: .15rem 0;
+  }
+  .bar-row .name { color: var(--ink); }
+  .bar-row .track {
+    position: relative;
+    height: 16px;
+    background: linear-gradient(to right, #fff 0 var(--shade-stop), var(--shaded) var(--shade-stop) 100%);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+  }
+  .bar-row .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); }
+  .bar-row .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+
+  .severity-bands {
+    display: grid; grid-template-columns: 7fr 8fr 6fr 10fr 10fr 23fr 16fr 21fr;
+    height: 18px;
+    border: 1px solid var(--line);
+    margin: .3rem 0 .15rem;
+    font-size: .65rem;
+  }
+  .severity-bands div { display:flex; align-items:center; justify-content:center; }
+
+  .interpretive { font-size: .92rem; }
+  .interpretive p { margin: .4rem 0; }
+  .interpretive .sub-header { font-weight: 600; margin-top: .8rem; color: var(--accent); }
+  .interpretive .endorsed { margin: .3rem 0 .8rem; padding-left: 1.25rem; font-size: .88rem; }
+  .interpretive .endorsed li { margin: .15rem 0; }
+
+  .responses-table { width: 100%; border-collapse: collapse; font-size: .82rem; margin: .25rem 0 1rem; }
+  .responses-table th, .responses-table td {
+    border: 1px solid var(--line); padding: .25rem .45rem;
+  }
+  .responses-table th { background: #f1ede4; text-align: center; }
+  .responses-table td.text-col { text-align: left; }
+  .responses-table td.value { text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .responses-table td.value.shaded { background: var(--shaded-cell); }
+
+  .footer-note { font-size: .8rem; color: var(--muted); margin-top: 2rem; border-top: 1px solid var(--line); padding-top: .75rem; }
+
+  .hidden { display: none !important; }
+
+  /* ---------- print ---------- */
+  @media print {
+    body { background: white; }
+    .no-print, button { display: none !important; }
+    .card { border: none; padding: 0; margin: .5rem 0; page-break-inside: avoid; }
+    .wrap { max-width: 100%; padding: 0; }
+    .responses-table { font-size: .72rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="title">
+    <h1>MID-60 — Multidimensional Inventory of Dissociation, 60-item version</h1>
+    <div class="subtitle">Self-hosted scoring (Kate &amp; Hegarty 2026, open licence). No PHI leaves this browser.</div>
+  </header>
+
+  <div class="disclaimer">
+    The MID-60 is a <b>screening instrument only</b>. It is not designed to be the sole basis for diagnosis and should
+    always be interpreted alongside clinical judgment by a qualified clinician.
+    If safety items 22 / 44 / 58 are endorsed, follow standard suicide risk assessment protocols.
+  </div>
+
+  <!-- ============== FORM VIEW ============== -->
+  <section id="form-view" class="no-print">
+
+    <div class="card">
+      <h2>Administration</h2>
+      <div class="client-meta">
+        <label>Client (initials / code)<input id="meta-client" type="text" placeholder="optional"></label>
+        <label>Date of birth<input id="meta-dob" type="date"></label>
+        <label>Date administered<input id="meta-date" type="date"></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Instructions</h2>
+      <p class="instructions" id="instructions-text"></p>
+    </div>
+
+    <div class="card items">
+      <h2>60 items</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th class="text-col">Item</th>
+            <th>0<br><span style="font-weight:400;font-size:.7rem;">Never</span></th>
+            <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
+            <th>10<br><span style="font-weight:400;font-size:.7rem;">Always</span></th>
+          </tr>
+        </thead>
+        <tbody id="items-tbody"></tbody>
+      </table>
+      <div class="progress">Answered: <strong id="progress-count">0</strong> / 60</div>
+      <div class="buttons">
+        <button id="btn-score" class="primary" disabled>Score &amp; show report</button>
+        <button id="btn-clear" class="warn">Clear all responses</button>
+        <button id="btn-sample" type="button" title="Load OSF sample for testing">Load sample (debug)</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== REPORT VIEW ============== -->
+  <section id="report-view" class="hidden">
+    <div class="card">
+      <h2>MID-60 Report</h2>
+      <div class="report-meta">
+        <div><b>Client</b> <span id="rep-client">—</span></div>
+        <div><b>Date of birth</b> <span id="rep-dob">—</span></div>
+        <div><b>Date administered</b> <span id="rep-date">—</span></div>
+      </div>
+
+      <div class="classification-row">
+        <div class="field"><b>Probable Profile Classification</b><span id="rep-classification">—</span></div>
+        <div class="field"><b>Subscales at clinical cutoff</b><span id="rep-cutoff-count">—</span></div>
+        <div class="field"><b>Mean Score (0–100)</b><span id="rep-total">—</span></div>
+        <div class="field"><b>Community Percentile</b><span id="rep-pct-comm">—</span></div>
+        <div class="field"><b>Clinical Percentile</b><span id="rep-pct-clin">—</span></div>
+        <div class="field"><b>Descriptor</b><span id="rep-descriptor">—</span></div>
+      </div>
+
+      <div id="rep-safety" class="safety-block hidden"></div>
+
+      <div class="interpretive" id="rep-interpretive"></div>
+    </div>
+
+    <div class="card">
+      <h3>Subscale results</h3>
+      <table class="subscale-table">
+        <thead>
+          <tr>
+            <th>Diagnostic family</th>
+            <th>Subscale</th>
+            <th>Mean (0–100)</th>
+            <th>Cutoff</th>
+            <th>In clinical range?</th>
+            <th>Items in clinical range</th>
+          </tr>
+        </thead>
+        <tbody id="rep-subscale-tbody"></tbody>
+      </table>
+
+      <h3>Subscale bar chart</h3>
+      <div class="bar-chart" id="rep-bar-chart"></div>
+    </div>
+
+    <div class="card">
+      <h3>Client responses, grouped by subscale</h3>
+      <div id="rep-responses"></div>
+    </div>
+
+    <div class="card">
+      <h3>Clinical use</h3>
+      <p style="font-size:.85rem;color:var(--muted);" id="clinical-use-text"></p>
+    </div>
+
+    <div class="buttons no-print">
+      <button id="btn-print" class="primary">Print / save as PDF</button>
+      <button id="btn-back">Back to form</button>
+    </div>
+
+    <div class="footer-note">
+      Scoring engine and instrument content reproduced from Kate &amp; Hegarty (2026), <i>A Review of the Clinical Utility and
+      Psychometric Properties of the Multidimensional Inventory of Dissociation – 60-item Version</i>.
+      <a href="https://doi.org/10.17605/OSF.IO/E83KC">doi.org/10.17605/OSF.IO/E83KC</a>.
+      Open-source licence. Software MIT-licensed.
+    </div>
+  </section>
+
+</div>
+
+<script src="mid60-engine.js"></script>
+<script>
+'use strict';
+
+var DATA = {};
+var RESPONSES = {};
+var STORAGE_KEY = 'mid60-draft-v1';
+
+// ---------- data loading ----------
+async function loadAll() {
+  var paths = ['data/items.json', 'data/subscales.json', 'data/classification.json',
+               'data/percentiles.json', 'data/templates.json'];
+  var [items, subs, cls, pct, tpl] = await Promise.all(
+    paths.map(function (p) { return fetch(p).then(function (r) { return r.json(); }); })
+  );
+  DATA.items = items.items;
+  DATA.subscales = subs.subscales;
+  DATA.classification = cls;
+  DATA.percentiles = pct;
+  DATA.templates = tpl;
+}
+
+// ---------- form rendering ----------
+function renderForm() {
+  var tbody = document.getElementById('items-tbody');
+  var html = '';
+  DATA.items.forEach(function (item) {
+    var rowClass = item.safety_flag ? 'safety' : '';
+    html += '<tr id="row-' + item.id + '" class="' + rowClass + '">';
+    html += '<td class="num">' + item.id + '</td>';
+    html += '<td class="text-col">' + escapeHtml(item.text_en) + '</td>';
+    for (var v = 0; v <= 10; v++) {
+      html += '<td class="radio-col"><input type="radio" name="i' + item.id + '" value="' + v + '" aria-label="' + v + '"></td>';
+    }
+    html += '</tr>';
+  });
+  tbody.innerHTML = html;
+
+  document.getElementById('instructions-text').textContent = DATA.templates.instructions.en;
+  document.getElementById('clinical-use-text').textContent = DATA.templates.clinical_use_disclaimer;
+
+  // bind change handlers
+  tbody.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (t.tagName !== 'INPUT' || t.type !== 'radio') return;
+    var m = t.name.match(/^i(\d+)$/);
+    if (!m) return;
+    var id = parseInt(m[1], 10);
+    RESPONSES[id] = parseInt(t.value, 10);
+    document.getElementById('row-' + id).classList.remove('unanswered');
+    saveDraft();
+    updateProgress();
+  });
+
+  // set today's date as default
+  var d = new Date();
+  var iso = d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+  document.getElementById('meta-date').value = iso;
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function updateProgress() {
+  var n = 0;
+  for (var i = 1; i <= 60; i++) if (typeof RESPONSES[i] === 'number') n++;
+  document.getElementById('progress-count').textContent = n;
+  document.getElementById('btn-score').disabled = (n < 60);
+}
+
+// ---------- draft persistence ----------
+function saveDraft() {
+  try {
+    var meta = {
+      client: document.getElementById('meta-client').value,
+      dob: document.getElementById('meta-dob').value,
+      date: document.getElementById('meta-date').value
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ responses: RESPONSES, meta: meta }));
+  } catch (e) { /* quota / private mode — ignore */ }
+}
+function loadDraft() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    var obj = JSON.parse(raw);
+    if (obj && obj.responses) {
+      Object.keys(obj.responses).forEach(function (k) {
+        var id = parseInt(k, 10);
+        var v = obj.responses[k];
+        RESPONSES[id] = v;
+        var radio = document.querySelector('input[name="i' + id + '"][value="' + v + '"]');
+        if (radio) radio.checked = true;
+      });
+    }
+    if (obj && obj.meta) {
+      if (obj.meta.client) document.getElementById('meta-client').value = obj.meta.client;
+      if (obj.meta.dob) document.getElementById('meta-dob').value = obj.meta.dob;
+      if (obj.meta.date) document.getElementById('meta-date').value = obj.meta.date;
+    }
+  } catch (e) { /* corrupt — ignore */ }
+}
+function clearDraft() {
+  if (!confirm('Clear all responses and metadata?')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  RESPONSES = {};
+  document.querySelectorAll('#items-tbody input[type="radio"]').forEach(function (r) { r.checked = false; });
+  document.getElementById('meta-client').value = '';
+  document.getElementById('meta-dob').value = '';
+  updateProgress();
+}
+
+// ---------- report rendering ----------
+function showReport() {
+  var dataPack = {
+    items: DATA.items,
+    subscales: DATA.subscales,
+    classification: DATA.classification,
+    percentiles: DATA.percentiles
+  };
+  var R = MID60.scoreAssessment(RESPONSES, dataPack);
+
+  document.getElementById('rep-client').textContent = document.getElementById('meta-client').value || '—';
+  document.getElementById('rep-dob').textContent = document.getElementById('meta-dob').value || '—';
+  document.getElementById('rep-date').textContent = document.getElementById('meta-date').value || '—';
+
+  document.getElementById('rep-classification').textContent = R.classification.name;
+  var nCutoff = Object.values(R.raw.atCutoff).filter(Boolean).length;
+  document.getElementById('rep-cutoff-count').textContent = nCutoff + ' of 12';
+  document.getElementById('rep-total').textContent = Math.round(R.raw.totalMean);
+  document.getElementById('rep-pct-comm').textContent = R.percentiles.community;
+  document.getElementById('rep-pct-clin').textContent = R.percentiles.clinical;
+  document.getElementById('rep-descriptor').textContent = R.descriptor;
+
+  renderSafety(R);
+  renderInterpretive(R);
+  renderSubscaleTable(R);
+  renderBarChart(R);
+  renderResponses(R);
+
+  document.getElementById('form-view').classList.add('hidden');
+  document.getElementById('report-view').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function renderSafety(R) {
+  var el = document.getElementById('rep-safety');
+  if (!R.safety_flags.length) { el.classList.add('hidden'); el.innerHTML = ''; return; }
+  el.classList.remove('hidden');
+  var tpl = DATA.templates.safety;
+  var s = R.safety_flags.length === 1 ? '' : 's';
+  var html = '<h3>' + tpl.header + '</h3>';
+  html += '<p>' + tpl.intro.replace('{S}', s) + '</p><ul>';
+  R.safety_flags.forEach(function (f) {
+    html += '<li>Item ' + f.id + ' — “' + escapeHtml(f.text) + '” (Response: ' + f.response + '/10)</li>';
+  });
+  html += '</ul><p>' + tpl.outro + '</p>';
+  el.innerHTML = html;
+}
+
+function renderInterpretive(R) {
+  var el = document.getElementById('rep-interpretive');
+  var tpl = DATA.templates;
+  var dateStr = document.getElementById('meta-date').value || '—';
+  var profile = R.classification.name;
+  var opening = tpl.opening.base
+    .replace('{DATE}', dateStr)
+    .replace('{SCORE}', Math.round(R.raw.totalMean))
+    .replace('{DESCRIPTOR}', R.descriptor);
+  if (R.percentiles.community >= 90) {
+    opening += tpl.opening.with_community_percentile.replace('{PCT}', R.percentiles.community);
+  }
+  if (R.classification.id === 16) {
+    opening += tpl.opening.no_disorder;
+  } else {
+    opening += tpl.opening.with_profile.replace('{PROFILE}', profile);
+  }
+  var html = '<p>' + opening + '</p>';
+
+  // diagnostic section
+  if (R.classification.id !== 16 && R.ranked_subscales.diagnostic.length) {
+    html += '<p class="sub-header">' + tpl.diagnostic_section.header + '</p>';
+    var n = R.ranked_subscales.diagnostic.length;
+    var p = n === 1
+      ? tpl.diagnostic_section.one.replace('{PROFILE}', profile)
+      : tpl.diagnostic_section.many.replace('{PROFILE}', profile).replace('{N}', n);
+    html += '<p>' + p + '</p>';
+    R.ranked_subscales.diagnostic.forEach(function (e) {
+      html += renderSubscaleBlock(e);
+    });
+  }
+
+  // additional section
+  if (R.ranked_subscales.additional.length) {
+    var n2 = R.ranked_subscales.additional.length;
+    var hdr = n2 === 1 ? tpl.additional_section.header_one : tpl.additional_section.header_many.replace('{N}', n2);
+    html += '<p class="sub-header">' + hdr + '</p>';
+    var p2 = n2 === 1 ? tpl.additional_section.one : tpl.additional_section.many.replace('{N}', n2);
+    html += '<p>' + p2 + '</p>';
+    R.ranked_subscales.additional.forEach(function (e) {
+      html += renderSubscaleBlock(e);
+    });
+  }
+
+  // no subscales at cutoff
+  if (!R.ranked_subscales.diagnostic.length && !R.ranked_subscales.additional.length) {
+    html += '<p>' + tpl.no_elevated_subscales + '</p>';
+  }
+
+  el.innerHTML = html;
+}
+
+function renderSubscaleBlock(entry) {
+  var sub = DATA.subscales[entry.key];
+  var tpl = DATA.templates.subscale_block;
+  var header = tpl.header
+    .replace('{DISPLAY_NAME}', sub.display_name)
+    .replace('{SCORE}', round1(entry.score))
+    .replace('{CUTOFF}', sub.cutoff)
+    .replace('{N_ITEMS}', entry.items_at_threshold)
+    .replace('{TOTAL_ITEMS}', entry.total_items);
+  var html = '<p><b>' + header + '</b></p>';
+  html += '<p>' + sub.interpretive_text + '</p>';
+  var top = MID60.highestEndorsedItems(entry.key, RESPONSES, DATA.items, DATA.subscales, 3);
+  if (top.length) {
+    html += '<p>' + DATA.templates.subscale_block.endorsed_intro + '</p><ul class="endorsed">';
+    top.forEach(function (t) {
+      html += '<li>' + t.id + '. ' + escapeHtml(t.text) + ' <i>(Response: ' + t.response + '/10)</i></li>';
+    });
+    html += '</ul>';
+  }
+  return html;
+}
+
+function round1(x) { return Math.round(x * 10) / 10; }
+
+function renderSubscaleTable(R) {
+  // Group subscales by diagnostic family in OSF order.
+  var groups = [
+    ['Dissociative Identity Disorder', ['Amnesia']],
+    ['DID and OSDD-1', ['AlterPerson', 'AngryIntrusion', 'PersecIntrusion']],
+    ['Depersonalisation / Derealisation Disorder', ['DeperDereal']],
+    ['Dissociative Amnesia', ['DistressMemory', 'AutoMemory']],
+    ['Post-Traumatic Stress Disorder', ['Flashbacks']],
+    ['Conversion Disorder', ['BodySymptoms', 'Seizures']],
+    ['General Subscales', ['Trance', 'SelfConfusion']]
+  ];
+  var html = '';
+  groups.forEach(function (grp) {
+    var grpName = grp[0];
+    grp[1].forEach(function (key, idx) {
+      var sub = DATA.subscales[key];
+      var score = R.raw.subscaleMeans[key];
+      var atCut = R.raw.atCutoff[key];
+      var inRange = atCut ? 'Yes' : 'No';
+      html += '<tr>';
+      html += '<td>' + (idx === 0 ? grpName : '') + '</td>';
+      html += '<td>' + sub.short_name + '</td>';
+      html += '<td>' + round1(score) + '</td>';
+      html += '<td>' + sub.cutoff + '</td>';
+      html += '<td' + (atCut ? ' class="cutoff-yes"' : '') + '>' + inRange + '</td>';
+      html += '<td>' + R.raw.itemsAtThreshold[key] + ' of ' + sub.items.length + '</td>';
+      html += '</tr>';
+    });
+  });
+  document.getElementById('rep-subscale-tbody').innerHTML = html;
+}
+
+function renderBarChart(R) {
+  var orderedKeys = ['Amnesia', 'AlterPerson', 'AngryIntrusion', 'PersecIntrusion',
+    'DeperDereal', 'DistressMemory', 'AutoMemory', 'Flashbacks',
+    'BodySymptoms', 'Seizures', 'Trance', 'SelfConfusion'];
+  var html = '';
+  orderedKeys.forEach(function (key) {
+    var sub = DATA.subscales[key];
+    var score = R.raw.subscaleMeans[key];
+    var pct = Math.min(100, score);
+    var shadeStop = (sub.cutoff / 100 * 100) + '%';
+    html += '<div class="bar-row" style="--shade-stop: ' + shadeStop + ';">';
+    html += '<div class="name">' + sub.short_name + '</div>';
+    html += '<div class="track"><div class="fill" style="width: ' + pct + '%"></div></div>';
+    html += '<div class="val">' + round1(score) + '</div>';
+    html += '</div>';
+  });
+  document.getElementById('rep-bar-chart').innerHTML = html;
+}
+
+function renderResponses(R) {
+  var groups = ['Amnesia', 'AlterPerson', 'AngryIntrusion', 'PersecIntrusion',
+    'DeperDereal', 'DistressMemory', 'AutoMemory', 'Flashbacks',
+    'BodySymptoms', 'Seizures', 'Trance', 'SelfConfusion'];
+  var html = '';
+  groups.forEach(function (key) {
+    var sub = DATA.subscales[key];
+    html += '<h4 style="margin:1rem 0 .25rem;">' + sub.display_name + '</h4>';
+    html += '<table class="responses-table"><thead><tr>';
+    html += '<th style="width:2.5rem;">#</th><th>Item</th><th style="width:3rem;">Resp</th>';
+    html += '</tr></thead><tbody>';
+    sub.items.forEach(function (id) {
+      var item = DATA.items.find(function (x) { return x.id === id; });
+      var v = RESPONSES[id];
+      var shadedClass = (typeof v === 'number' && v * 10 >= sub.cutoff) ? ' shaded' : '';
+      html += '<tr><td class="value">' + id + '</td><td class="text-col">' +
+              escapeHtml(item.text_en) + '</td><td class="value' + shadedClass + '">' +
+              (typeof v === 'number' ? v : '–') + '</td></tr>';
+    });
+    html += '</tbody></table>';
+  });
+  document.getElementById('rep-responses').innerHTML = html;
+}
+
+// ---------- wiring ----------
+window.addEventListener('DOMContentLoaded', function () {
+  loadAll().then(function () {
+    renderForm();
+    loadDraft();
+    updateProgress();
+  });
+
+  document.getElementById('btn-score').addEventListener('click', showReport);
+  document.getElementById('btn-clear').addEventListener('click', clearDraft);
+  document.getElementById('btn-back').addEventListener('click', function () {
+    document.getElementById('report-view').classList.add('hidden');
+    document.getElementById('form-view').classList.remove('hidden');
+  });
+  document.getElementById('btn-print').addEventListener('click', function () { window.print(); });
+
+  document.getElementById('btn-sample').addEventListener('click', function () {
+    fetch('docs/sample_responses.json').then(function (r) { return r.json(); }).then(function (obj) {
+      RESPONSES = {};
+      Object.keys(obj.responses).forEach(function (k) {
+        var id = parseInt(k, 10);
+        var v = obj.responses[k];
+        RESPONSES[id] = v;
+        var radio = document.querySelector('input[name="i' + id + '"][value="' + v + '"]');
+        if (radio) radio.checked = true;
+      });
+      saveDraft();
+      updateProgress();
+    });
+  });
+
+  ['meta-client', 'meta-dob', 'meta-date'].forEach(function (id) {
+    document.getElementById(id).addEventListener('change', saveDraft);
+  });
+});
+</script>
+</body>
+</html>

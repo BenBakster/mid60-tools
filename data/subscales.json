@@ -1,0 +1,101 @@
+{
+  "_source": "Kate & Hegarty 2026 OSF Technical Paper, pp. 6-7 (cutoffs, item assignments); pp. 15-16 (interpretive text)",
+  "subscales": {
+    "Amnesia": {
+      "display_name": "DID: Amnesia (for recent events)",
+      "short_name": "Amnesia",
+      "diagnostic_family": "Dissociative Identity Disorder",
+      "items": [42, 45, 48, 58],
+      "cutoff": 10,
+      "interpretive_text": "The client reports episodes of suddenly finding themselves in a situation without knowing how they got there, reflecting periods of fugue or 'lost time.'"
+    },
+    "AlterPerson": {
+      "display_name": "DID / OSDD-1: Subjective awareness of alter personalities and self-states",
+      "short_name": "Alter Personalities",
+      "diagnostic_family": "DID and OSDD-1",
+      "items": [3, 36, 39, 49, 57],
+      "cutoff": 20,
+      "interpretive_text": "The client reports awareness of distinct self-states or 'parts' that feel as if they act independently and are 'not me.' This may include hearing child voices internally, sensing other people inside who can speak or take control, or experiencing themselves as having multiple personalities."
+    },
+    "AngryIntrusion": {
+      "display_name": "DID / OSDD-1: Angry intrusions",
+      "short_name": "Angry Intrusions",
+      "diagnostic_family": "DID and OSDD-1",
+      "items": [28, 33, 35, 46, 60],
+      "cutoff": 18,
+      "interpretive_text": "The client experiences sudden, strong intrusions of anger that feel outside their control, as if an angry part 'takes over' their speech and behaviour and feels separate from their usual sense of self. During these episodes, they may or do things they would not ordinarily do."
+    },
+    "PersecIntrusion": {
+      "display_name": "DID / OSDD-1: Persecutory intrusions",
+      "short_name": "Persecutory Intrusions",
+      "diagnostic_family": "DID and OSDD-1",
+      "items": [22, 37, 44, 56, 59],
+      "cutoff": 18,
+      "interpretive_text": "The client experiences persecutory intrusions in the form of critical, hostile internal voices that forcefully enter their mind and harshly criticise, belittle, or censor them. Voices that command self-harm or express a wish for the client to be dead are flagged for clinical attention."
+    },
+    "DeperDereal": {
+      "display_name": "Derealisation / Depersonalisation",
+      "short_name": "Depersonalisation / Derealisation",
+      "diagnostic_family": "Depersonalisation/Derealisation Disorder",
+      "items": [2, 7, 9, 13, 25, 47, 50, 53],
+      "cutoff": 20,
+      "interpretive_text": "The client frequently experiences a sense of distance, disconnection, unfamiliarity, and unreality with regard to themselves, others, or their surroundings. This may include feeling detached from their body or emotions, perceiving the world as foggy or distant."
+    },
+    "DistressMemory": {
+      "display_name": "Dissociative Amnesia: Distress about severe memory problems",
+      "short_name": "Distress about Memory Problems",
+      "diagnostic_family": "Dissociative Amnesia",
+      "items": [1, 8, 20, 38, 43, 52],
+      "cutoff": 30,
+      "interpretive_text": "The client reports significant distress related to pervasive memory difficulties affecting daily functioning. For example, they frequently forget recent conversations, meals, or activities. Severe memory problems can reflect a range of dissociative mechanisms, e.g. alters and intrusions (DID/OSDD-1) and depersonalization, as well as occurring alongside dissociative amnesia. Note: This subscale should be interpreted with caution as it may be elevated due to hyperarousal or hypoarousal (such as trance), inattention, including ADHD, traumatic brain injury, or other organic causes. When difficulties occur in interpersonal contexts, e.g. immediately forgetting conversations, social anxiety or shame may also play a role."
+    },
+    "AutoMemory": {
+      "display_name": "Dissociative Amnesia: Loss of autobiographical memory",
+      "short_name": "Loss of Autobiographical Memory",
+      "diagnostic_family": "Dissociative Amnesia",
+      "items": [16, 19, 24, 29, 34],
+      "cutoff": 34,
+      "interpretive_text": "The client reports substantial gaps in their personal history and autobiographical memory, including missing periods from childhood or feeling that important life events occurred but cannot be recalled. These extensive memory gaps go beyond normal childhood amnesia and suggest significant dissociative barriers to accessing personal history."
+    },
+    "Flashbacks": {
+      "display_name": "PTSD: Flashbacks",
+      "short_name": "Flashbacks",
+      "diagnostic_family": "Posttraumatic Stress Disorder",
+      "items": [4, 15, 31, 40, 54],
+      "cutoff": 16,
+      "interpretive_text": "The client experiences frequent intrusive re-experiencing of traumatic memories with vivid sensory detail (sights, sounds, smells). These flashbacks are so immersive that they may lose contact with present reality, and the intensity can be debilitating enough to interfere with daily functioning."
+    },
+    "BodySymptoms": {
+      "display_name": "Functional Neurological Symptom Disorder: Body symptoms",
+      "short_name": "Body Symptoms",
+      "diagnostic_family": "Functional Neurological Symptom Disorder",
+      "items": [5, 10, 14, 18],
+      "cutoff": 10,
+      "interpretive_text": "The client reports episodes of neurological symptoms without medical explanation, including temporary blindness, deafness, paralysis, or difficulty swallowing. These functional neurological symptoms may represent the somatic expression of psychological distress."
+    },
+    "Seizures": {
+      "display_name": "Functional Neurological Symptom Disorder: Pseudo-Seizures",
+      "short_name": "Non-epileptic Seizures",
+      "diagnostic_family": "Functional Neurological Symptom Disorder",
+      "items": [26],
+      "cutoff": 10,
+      "interpretive_text": "The client experiences seizure-like episodes that medical evaluation has determined are not epileptic in origin. These psychogenic non-epileptic seizures often occur in the context of trauma history and dissociation."
+    },
+    "Trance": {
+      "display_name": "General: Trance",
+      "short_name": "Trance",
+      "diagnostic_family": "General",
+      "items": [21, 27, 30, 32, 41, 51],
+      "cutoff": 11.7,
+      "interpretive_text": "The client frequently enters prolonged trance states characterised by markedly reduced awareness of their surroundings and disconnection from present reality. During these episodes, they may be intensely focused on internal experience, which may range from focusing on traumatic events, engaging in enjoyable daydreams, to experiencing a state of total emptiness."
+    },
+    "SelfConfusion": {
+      "display_name": "General: Self-Confusion",
+      "short_name": "Self-Confusion",
+      "diagnostic_family": "General",
+      "items": [6, 11, 12, 17, 23, 55],
+      "cutoff": 33.3,
+      "interpretive_text": "The client reports a deep and persistent uncertainty about their identity, which is consistent with the cumulative impact of chronic dissociative experiences on a person's sense of self. However, as self-confusion can also arise in other identity-related contexts, this needs to be considered alongside elevations in other dissociation subscales."
+    }
+  }
+}
