@@ -1,50 +1,54 @@
 # MID-60-tools
 
-Self-hosted scoring engine for the **Multidimensional Inventory of Dissociation – 60-item version (MID-60)**. Парный к [ampd-tools](https://github.com/BenBakster/ampd-tools) — vanilla HTML, без сборки, без сервера, всё считается клиентом.
+Self-hosted скоринговий рушій для **Multidimensional Inventory of Dissociation – 60-item version (MID-60)**. Парний до [ampd-tools](https://github.com/BenBakster/ampd-tools) — vanilla HTML, без збірки, без сервера, усе рахується у браузері клієнта.
 
-## Что внутри
+## Що всередині
 
-- 60-пунктовая форма заполнения (UK за замовчуванням — літературний клінічний переклад; EN валідований — переключач у верхньому правому куті)
-- Скоринг: total mean × 10, 12 subscale means, severity bands
-- Перцентили: community (Φ(z), μ=12.94 σ=13.32) + clinical (μ=56.8 σ=18.8)
-- 16-категорийная Probable Profile Classification (Kate 2025)
-- Safety flag (items 22 / 44 / 58) — авто-оповещение о self-harm/suicidal ideation
-- Composite ranking (`(score-cutoff)/cutoff + items_at_threshold/N`) для выбора top субшкал
-- Дословные interpretive paragraphs из OSF Technical Paper
-- Print-to-PDF отчёт
+- 60-пунктовий опитувальник для самозаповнення (UK за замовчуванням — літературний клінічний переклад; EN валідований — перемикач у верхньому правому куті)
+- Скоринг: total mean × 10, 12 середніх по підшкалах, severity bands
+- Перцентилі: community (Φ(z), μ=12.94 σ=13.32) + clinical (μ=56.8 σ=18.8)
+- 16-категорійна Probable Profile Classification (Kate 2025)
+- Safety flag (пункти 22 / 44 / 58) — авто-сповіщення про self-harm / суїцидальні думки
+- Composite ranking `(score-cutoff)/cutoff + items_at_threshold/N` для вибору top-підшкал
+- Дослівні interpretive paragraphs з OSF Technical Paper
+- Print-to-PDF звіт
 
-## Лицензия и источники
+## Ліцензія та джерела
 
 - **Software** — MIT.
-- **Instrument content** — open-source licence Kate & Hegarty 2026 ([OSF E83KC](https://doi.org/10.17605/OSF.IO/E83KC)). Items, subscale assignments, cutoffs, classification rules, norms, interpretive text — всё дословно из этого документа.
+- **Instrument content** — open-source ліцензія Kate & Hegarty 2026 ([OSF E83KC](https://doi.org/10.17605/OSF.IO/E83KC)). Пункти, прив'язка до підшкал, cutoff'и, правила класифікації, норми, interpretive text — усе дослівно з цього документа.
 - MID-60 developer paper: Kate, Jamieson, Dorahy & Middleton, 2021. *J Trauma & Dissociation* 22(3): 265-287.
 
-## Клиническое предупреждение
+## Клінічне попередження
 
-Скрининг, не диагноз. Использовать только в связке с клиническим интервью и (при показаниях) SCID-D / DDIS / TADS-I. При сработавшем safety flag — стандартный протокол оценки суицидального риска.
+Скринінг, не діагноз. Використовувати лише в зв'язці з клінічним інтерв'ю і (за показаннями) SCID-D / DDIS / TADS-I. При спрацьованому safety flag — стандартний протокол оцінки суїцидального ризику.
 
 ## Структура
 
 ```
 mid60-tools/
-  index.html        # форма
-  report.html       # отчёт (рендерится из URL-hash или localStorage)
+  index.html              # опитувальник + рендер звіту
+  mid60-engine.js         # чистий рушій скорингу (без DOM)
   data/
-    items.json      # 60 items: text/subscale/safety flag
-    subscales.json  # 12 subscales: items/cutoff/interpretive text
-    classification.json   # 16 диагностических профилей + правила
-    percentiles.json      # OSF percentile table (стр. 11)
+    items.json            # 60 пунктів: text / subscale / safety flag
+    subscales.json        # 12 підшкал: items / cutoff / interpretive text
+    classification.json   # 16 діагностичних профілів + правила
+    percentiles.json      # OSF percentile table (стор. 11)
+    templates.json        # шаблони звіту + disclaimers
   docs/
-    SOURCE.md       # сверка нашего content с OSF страницами
+    SOURCE.md             # звірка контенту з OSF сторінками
+    test-engine.js        # тести рушія (звірка з OSF Sample Report)
+    sample_responses.json # debug-дані для ?debug=1
 ```
 
 ## Roadmap
 
-- [x] v0.1 — single-page HTML, локальный self-administration
-- [x] v0.2 — літературний український переклад 60 items + UI, переключач EN/UK
-- [ ] v0.3 — Telegram-бот gate в стилі ampd-tools (whitelist + PHI ≤ 1ч)
-- [ ] v0.4 — мультиадміністраційний line plot для лонгітюду
+- [x] v0.1 — single-page HTML, локальне self-administration
+- [x] v0.2 — літературний український переклад 60 пунктів + UI, перемикач EN/UK
+- [x] v0.3 — audit fixes (3 blockers + 13 majors + ~15 minors)
+- [ ] v0.4 — Telegram-бот gate у стилі ampd-tools (whitelist + PHI ≤ 1 год)
+- [ ] v0.5 — мультиадміністраційний line plot для лонгітюду
 
 ## Український переклад
 
-Робочий клінічний переклад (Vilenchyk 2026, неофіційний — не валідований у популяційному дослідженні). Стиль: друге лице «ви» з активним дієсловом, як у DASS/PHQ-UA. Safety items 22/44/58 — без пом'якшення. Для офіційного звіту досі рекомендовано EN-первинна мова (вона валідована Kate et al. 2021), але для скринінгу україномовних пацієнтів — UA дає природніше читання.
+Робочий клінічний переклад (Vilenchyk 2026, неофіційний — не валідований у популяційному дослідженні). Стиль: друга особа «ви» з активним дієсловом, як у DASS/PHQ-UA. Safety items 22/44/58 — без пом'якшення. Для офіційного звіту досі рекомендовано використовувати EN як основну мову (вона валідована Kate et al. 2021), але для скринінгу україномовних пацієнтів UA дає природніше читання.

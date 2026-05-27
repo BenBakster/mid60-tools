@@ -3,7 +3,7 @@
   "subscales": {
     "Amnesia": {
       "display_name_en": "DID: Amnesia (for recent events)",
-      "display_name_uk": "ДРІ: Амнезія (на нещодавні події)",
+      "display_name_uk": "ДРІ: Амнезія (щодо нещодавніх подій)",
       "short_name_en": "Amnesia",
       "short_name_uk": "Амнезія",
       "diagnostic_family_en": "Dissociative Identity Disorder",
@@ -15,35 +15,35 @@
     },
     "AlterPerson": {
       "display_name_en": "DID / OSDD-1: Subjective awareness of alter personalities and self-states",
-      "display_name_uk": "ДРІ / ІВДР-1: Суб'єктивне усвідомлення альтер-особистостей і самостанів",
+      "display_name_uk": "ДРІ / ІУДР-1: Суб'єктивне усвідомлення альтер-особистостей і самостанів",
       "short_name_en": "Alter Personalities",
       "short_name_uk": "Альтер-особистості",
       "diagnostic_family_en": "DID and OSDD-1",
-      "diagnostic_family_uk": "ДРІ та ІВДР-1",
+      "diagnostic_family_uk": "ДРІ та ІУДР-1",
       "items": [3, 36, 39, 49, 57],
       "cutoff": 20,
       "interpretive_text_en": "The client reports awareness of distinct self-states or 'parts' that feel as if they act independently and are 'not me.' This may include hearing child voices internally, sensing other people inside who can speak or take control, or experiencing themselves as having multiple personalities.",
-      "interpretive_text_uk": "Пацієнт повідомляє про усвідомлення окремих самостанів або «частин», які сприймаються як такі, що діють самостійно і є «не я». Це може включати чутність дитячих голосів усередині, відчуття інших людей всередині, які можуть говорити або брати контроль, або переживання себе як такого, що має декілька особистостей."
+      "interpretive_text_uk": "Пацієнт повідомляє про усвідомлення окремих самостанів або «частин», які сприймаються як такі, що діють самостійно і є «не я». Це може включати слухові переживання дитячих голосів усередині, відчуття інших людей всередині, які можуть говорити або перебирати контроль, або переживання себе як такого, що має декілька особистостей."
     },
     "AngryIntrusion": {
       "display_name_en": "DID / OSDD-1: Angry intrusions",
-      "display_name_uk": "ДРІ / ІВДР-1: Гнівні інтрузії",
+      "display_name_uk": "ДРІ / ІУДР-1: Гнівні інтрузії",
       "short_name_en": "Angry Intrusions",
       "short_name_uk": "Гнівні інтрузії",
       "diagnostic_family_en": "DID and OSDD-1",
-      "diagnostic_family_uk": "ДРІ та ІВДР-1",
+      "diagnostic_family_uk": "ДРІ та ІУДР-1",
       "items": [28, 33, 35, 46, 60],
       "cutoff": 18,
       "interpretive_text_en": "The client experiences sudden, strong intrusions of anger that feel outside their control, as if an angry part 'takes over' their speech and behaviour and feels separate from their usual sense of self. During these episodes, they may or do things they would not ordinarily do.",
-      "interpretive_text_uk": "Пацієнт переживає раптові сильні інтрузії гніву, які відчуваються поза його контролем, ніби гнівна частина «перебирає контроль» над його мовленням і поведінкою та сприймається як відокремлена від звичного відчуття себе. Під час таких епізодів він може говорити або робити речі, яких зазвичай не робив би."
+      "interpretive_text_uk": "Пацієнт переживає раптові сильні інтрузії гніву, які відчуваються поза контролем, ніби гнівна частина «перебирає контроль» над мовленням і поведінкою та сприймається як відокремлена від звичного відчуття себе. Під час таких епізодів пацієнт може говорити або робити речі, які зазвичай йому невластиві."
     },
     "PersecIntrusion": {
       "display_name_en": "DID / OSDD-1: Persecutory intrusions",
-      "display_name_uk": "ДРІ / ІВДР-1: Переслідувальні інтрузії",
+      "display_name_uk": "ДРІ / ІУДР-1: Переслідувальні інтрузії",
       "short_name_en": "Persecutory Intrusions",
       "short_name_uk": "Переслідувальні інтрузії",
       "diagnostic_family_en": "DID and OSDD-1",
-      "diagnostic_family_uk": "ДРІ та ІВДР-1",
+      "diagnostic_family_uk": "ДРІ та ІУДР-1",
       "items": [22, 37, 44, 56, 59],
       "cutoff": 18,
       "interpretive_text_en": "The client experiences persecutory intrusions in the form of critical, hostile internal voices that forcefully enter their mind and harshly criticise, belittle, or censor them. Voices that command self-harm or express a wish for the client to be dead are flagged for clinical attention.",
@@ -71,7 +71,7 @@
       "items": [1, 8, 20, 38, 43, 52],
       "cutoff": 30,
       "interpretive_text_en": "The client reports significant distress related to pervasive memory difficulties affecting daily functioning. For example, they frequently forget recent conversations, meals, or activities. Severe memory problems can reflect a range of dissociative mechanisms, e.g. alters and intrusions (DID/OSDD-1) and depersonalization, as well as occurring alongside dissociative amnesia. Note: This subscale should be interpreted with caution as it may be elevated due to hyperarousal or hypoarousal (such as trance), inattention, including ADHD, traumatic brain injury, or other organic causes. When difficulties occur in interpersonal contexts, e.g. immediately forgetting conversations, social anxiety or shame may also play a role.",
-      "interpretive_text_uk": "Пацієнт повідомляє про значний дистрес, пов'язаний із поширеними труднощами пам'яті, що впливають на повсякденне функціонування. Наприклад, він часто забуває нещодавні розмови, прийоми їжі або заняття. Серйозні проблеми з пам'яттю можуть відображати різні дисоціативні механізми (альтери та інтрузії при ДРІ/ІВДР-1, деперсоналізацію), а також співіснувати з дисоціативною амнезією. Зауваження: цю підшкалу слід інтерпретувати обережно, оскільки вона може бути підвищена через гіперзбудження або гіпозбудження (наприклад, транс), неуважність (зокрема при СДУГ), черепно-мозкову травму чи інші органічні причини. Коли труднощі виникають у міжособистісних контекстах (наприклад, миттєве забування розмов), роль може відігравати соціальна тривога або сором."
+      "interpretive_text_uk": "Пацієнт повідомляє про значний дистрес, пов'язаний із поширеними труднощами пам'яті, що впливають на повсякденне функціонування. Наприклад, пацієнт часто забуває нещодавні розмови, що їв або чим займався. Серйозні проблеми з пам'яттю можуть відображати різні дисоціативні механізми (альтери та інтрузії при ДРІ/ІУДР-1, деперсоналізацію), а також співіснувати з дисоціативною амнезією. Зауваження: цю підшкалу слід інтерпретувати обережно, оскільки вона може бути підвищена через гіперзбудження або гіпозбудження (наприклад, транс), неуважність (зокрема при СДУГ), черепно-мозкову травму чи інші органічні причини. Коли труднощі виникають у міжособистісних контекстах (наприклад, миттєве забування розмов), роль може відігравати соціальна тривога або сором."
     },
     "AutoMemory": {
       "display_name_en": "Dissociative Amnesia: Loss of autobiographical memory",
@@ -95,7 +95,7 @@
       "items": [4, 15, 31, 40, 54],
       "cutoff": 16,
       "interpretive_text_en": "The client experiences frequent intrusive re-experiencing of traumatic memories with vivid sensory detail (sights, sounds, smells). These flashbacks are so immersive that they may lose contact with present reality, and the intensity can be debilitating enough to interfere with daily functioning.",
-      "interpretive_text_uk": "Пацієнт часто переживає інтрузивне повторне проживання травматичних спогадів із яскравими сенсорними деталями (зором, звуками, запахами). Ці флешбеки настільки занурювальні, що пацієнт може втрачати контакт із теперішньою реальністю, а їхня інтенсивність може бути виснажливою настільки, що порушує повсякденне функціонування."
+      "interpretive_text_uk": "Пацієнт часто переживає інтрузивне повторне проживання травматичних спогадів із яскравими сенсорними деталями (образами, звуками, запахами). Ці флешбеки настільки занурювальні, що пацієнт може втрачати контакт із теперішньою реальністю, а їхня інтенсивність може бути виснажливою настільки, що порушує повсякденне функціонування."
     },
     "BodySymptoms": {
       "display_name_en": "Functional Neurological Symptom Disorder: Body symptoms",
@@ -131,7 +131,7 @@
       "items": [21, 27, 30, 32, 41, 51],
       "cutoff": 11.7,
       "interpretive_text_en": "The client frequently enters prolonged trance states characterised by markedly reduced awareness of their surroundings and disconnection from present reality. During these episodes, they may be intensely focused on internal experience, which may range from focusing on traumatic events, engaging in enjoyable daydreams, to experiencing a state of total emptiness.",
-      "interpretive_text_uk": "Пацієнт часто впадає у тривалі трансові стани, які характеризуються помітно зниженим усвідомленням оточення та відірваністю від теперішньої реальності. Під час таких епізодів він може бути інтенсивно зосереджений на внутрішньому переживанні: від зосередження на травматичних подіях до приємних мрій наяву чи відчуття повної порожнечі."
+      "interpretive_text_uk": "Пацієнт часто впадає у тривалі трансові стани, які характеризуються помітно зниженим усвідомленням оточення та відірваністю від теперішньої реальності. Під час таких епізодів увага може бути інтенсивно зосереджена на внутрішньому переживанні: від зосередження на травматичних подіях до приємних мрій наяву чи відчуття повної порожнечі."
     },
     "SelfConfusion": {
       "display_name_en": "General: Self-Confusion",

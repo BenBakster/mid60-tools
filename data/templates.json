@@ -14,7 +14,7 @@
     "header_en": "Risk of Self-Harm or Suicide",
     "header_uk": "Ризик самоушкодження або суїциду",
     "intro_en": "The respondent indicated risk of self-harm or suicide based upon the following item{S}:",
-    "intro_uk": "Опитуваний вказав на ризик самоушкодження або суїциду за такими пунктами:",
+    "intro_uk": "Пацієнт вказав на ризик самоушкодження або суїциду за такими пунктами:",
     "outro_en": "It is recommended to follow suicide risk assessment protocols to determine the nature, severity, and immediacy of the risk.",
     "outro_uk": "Рекомендується застосувати протокол оцінки суїцидального ризику для визначення характеру, ступеня тяжкості та невідкладності ризику."
   },
@@ -46,7 +46,7 @@
   "no_elevated_subscales_uk": "Жодна з підшкал не перевищила клінічної межі, що свідчить про відсутність клінічно значущих дисоціативних симптомів за всіма виміряними доменами.",
   "instructions": {
     "en": "How often do you have the following experiences when you are not under the influence of alcohol or drugs? Please select the number that best describes you. Select a \"0\" if the experience never happens to you; select a \"10\" if it is always happening to you. If it happens sometimes, but not all the time, choose a number between 1 and 9 that best describes how often it happens to you.",
-    "uk": "Як часто ви маєте наведені нижче переживання, коли ви не перебуваєте під впливом алкоголю або наркотичних речовин? Будь ласка, оберіть число, яке найкраще описує вас. Оберіть «0», якщо це переживання ніколи з вами не трапляється; оберіть «10», якщо воно відбувається завжди. Якщо воно трапляється іноді, але не постійно, оберіть число від 1 до 9, яке найкраще відображає частоту."
+    "uk": "Як часто у вас виникають наведені нижче переживання, коли ви не перебуваєте під впливом алкоголю або наркотичних речовин? Будь ласка, оберіть число, яке найкраще описує вас. Оберіть «0», якщо це переживання ніколи з вами не трапляється; оберіть «10», якщо воно відбувається завжди. Якщо воно трапляється іноді, але не постійно, оберіть число від 1 до 9, яке найкраще відображає частоту."
   },
   "clinical_use_disclaimer": {
     "en": "The MID-60 is a screening instrument only. It is not designed to be the sole basis for diagnosis and should always be interpreted alongside clinical judgment. Clinically significant elevations should be followed up by asking targeted questions to clarify whether the nature and severity of the symptom truly match the item content. Where indicated, further evaluation can be undertaken using validated structured clinical interviews, such as the Structured Clinical Interview for DSM-5 Dissociative Disorders (SCID-D), the Dissociative Disorders Interview Schedule (DDIS), or the Trauma and Dissociative Symptoms Interview (TADS-I).",
