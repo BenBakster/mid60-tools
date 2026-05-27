@@ -20,7 +20,7 @@
      "text_uk": "Вам стає важко ковтати (без відомої медичної причини)"},
 
     {"id": 6,  "subscale": "SelfConfusion",    "text_en": "Having trance-like episodes where you stare off into space and lose awareness of what is going on around you",
-     "text_uk": "У вас бувають епізоди, схожі на транс, коли ви дивитеся в порожнечу й втрачаєте усвідомлення того, що відбувається навколо"},
+     "text_uk": "У вас бувають епізоди, коли ви ніби «вимикаєтеся» — дивитеся в порожнечу й втрачаєте усвідомлення того, що відбувається навколо"},
 
     {"id": 7,  "subscale": "DeperDereal",      "text_en": "Being told of things that you had recently done, but with absolutely no memory of having done those things",
      "text_uk": "Вам розповідають про речі, які ви нещодавно зробили, але ви абсолютно цього не пам'ятаєте"},
@@ -47,7 +47,7 @@
      "text_uk": "Ви раптом не можете рухатися — ніби вас паралізувало (без відомої медичної причини)"},
 
     {"id": 15, "subscale": "Flashbacks",       "text_en": "Being so bothered by flashbacks that it was hard to get out of bed and face the day",
-     "text_uk": "Флешбеки настільки вас турбують, що вам важко встати з ліжка й узятися за день"},
+     "text_uk": "Травматичні спогади настільки не дають вам спокою, що вам важко встати з ліжка й узятися за день"},
 
     {"id": 16, "subscale": "AutoMemory",       "text_en": "Not remembering large parts of your childhood after age 5",
      "text_uk": "Ви не пам'ятаєте значних періодів свого дитинства після п'ятирічного віку"},
@@ -84,7 +84,7 @@
      "text_uk": "У вас бувають напади / судоми, причини яких ваш лікар не може встановити"},
 
     {"id": 27, "subscale": "Trance",           "text_en": "Going into trance so much (or for so long) that it interferes with your daily activities and responsibilities",
-     "text_uk": "Ви впадаєте в транс так часто (або так надовго), що це заважає вам у повсякденних справах та обов'язках"},
+     "text_uk": "Ви настільки часто (або так надовго) відключаєтеся від реальності, що це заважає вам у повсякденних справах та обов'язках"},
 
     {"id": 28, "subscale": "AngryIntrusion",   "text_en": "Words just flowing from your mouth as if they were not in your control",
      "text_uk": "Слова самі вилітають з вас, ніби ви ними не керуєте"},
@@ -93,13 +93,13 @@
      "text_uk": "Вам здається, що у вашій пам'яті є великі прогалини"},
 
     {"id": 30, "subscale": "Trance",           "text_en": "Going into trance for hours",
-     "text_uk": "Ви впадаєте в транс на цілі години"},
+     "text_uk": "Ви відключаєтеся від реальності на цілі години"},
 
     {"id": 31, "subscale": "Flashbacks",       "text_en": "Bad memories coming into your mind and you can't get rid of them",
      "text_uk": "Погані спогади спливають у вашій свідомості, і ви не можете їх позбутися"},
 
     {"id": 32, "subscale": "Trance",           "text_en": "Drifting into trance without even realising that it is happening",
-     "text_uk": "Ви впадаєте в транс, навіть не усвідомлюючи цього"},
+     "text_uk": "Ви відключаєтеся від реальності, навіть не помічаючи цього"},
 
     {"id": 33, "subscale": "AngryIntrusion",   "text_en": "Words come out of your mouth, but you didn't say them; you don't know where those words came from",
      "text_uk": "З вас вилітають слова, які ви не збиралися казати; ви не знаєте, звідки вони взялися"},
@@ -126,7 +126,7 @@
      "text_uk": "Ви переживаєте минулу травму настільки яскраво, що бачите її, чуєте, відчуваєте її запах тощо"},
 
     {"id": 41, "subscale": "Trance",           "text_en": "Going into trance several days in a row",
-     "text_uk": "Ви впадаєте в транс декілька днів поспіль"},
+     "text_uk": "Ви відключаєтеся від реальності декілька днів поспіль"},
 
     {"id": 42, "subscale": "Amnesia",          "text_en": "Discovering that you have changed your appearance (e.g., cut your hair, or changed your hairstyle, or changed what you are wearing, or put on cosmetics, etc.) with no memory of having done so",
      "text_uk": "Ви виявляєте, що змінили зовнішність (наприклад, постриглися, змінили зачіску, перевдягнулися, нафарбувалися тощо), не пам'ятаючи, що робили це"},
@@ -157,7 +157,7 @@
      "text_uk": "Ви «отямлюєтеся» й виявляєте, що зробили щось, чого не пам'ятаєте (наприклад, щось розбили, порізали себе, прибрали весь будинок тощо)"},
 
     {"id": 51, "subscale": "Trance",           "text_en": "Having difficulty staying out of trance",
-     "text_uk": "Вам важко не впадати в транс"},
+     "text_uk": "Вам важко не відключатися від реальності"},
 
     {"id": 52, "subscale": "DistressMemory",   "text_en": "Suddenly not knowing how to do your job",
      "text_uk": "Ви раптом не знаєте, як виконувати свою роботу"},
@@ -166,7 +166,7 @@
      "text_uk": "Ви раптом відчуваєте, ніби ваше тіло — не зовсім ваше"},
 
     {"id": 54, "subscale": "Flashbacks",       "text_en": "Being bothered by flashbacks for several days in a row",
-     "text_uk": "Флешбеки турбують вас декілька днів поспіль"},
+     "text_uk": "Травматичні спогади не дають вам спокою декілька днів поспіль"},
 
     {"id": 55, "subscale": "SelfConfusion",    "text_en": "Being confused or puzzled by your emotions",
      "text_uk": "Ви розгублені або спантеличені власними емоціями"},

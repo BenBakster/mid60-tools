@@ -87,15 +87,15 @@
     },
     "Flashbacks": {
       "display_name_en": "PTSD: Flashbacks",
-      "display_name_uk": "ПТСР: Флешбеки",
+      "display_name_uk": "ПТСР: Повторні травматичні переживання",
       "short_name_en": "Flashbacks",
-      "short_name_uk": "Флешбеки",
+      "short_name_uk": "Повторні переживання",
       "diagnostic_family_en": "Posttraumatic Stress Disorder",
       "diagnostic_family_uk": "Посттравматичний стресовий розлад",
       "items": [4, 15, 31, 40, 54],
       "cutoff": 16,
       "interpretive_text_en": "The client experiences frequent intrusive re-experiencing of traumatic memories with vivid sensory detail (sights, sounds, smells). These flashbacks are so immersive that they may lose contact with present reality, and the intensity can be debilitating enough to interfere with daily functioning.",
-      "interpretive_text_uk": "Пацієнт часто переживає інтрузивне повторне проживання травматичних спогадів із яскравими сенсорними деталями (образами, звуками, запахами). Ці флешбеки настільки поглинають пацієнта, що він може втрачати контакт із теперішньою реальністю, а їхня інтенсивність може бути виснажливою настільки, що порушує повсякденне функціонування."
+      "interpretive_text_uk": "Пацієнт часто переживає інтрузивне повторне проживання травматичних спогадів із яскравими сенсорними деталями (образами, звуками, запахами). Ці повторні переживання настільки поглинають пацієнта, що він може втрачати контакт із теперішньою реальністю, а їхня інтенсивність може бути виснажливою настільки, що порушує повсякденне функціонування."
     },
     "BodySymptoms": {
       "display_name_en": "Functional Neurological Symptom Disorder: Body symptoms",
