@@ -1,6 +1,6 @@
 {
   "_source_en": "Kate et al. 2021 (J Trauma & Dissociation 22(3): 265-287); Kate & Hegarty 2026 OSF Technical Paper, pp. 18-21",
-  "_source_uk": "Робочий клінічний переклад українською: Claude Opus 4.7 (Anthropic, 2026); клінічна супервізія та редагування — Vilenchyk. Неофіційний, не валідований у популяційному дослідженні. EN залишається первинною мовою для звітування.",
+  "_source_uk": "UK translation: Claude Opus 4.7 + MD Psychiatrist Vilenchyk Anton, UA. Неофіційний, не валідований у популяційному дослідженні. EN залишається первинною мовою для звітування.",
   "_scale": "0 (Never / Ніколи) – 10 (Always / Завжди)",
   "_safety_items": [22, 44, 58],
   "items": [
