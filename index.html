@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://worker-production-ede9.up.railway.app; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://worker-production-ede9.up.railway.app; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
 <title>MID-60 — Багатовимірний опитувальник дисоціації</title>
 <style>
   :root {
@@ -209,6 +210,36 @@
 
   .footer-note { font-size: .8rem; color: var(--muted); margin-top: 2rem; border-top: 1px solid var(--line); padding-top: .75rem; }
 
+  /* Safety modal — затемнённый оверлей с инструкцией про линии помощи.
+     Появляется при срабатывании пунктов 22/44/58 (суицид/самоушкодження),
+     блокирует взаимодействие до явного dismiss. UX-баррьер на случай,
+     когда пациент скрывает суицидальность через DevTools/refresh — modal
+     гарантирует, что страница помощи увидена пациентом до share лікарю. */
+  .safety-modal-overlay {
+    position: fixed; inset: 0; background: rgba(20, 20, 25, .7);
+    z-index: 9999; display: flex; align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+  .safety-modal {
+    background: #fff; max-width: 540px; width: 100%;
+    border-radius: 8px; border-left: 6px solid var(--warn-ink);
+    padding: 1.5rem 1.5rem 1.25rem; box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+  }
+  .safety-modal h2 { color: var(--warn-ink); margin: 0 0 .75rem; font-size: 1.25rem; }
+  .safety-modal p { margin: .5rem 0; line-height: 1.5; }
+  .safety-modal .lines {
+    background: var(--shaded); border-radius: 4px; padding: .75rem 1rem;
+    margin: .85rem 0; font-size: .95rem;
+  }
+  .safety-modal .lines div { margin: .25rem 0; }
+  .safety-modal .lines b { font-variant-numeric: tabular-nums; }
+  .safety-modal button {
+    margin-top: .75rem; padding: .6rem 1.25rem;
+    background: var(--warn-ink); color: #fff; border: none; border-radius: 4px;
+    font: inherit; cursor: pointer;
+  }
+  .safety-modal button:hover { background: #7a161e; }
+
   .hidden { display: none !important; }
 
   /* ---------- print ---------- */
@@ -257,9 +288,9 @@
     <div class="card">
       <h2 data-i18n="administration">Адміністрування</h2>
       <div class="client-meta">
-        <label data-i18n-key="meta_client">Пацієнт (ініціали / код)<input id="meta-client" type="text" placeholder="за бажанням"></label>
-        <label data-i18n-key="meta_dob">Дата народження<input id="meta-dob" type="date"></label>
-        <label data-i18n-key="meta_date">Дата проведення<input id="meta-date" type="date"></label>
+        <label data-i18n-key="meta_client">Пацієнт (ініціали / код)<input id="meta-client" type="text" placeholder="за бажанням" maxlength="80" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off"></label>
+        <label data-i18n-key="meta_dob">Дата народження<input id="meta-dob" type="date" autocomplete="off"></label>
+        <label data-i18n-key="meta_date">Дата проведення<input id="meta-date" type="date" autocomplete="off"></label>
       </div>
     </div>
 
@@ -362,6 +393,30 @@
   </section>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+
+<!-- Safety modal. Скрыт по умолчанию, открывается при срабатывании пунктов
+     безопасности 22 / 44 / 58. Текст и линии — UA по умолчанию; EN-версия
+     обновляется через showSafetyModal() с учётом LANG. См. CSS .safety-modal. -->
+<div id="safety-modal" class="safety-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="safety-modal-title">
+  <div class="safety-modal">
+    <h2 id="safety-modal-title">⚠ Важлива інформація щодо безпеки</h2>
+    <p id="safety-modal-body">
+      У ваших відповідях є пункти, що свідчать про думки про самоушкодження
+      або суїцид. Це не діагноз, але це підстава прямо зараз поговорити з
+      кимось, кому ви довіряєте, або зателефонувати на лінію допомоги.
+    </p>
+    <div class="lines">
+      <div><b>7333</b> — <span id="safety-line-lifeline">Lifeline Ukraine (безкоштовно, 24/7)</span></div>
+      <div><b>0 800 211 444</b> — <span id="safety-line-mh">Лінія психічного здоров'я Львова</span></div>
+      <div><b>112</b> — <span id="safety-line-er">екстрена медична допомога</span></div>
+    </div>
+    <p id="safety-modal-footer-text">
+      Цей звіт <b>не</b> замінює очну консультацію. Якщо є гострий ризик —
+      зверніться по допомогу зараз, не чекайте відповіді лікаря.
+    </p>
+    <button type="button" id="safety-modal-ack">Я прочитав, продовжити до звіту</button>
+  </div>
 </div>
 
 <script src="mid60-engine.js"></script>
@@ -584,6 +639,10 @@ function applyUiStrings() {
   document.querySelectorAll('[data-i18n]').forEach(function (el) {
     var key = el.getAttribute('data-i18n');
     var val = T(key);
+    // Эти три ключа содержат форматирование (<br>, <a>) в i18n-источниках,
+    // поэтому идут innerHTML. ВНИМАНИЕ: содержимое — наш controlled
+    // contributions; никакого user input. При добавлении новых ключей
+    // в этот список — проверять что они не принимают user-controlled данные.
     if (key === 'clinical_disclaimer' || key === 'footer' || key === 'subtitle') el.innerHTML = val;
     else el.textContent = val;
   });
@@ -685,6 +744,14 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+// Le() = escapeHtml(L(obj, field)). Используется ВЕЗДЕ, где результат L()
+// идёт в .innerHTML — иначе malicious PR-перевод (data/*.json) с
+// `<img onerror=...>` в interpretive_text/header/intro моментально
+// получает XSS в браузере пациента. На 2026-05 контент JSON чистый,
+// никаких HTML-тегов, но коллекция переводов будет расти — защита
+// должна быть в коде, а не в надежде на ревью PR-ов.
+function Le(obj, field) { return escapeHtml(L(obj, field)); }
+
 function updateProgress() {
   var n = 0;
   for (var i = 1; i <= 60; i++) if (typeof RESPONSES[i] === 'number') n++;
@@ -693,6 +760,11 @@ function updateProgress() {
 }
 
 // ---------- draft persistence (sessionStorage + 1h TTL) ----------
+// Absolute TTL: фиксируем savedAt только при ПЕРВОМ сохранении draft'а
+// текущей сессии. Раньше savedAt обновлялся при каждом saveDraft → sliding
+// window: пациент мог сидеть на вкладке сутки, PHI не очищалось. С абсолютным
+// TTL чернетка живёт ровно 1 час с первого ответа, независимо от активности.
+var _draftStartedAt = null;
 function saveDraft() {
   try {
     var meta = {
@@ -700,13 +772,35 @@ function saveDraft() {
       dob: document.getElementById('meta-dob').value,
       date: document.getElementById('meta-date').value
     };
+    if (_draftStartedAt === null) _draftStartedAt = Date.now();
     sessionStorage.setItem(DRAFT_KEY, JSON.stringify({
       responses: RESPONSES,
       meta: meta,
-      savedAt: Date.now()
+      savedAt: _draftStartedAt
     }));
   } catch (e) { /* ignore */ }
 }
+
+// Interval-based TTL check: раз в минуту проверяем не прокис ли draft.
+// Раньше проверка была ТОЛЬКО при загрузке страницы — если пациент
+// открыл вкладку на час и оставил, PHI оставалось до закрытия.
+// Сейчас при истечении TTL чернетка стирается из sessionStorage,
+// а форма перезагружается, чтобы PHI не висело в DOM.
+setInterval(function () {
+  try {
+    var raw = sessionStorage.getItem(DRAFT_KEY);
+    if (!raw) return;
+    var obj = JSON.parse(raw);
+    if (obj && typeof obj.savedAt === 'number' && (Date.now() - obj.savedAt) > DRAFT_TTL_MS) {
+      sessionStorage.removeItem(DRAFT_KEY);
+      _draftStartedAt = null;
+      // Принудительная перезагрузка стирает PHI из DOM. Альтернатива
+      // (поэлементно затирать инпуты + RESPONSES) хрупкая: новый input
+      // или radiogroup забудут — а reload надёжен.
+      location.reload();
+    }
+  } catch (e) { /* ignore */ }
+}, 60000);
 function loadDraft() {
   try {
     var raw = sessionStorage.getItem(DRAFT_KEY);
@@ -717,6 +811,9 @@ function loadDraft() {
       sessionStorage.removeItem(DRAFT_KEY);
       return;
     }
+    // Подхватываем savedAt из чернетки — продолжение прерванной сессии
+    // не сбрасывает absolute-TTL начало.
+    if (typeof obj.savedAt === 'number') _draftStartedAt = obj.savedAt;
     if (obj.responses) {
       Object.keys(obj.responses).forEach(function (k) {
         var id = parseInt(k, 10);
@@ -739,6 +836,7 @@ function loadDraft() {
 function clearDraft() {
   if (!confirm(T('confirm_clear'))) return;
   sessionStorage.removeItem(DRAFT_KEY);
+  _draftStartedAt = null;
   RESPONSES = {};
   document.querySelectorAll('#items-tbody input[type="radio"]').forEach(function (r) { r.checked = false; });
   document.getElementById('meta-client').value = '';
@@ -784,6 +882,41 @@ function showReport() {
   document.getElementById('form-view').classList.add('hidden');
   document.getElementById('report-view').classList.remove('hidden');
   window.scrollTo(0, 0);
+
+  // Safety hard-modal: при срабатывании пунктов 22/44/58 модальное окно
+  // перекрывает отчёт до явного dismiss. Это medical-critical UX-баррьер
+  // на основе данных движка (R.safety_flags вычислены MID60.scoreAssessment).
+  // DevTools-обход (обнуление RESPONSES[22] перед showReport) технически
+  // возможен — отдельный server-side recompute планируется next-sprint.
+  if (R.safety_flags && R.safety_flags.length) {
+    showSafetyModal();
+  }
+}
+
+function showSafetyModal() {
+  var m = document.getElementById('safety-modal');
+  if (!m) return;
+  // Локализация: UA по умолчанию (см. HTML), EN — динамически.
+  if (LANG === 'en') {
+    document.getElementById('safety-modal-title').textContent = '⚠ Important safety information';
+    document.getElementById('safety-modal-body').textContent =
+      'Some of your responses indicate thoughts about self-harm or suicide. ' +
+      'This is not a diagnosis, but it is a reason to talk to someone you ' +
+      'trust right now, or call a helpline.';
+    document.getElementById('safety-line-lifeline').textContent = 'Lifeline Ukraine (free, 24/7)';
+    document.getElementById('safety-line-mh').textContent = 'Lviv mental health helpline';
+    document.getElementById('safety-line-er').textContent = 'emergency medical services';
+    document.getElementById('safety-modal-footer-text').innerHTML =
+      'This report is <b>not</b> a substitute for in-person consultation. ' +
+      'If risk is acute, seek help now — do not wait for the doctor to reply.';
+    document.getElementById('safety-modal-ack').textContent = 'I have read this, continue to report';
+  }
+  m.classList.remove('hidden');
+}
+
+function hideSafetyModal() {
+  var m = document.getElementById('safety-modal');
+  if (m) m.classList.add('hidden');
 }
 
 function renderSafety(R) {
@@ -791,12 +924,12 @@ function renderSafety(R) {
   if (!R.safety_flags.length) { el.classList.add('hidden'); el.innerHTML = ''; return; }
   el.classList.remove('hidden');
   var tpl = DATA.templates.safety;
-  var html = '<h3>' + L(tpl, 'header') + '</h3>';
-  html += '<p>' + L(tpl, 'intro').replace('{S}', LANG === 'en' && R.safety_flags.length === 1 ? '' : (LANG === 'en' ? 's' : '')) + '</p><ul>';
+  var html = '<h3>' + Le(tpl, 'header') + '</h3>';
+  html += '<p>' + escapeHtml(L(tpl, 'intro').replace('{S}', LANG === 'en' && R.safety_flags.length === 1 ? '' : (LANG === 'en' ? 's' : ''))) + '</p><ul>';
   R.safety_flags.forEach(function (f) {
     html += '<li>' + (LANG === 'uk' ? 'Пункт ' : 'Item ') + f.id + ' — «' + escapeHtml(f.text) + '» (' + T('response_label') + ': ' + f.response + '/10)</li>';
   });
-  html += '</ul><p>' + L(tpl, 'outro') + '</p>';
+  html += '</ul><p>' + Le(tpl, 'outro') + '</p>';
   el.innerHTML = html;
 }
 
@@ -805,26 +938,29 @@ function renderInterpretive(R) {
   var tpl = DATA.templates;
   var dateStr = document.getElementById('meta-date').value || '—';
   var profile = R.classification.name;
-  var opening = L(tpl.opening, 'base')
-    .replace('{DATE}', dateStr)
+  // escape ДО replace: значения пациента (дата, профиль) могут содержать
+  // спецсимволы; placeholder'ы {DATE}/{SCORE}/{PROFILE} — литералы,
+  // безопасны. После replace целый opening идёт в innerHTML.
+  var opening = escapeHtml(L(tpl.opening, 'base'))
+    .replace('{DATE}', escapeHtml(dateStr))
     .replace('{SCORE}', Math.round(R.raw.totalMean))
-    .replace('{DESCRIPTOR}', R.descriptor);
+    .replace('{DESCRIPTOR}', escapeHtml(R.descriptor));
   if (R.percentiles.community >= 90) {
-    opening += L(tpl.opening, 'with_community_percentile').replace('{PCT}', R.percentiles.community);
+    opening += escapeHtml(L(tpl.opening, 'with_community_percentile')).replace('{PCT}', R.percentiles.community);
   }
   if (R.classification.id === 16) {
-    opening += L(tpl.opening, 'no_disorder');
+    opening += Le(tpl.opening, 'no_disorder');
   } else {
-    opening += L(tpl.opening, 'with_profile').replace('{PROFILE}', profile);
+    opening += escapeHtml(L(tpl.opening, 'with_profile')).replace('{PROFILE}', escapeHtml(profile));
   }
   var html = '<p>' + opening + '</p>';
 
   if (R.classification.id !== 16 && R.ranked_subscales.diagnostic.length) {
-    html += '<p class="sub-header">' + L(tpl.diagnostic_section, 'header') + '</p>';
+    html += '<p class="sub-header">' + Le(tpl.diagnostic_section, 'header') + '</p>';
     var n = R.ranked_subscales.diagnostic.length;
     var p = n === 1
-      ? L(tpl.diagnostic_section, 'one').replace('{PROFILE}', profile)
-      : L(tpl.diagnostic_section, 'many').replace('{PROFILE}', profile).replace('{N}', n);
+      ? escapeHtml(L(tpl.diagnostic_section, 'one')).replace('{PROFILE}', escapeHtml(profile))
+      : escapeHtml(L(tpl.diagnostic_section, 'many')).replace('{PROFILE}', escapeHtml(profile)).replace('{N}', n);
     html += '<p>' + p + '</p>';
     R.ranked_subscales.diagnostic.forEach(function (e) {
       html += renderSubscaleBlock(e);
@@ -833,9 +969,9 @@ function renderInterpretive(R) {
 
   if (R.ranked_subscales.additional.length) {
     var n2 = R.ranked_subscales.additional.length;
-    var hdr = n2 === 1 ? L(tpl.additional_section, 'header_one') : L(tpl.additional_section, 'header_many').replace('{N}', n2);
+    var hdr = n2 === 1 ? Le(tpl.additional_section, 'header_one') : escapeHtml(L(tpl.additional_section, 'header_many')).replace('{N}', n2);
     html += '<p class="sub-header">' + hdr + '</p>';
-    var p2 = n2 === 1 ? L(tpl.additional_section, 'one') : L(tpl.additional_section, 'many').replace('{N}', n2);
+    var p2 = n2 === 1 ? Le(tpl.additional_section, 'one') : escapeHtml(L(tpl.additional_section, 'many')).replace('{N}', n2);
     html += '<p>' + p2 + '</p>';
     R.ranked_subscales.additional.forEach(function (e) {
       html += renderSubscaleBlock(e);
@@ -843,7 +979,7 @@ function renderInterpretive(R) {
   }
 
   if (!R.ranked_subscales.diagnostic.length && !R.ranked_subscales.additional.length) {
-    html += '<p>' + L(tpl, 'no_elevated_subscales') + '</p>';
+    html += '<p>' + Le(tpl, 'no_elevated_subscales') + '</p>';
   }
 
   el.innerHTML = html;
@@ -852,17 +988,19 @@ function renderInterpretive(R) {
 function renderSubscaleBlock(entry) {
   var sub = DATA.subscales[entry.key];
   var tpl = DATA.templates.subscale_block;
-  var header = L(tpl, 'header')
-    .replace('{DISPLAY_NAME}', L(sub, 'display_name'))
+  // header — escape ДО replace (placeholders литералы, значения escape'ятся отдельно)
+  var header = escapeHtml(L(tpl, 'header'))
+    .replace('{DISPLAY_NAME}', escapeHtml(L(sub, 'display_name')))
     .replace('{SCORE}', round1(entry.score))
     .replace('{CUTOFF}', sub.cutoff)
     .replace('{N_ITEMS}', entry.items_at_threshold)
     .replace('{TOTAL_ITEMS}', entry.total_items);
   var html = '<p><b>' + header + '</b></p>';
-  html += '<p>' + L(sub, 'interpretive_text') + '</p>';
+  // interpretive_text — главный XSS-вектор через PR-переводы. Le() обязателен.
+  html += '<p>' + Le(sub, 'interpretive_text') + '</p>';
   var top = MID60.highestEndorsedItems(entry.key, RESPONSES, DATA.items, DATA.subscales, 3, LANG);
   if (top.length) {
-    html += '<p>' + L(tpl, 'endorsed_intro') + '</p><ul class="endorsed">';
+    html += '<p>' + Le(tpl, 'endorsed_intro') + '</p><ul class="endorsed">';
     top.forEach(function (t) {
       html += '<li>' + t.id + '. ' + escapeHtml(t.text) + ' <i>(' + T('response_label') + ': ' + t.response + '/10)</i></li>';
     });
@@ -884,12 +1022,12 @@ function renderSubscaleTable(R) {
       var atCut = R.raw.atCutoff[key];
       var inRange = atCut ? T('yes') : T('no');
       html += '<tr>';
-      html += '<td>' + (idx === 0 ? grpName : '') + '</td>';
-      html += '<td>' + L(sub, 'short_name') + '</td>';
+      html += '<td>' + escapeHtml(idx === 0 ? grpName : '') + '</td>';
+      html += '<td>' + Le(sub, 'short_name') + '</td>';
       html += '<td>' + round1(score) + '</td>';
       html += '<td>' + sub.cutoff + '</td>';
-      html += '<td' + (atCut ? ' class="cutoff-yes"' : '') + '>' + inRange + '</td>';
-      html += '<td>' + R.raw.itemsAtThreshold[key] + ' ' + T('rep_of') + ' ' + sub.items.length + '</td>';
+      html += '<td' + (atCut ? ' class="cutoff-yes"' : '') + '>' + escapeHtml(inRange) + '</td>';
+      html += '<td>' + R.raw.itemsAtThreshold[key] + ' ' + escapeHtml(T('rep_of')) + ' ' + sub.items.length + '</td>';
       html += '</tr>';
     });
   });
@@ -904,7 +1042,7 @@ function renderBarChart(R) {
     var pct = Math.min(100, score);
     var shadeStop = sub.cutoff + '%';
     html += '<div class="bar-row" style="--shade-stop: ' + shadeStop + ';">';
-    html += '<div class="name">' + L(sub, 'short_name') + '</div>';
+    html += '<div class="name">' + Le(sub, 'short_name') + '</div>';
     html += '<div class="track"><div class="fill" style="width: ' + pct + '%"></div></div>';
     html += '<div class="val">' + round1(score) + '</div>';
     html += '</div>';
@@ -916,9 +1054,9 @@ function renderResponses(R) {
   var html = '';
   SUBSCALE_ORDER.forEach(function (key) {
     var sub = DATA.subscales[key];
-    html += '<h4 style="margin:1rem 0 .25rem;">' + L(sub, 'display_name') + '</h4>';
+    html += '<h4 style="margin:1rem 0 .25rem;">' + Le(sub, 'display_name') + '</h4>';
     html += '<table class="responses-table"><thead><tr>';
-    html += '<th style="width:2.5rem;">#</th><th>' + T('item_col') + '</th><th style="width:3rem;">' + T('response_short') + '</th>';
+    html += '<th style="width:2.5rem;">#</th><th>' + escapeHtml(T('item_col')) + '</th><th style="width:3rem;">' + escapeHtml(T('response_short')) + '</th>';
     html += '</tr></thead><tbody>';
     sub.items.forEach(function (id) {
       var item = ITEMS_BY_ID[id];
@@ -1048,7 +1186,8 @@ function buildHtmlReport() {
   var styleEls = document.getElementsByTagName('style');
   for (var i = 0; i < styleEls.length; i++) styles += styleEls[i].textContent;
   var nameRaw = document.getElementById('meta-client').value || '';
-  var nameEsc = nameRaw.replace(/[<>&"]/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; });
+  // Полный набор спецсимволов HTML, включая ' (был пропуск).
+  var nameEsc = nameRaw.replace(/[<>&"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; });
   var title = 'MID-60' + (nameEsc ? ' — ' + nameEsc : '');
   return '<!DOCTYPE html><html lang="' + LANG + '"><head><meta charset="utf-8">' +
     '<meta name="viewport" content="width=device-width,initial-scale=1">' +
@@ -1067,6 +1206,31 @@ function showToast(msg) {
   _toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2400);
 }
 
+// Жёсткая регулярка для deep_link от бота. Без неё скомпрометированный
+// endpoint вернёт `javascript:fetch(...)` / фишинг-URL — фронт слепо
+// зальёт это в location.href. Регулярка фиксирует ровно ожидаемую форму
+// t.me/<bot>?start=mid60_<token>; имя бота допускаем 5-32 chars (Telegram
+// constraints); token — base64url 1-128.
+var MID60_DEEP_LINK_RE = /^https:\/\/t\.me\/[A-Za-z][A-Za-z0-9_]{4,31}\?start=mid60_[A-Za-z0-9_-]{1,128}$/;
+
+// Нормализация имени пациента перед POST: NFKC + strip zero-width / RTL-
+// override (homoglyph attack на whitelist бота), оставляем буквы/цифры/
+// пробелы/тире/точку/апостроф/слеш, cap 80. Это дублирует cap в input
+// maxlength + защищает от paste через JS.
+function sanitizeName(raw) {
+  if (!raw) return null;
+  var s = String(raw)
+    .normalize('NFKC')
+    // Zero-width + RTL-override: U+200B-200D ZWS/ZWNJ/ZWJ,
+    // U+202A-202E LRE/RLE/PDF/LRO/RLO, U+2060 word joiner, U+FEFF BOM.
+    // Эти символы невидимы → обходят whitelist бота / спуфят отображение.
+    .replace(/[​-‍‪-‮⁠﻿]/g, '')
+    .replace(/[^\p{L}\p{N}\s.\-_'\/]/gu, '')
+    .trim()
+    .slice(0, 80);
+  return s || null;
+}
+
 function sendToBot() {
   if (!MID60_BOT_ENDPOINT) return;
   var enc = packResponses();
@@ -1076,7 +1240,7 @@ function sendToBot() {
   showToast(T('send_bot_sending'));
   var body = {
     payload: enc,
-    name: document.getElementById('meta-client').value || null,
+    name: sanitizeName(document.getElementById('meta-client').value),
     report_text: buildEmojiSummary(LAST_REPORT) || null,
     report_html: buildHtmlReport() || null
   };
@@ -1095,9 +1259,16 @@ function sendToBot() {
       return resp.json();
     })
     .then(function (d) {
+      // Валидация deep_link от сервера: ровно ожидаемая форма, иначе reject.
+      // При скомпрометированном endpoint это разница между phishing-redirect
+      // и контролируемой ошибкой пользователю.
+      var dl = String((d && d.deep_link) || '');
+      if (!MID60_DEEP_LINK_RE.test(dl)) {
+        throw new Error('bad_deep_link');
+      }
       showToast(T('send_bot_opening'));
       if (btn) btn.classList.add('ok');
-      window.location.href = d.deep_link;
+      window.location.href = dl;
     })
     .catch(function (e) {
       showToast(T('send_bot_err') + (e.message || 'connection'));
@@ -1146,6 +1317,7 @@ window.addEventListener('DOMContentLoaded', function () {
     document.getElementById('form-view').classList.remove('hidden');
   });
   document.getElementById('btn-print').addEventListener('click', function () { window.print(); });
+  document.getElementById('safety-modal-ack').addEventListener('click', hideSafetyModal);
 
   if (MID60_BOT_ENDPOINT) {
     var sendBtn = document.getElementById('btn-send-bot');
@@ -1156,6 +1328,9 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 
   document.getElementById('btn-sample').addEventListener('click', function () {
+    // Если есть текущая чернетка — confirm, иначе перетрём ответы пациента.
+    var anyAnswered = Object.keys(RESPONSES).length > 0;
+    if (anyAnswered && !confirm('Перетерти поточні відповіді тестовим набором?')) return;
     fetch('docs/sample_responses.json').then(function (r) { return r.json(); }).then(function (obj) {
       RESPONSES = {};
       Object.keys(obj.responses).forEach(function (k) {
