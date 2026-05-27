@@ -44,7 +44,7 @@ NovoPsych's exact algorithm is not fully public. Our `mid60-engine.js` mirrors O
 
 ## Derived works (not from OSF)
 
-- **`text_uk` усіх 60 items + UA-переклад interpretive_text/templates/UI** — робочий клінічний переклад (Vilenchyk 2026, неофіційний). НЕ валідований у популяційному дослідженні. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовувати EN (Kate et al. 2021).
+- **`text_uk` усіх 60 items + UA-переклад interpretive_text/templates/UI** — робочий клінічний переклад: Claude Opus 4.7 (Anthropic, 2026); клінічна супервізія, редагування й остаточне рішення щодо формулювань — Vilenchyk (психіатр-нарколог). Неофіційний, НЕ валідований у популяційному дослідженні. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовувати EN (Kate et al. 2021).
 - **Architecture, HTML/CSS/JS UI, report renderer** — original work, MIT licensed.
 
 ## Secondary references (cited, no content reused)

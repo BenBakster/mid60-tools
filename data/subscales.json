@@ -1,5 +1,5 @@
 {
-  "_source": "Kate & Hegarty 2026 OSF Technical Paper, pp. 6-7 (cutoffs, item assignments); pp. 15-16 (interpretive text). UK translation — робочий клінічний переклад (Vilenchyk 2026, неофіційний).",
+  "_source": "Kate & Hegarty 2026 OSF Technical Paper, pp. 6-7 (cutoffs, item assignments); pp. 15-16 (interpretive text). UK translation — робочий клінічний переклад: Claude Opus 4.7 (Anthropic, 2026); клінічна супервізія — Vilenchyk; неофіційний.",
   "subscales": {
     "Amnesia": {
       "display_name_en": "DID: Amnesia (for recent events)",
