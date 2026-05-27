@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 <title>MID-60 — Багатовимірний опитувальник дисоціації</title>
 <style>
   :root {
@@ -72,7 +73,12 @@
     font: inherit;
   }
 
-  .items table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  .items .scroll-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .items table { width: 100%; border-collapse: collapse; font-size: .88rem; min-width: 640px; }
+  @media (max-width: 640px) {
+    .items td.radio-col { min-width: 2.4rem; padding: .5rem .25rem; }
+    .items td.radio-col input { transform: scale(1.25); }
+  }
   .items th, .items td {
     border-bottom: 1px solid var(--line);
     padding: .35rem .25rem;
@@ -83,10 +89,19 @@
   .items td.num { width: 1.6rem; text-align: center; color: var(--muted); }
   .items td.radio-col { text-align: center; width: 2.1rem; }
   .items td.radio-col input { transform: scale(1.05); cursor: pointer; }
-  .items tr.safety td.text-col::after {
-    content: " ⚠";
+  .items tr.safety .safety-mark {
     color: var(--warn-ink);
     font-weight: bold;
+    margin-left: .35rem;
+  }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+  /* focus-visible (a11y minor — accent outline) */
+  button:focus-visible, input:focus-visible, .lang-switch button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
   }
 
   .buttons { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1rem; }
@@ -202,7 +217,7 @@
   <div class="disclaimer" data-i18n="clinical_disclaimer">
     MID-60 — це <b>лише скринінговий інструмент</b>. Він не призначений бути єдиною підставою для встановлення діагнозу
     й завжди має інтерпретуватися в поєднанні з клінічним судженням кваліфікованого фахівця.
-    Якщо спрацьовують safety items 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.
+    Якщо спрацьовують пункти безпеки 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.
   </div>
 
   <div id="uk-translation-note" class="disclaimer uk-translation"></div>
@@ -226,6 +241,7 @@
 
     <div class="card items">
       <h2 data-i18n="items_header">60 пунктів</h2>
+      <div class="scroll-wrap">
       <table>
         <thead>
           <tr>
@@ -238,11 +254,12 @@
         </thead>
         <tbody id="items-tbody"></tbody>
       </table>
-      <div class="progress"><span data-i18n="answered">Відповідей:</span> <strong id="progress-count">0</strong> / 60</div>
+      </div>
+      <div class="progress" aria-live="polite" aria-atomic="true"><span data-i18n="answered">Відповідей:</span> <strong id="progress-count">0</strong> / 60</div>
       <div class="buttons">
         <button id="btn-score" class="primary" disabled data-i18n="btn_score">Підрахувати й показати звіт</button>
         <button id="btn-clear" class="warn" data-i18n="btn_clear">Очистити всі відповіді</button>
-        <button id="btn-sample" type="button" data-i18n="btn_sample">Завантажити приклад (debug)</button>
+        <button id="btn-sample" type="button" class="hidden" data-i18n="btn_sample">Завантажити приклад (debug)</button>
       </div>
     </div>
   </section>
@@ -322,7 +339,32 @@
 
 var DATA = {};
 var RESPONSES = {};
-var STORAGE_KEY = 'mid60-draft-v1';
+var ITEMS_BY_ID = {};  // побудовано один раз у renderForm, замість find() у циклах
+
+// Канонічний порядок підшкал у звіті — використовується в 3 місцях
+// (subscale table, bar chart, responses table). Зберігаємо тут один раз.
+var SUBSCALE_ORDER = ['Amnesia', 'AlterPerson', 'AngryIntrusion', 'PersecIntrusion',
+  'DeperDereal', 'DistressMemory', 'AutoMemory', 'Flashbacks',
+  'BodySymptoms', 'Seizures', 'Trance', 'SelfConfusion'];
+
+// Діагностичні групи для subscale-table (порядок ↔ OSF Sample Report стор. 4).
+var DIAG_GROUPS = [
+  ['Dissociative Identity Disorder', ['Amnesia']],
+  ['DID and OSDD-1', ['AlterPerson', 'AngryIntrusion', 'PersecIntrusion']],
+  ['Depersonalisation / Derealisation Disorder', ['DeperDereal']],
+  ['Dissociative Amnesia', ['DistressMemory', 'AutoMemory']],
+  ['Post-Traumatic Stress Disorder', ['Flashbacks']],
+  ['Conversion Disorder', ['BodySymptoms', 'Seizures']],
+  ['General Subscales', ['Trance', 'SelfConfusion']]
+];
+
+// PHI hygiene: чернетка живе в sessionStorage (вкладко-локально, очищується
+// при закритті вкладки). Закриває одночасно (а) cross-tab plutanie різних
+// пацієнтів, (б) клінічну політику «PHI ≤ 1 година». Backup TTL — нижче
+// в loadDraft() — на випадок якщо сесія браузера триває довше.
+var DRAFT_KEY = 'mid60-draft-v1';
+var DRAFT_TTL_MS = 60 * 60 * 1000;  // 1 година
+// Мова — стабільна, не PHI. Це OK в localStorage.
 var LANG_KEY = 'mid60-lang-v1';
 var LANG = 'uk';
 
@@ -331,7 +373,7 @@ var UI = {
   uk: {
     title: 'MID-60 — Багатовимірний опитувальник дисоціації, 60-пунктова версія',
     subtitle: 'Локальний скоринг (Kate & Hegarty 2026, відкрита ліцензія). PHI не залишає цей браузер.',
-    clinical_disclaimer: 'MID-60 — це <b>лише скринінговий інструмент</b>. Він не призначений бути єдиною підставою для встановлення діагнозу й завжди має інтерпретуватися в поєднанні з клінічним судженням кваліфікованого фахівця. Якщо спрацьовують safety items 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.',
+    clinical_disclaimer: 'MID-60 — це <b>лише скринінговий інструмент</b>. Він не призначений бути єдиною підставою для встановлення діагнозу й завжди має інтерпретуватися в поєднанні з клінічним судженням кваліфікованого фахівця. Якщо спрацьовують пункти безпеки 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.',
     administration: 'Адміністрування',
     meta_client: 'Пацієнт (ініціали / код)',
     meta_dob: 'Дата народження',
@@ -346,6 +388,7 @@ var UI = {
     btn_score: 'Підрахувати й показати звіт',
     btn_clear: 'Очистити всі відповіді',
     btn_sample: 'Завантажити приклад (debug)',
+    sr_safety: 'пункт безпеки',
     btn_print: 'Друк / зберегти в PDF',
     btn_back: 'Повернутися до форми',
     confirm_clear: 'Очистити всі відповіді та метадані?',
@@ -403,6 +446,7 @@ var UI = {
     btn_score: 'Score & show report',
     btn_clear: 'Clear all responses',
     btn_sample: 'Load sample (debug)',
+    sr_safety: 'safety item',
     btn_print: 'Print / save as PDF',
     btn_back: 'Back to form',
     confirm_clear: 'Clear all responses and metadata?',
@@ -456,14 +500,29 @@ function T(key) { return (UI[LANG] && UI[LANG][key] !== undefined) ? UI[LANG][ke
 async function loadAll() {
   var paths = ['data/items.json', 'data/subscales.json', 'data/classification.json',
                'data/percentiles.json', 'data/templates.json'];
-  var [items, subs, cls, pct, tpl] = await Promise.all(
-    paths.map(function (p) { return fetch(p).then(function (r) { return r.json(); }); })
-  );
+  var responses = await Promise.all(paths.map(function (p) {
+    return fetch(p).then(function (r) {
+      if (!r.ok) throw new Error(p + ' → HTTP ' + r.status);
+      return r.json();
+    });
+  }));
+  var [items, subs, cls, pct, tpl] = responses;
   DATA.items = items.items;
   DATA.subscales = subs.subscales;
   DATA.classification = cls;
   DATA.percentiles = pct;
   DATA.templates = tpl;
+}
+function showLoadError(e) {
+  // Якщо сторінку відкрили через file:// — fetch JSON блокується CORS і
+  // користувач має знати причину, а не порожній екран.
+  var msg = 'Не вдалося завантажити дані: ' + (e && e.message ? e.message : e) +
+            '. Запустіть локальний сервер: cd mid60-tools && python3 -m http.server 8080';
+  var div = document.createElement('div');
+  div.setAttribute('role', 'alert');
+  div.style.cssText = 'background:#fdecec;color:#a4202a;padding:1rem;margin:1rem;border:1px solid #a4202a;border-radius:4px;font-family:monospace;';
+  div.textContent = msg;
+  document.body.insertBefore(div, document.body.firstChild);
 }
 
 // ---------- i18n for static labels ----------
@@ -487,31 +546,44 @@ function applyUiStrings() {
   document.getElementById('lang-uk').classList.toggle('active', LANG === 'uk');
   document.getElementById('lang-en').classList.toggle('active', LANG === 'en');
 
-  // translation note
+  // translation note + data-driven UI strings — тільки якщо DATA вже готова
+  // (захист від race: setLang() може бути викликаний до завершення loadAll).
   var note = document.getElementById('uk-translation-note');
-  if (LANG === 'uk') {
-    note.textContent = DATA.templates ? DATA.templates.translation_disclaimer.uk : '';
-    note.classList.remove('hidden');
-  } else {
-    note.classList.add('hidden');
-  }
-
-  if (DATA.templates) {
+  if (DATA.templates && DATA.templates.translation_disclaimer) {
+    if (LANG === 'uk') {
+      note.textContent = DATA.templates.translation_disclaimer.uk;
+      note.classList.remove('hidden');
+    } else {
+      note.classList.add('hidden');
+    }
     document.getElementById('instructions-text').textContent = DATA.templates.instructions[LANG] || DATA.templates.instructions.en;
     document.getElementById('clinical-use-text').textContent = DATA.templates.clinical_use_disclaimer[LANG] || DATA.templates.clinical_use_disclaimer.en;
+  } else {
+    note.classList.add('hidden');
   }
 }
 
 // ---------- form rendering ----------
 function renderForm() {
+  ITEMS_BY_ID = {};
+  DATA.items.forEach(function (it) { ITEMS_BY_ID[it.id] = it; });
   var tbody = document.getElementById('items-tbody');
   var html = '';
   DATA.items.forEach(function (item) {
     var rowClass = item.safety_flag ? 'safety' : '';
     var text = L(item, 'text');
-    html += '<tr id="row-' + item.id + '" class="' + rowClass + '">';
-    html += '<td class="num">' + item.id + '</td>';
-    html += '<td class="text-col" data-item-text="' + item.id + '">' + escapeHtml(text) + '</td>';
+    var textId = 'item-text-' + item.id;
+    // role=radiogroup щоб screen-reader об'єднав 11 радіо як одну групу,
+    // aria-labelledby прив'язує її до тексту пункту, а не до цифри 0..10.
+    html += '<tr id="row-' + item.id + '" class="' + rowClass + '" role="radiogroup" aria-labelledby="' + textId + '">';
+    html += '<td class="num" aria-hidden="true">' + item.id + '</td>';
+    html += '<td class="text-col" id="' + textId + '" data-item-text="' + item.id + '">' + escapeHtml(text);
+    if (item.safety_flag) {
+      // Видимий маркер ⚠ + sr-only пояснення для screen-reader'а
+      html += '<span class="sr-only" data-sr-safety>' + T('sr_safety') + '</span>';
+      html += '<span class="safety-mark" aria-hidden="true">⚠</span>';
+    }
+    html += '</td>';
     for (var v = 0; v <= 10; v++) {
       html += '<td class="radio-col"><input type="radio" name="i' + item.id + '" value="' + v + '" aria-label="' + v + '"></td>';
     }
@@ -540,8 +612,17 @@ function renderForm() {
 function relabelItems() {
   document.querySelectorAll('[data-item-text]').forEach(function (cell) {
     var id = parseInt(cell.getAttribute('data-item-text'), 10);
-    var item = DATA.items.find(function (x) { return x.id === id; });
+    var item = ITEMS_BY_ID[id];
+    // Перерендер тільки .text-col (без sr-only/safety-mark) щоб не стерти a11y розмітку
+    var srMark = cell.querySelector('[data-sr-safety]');
+    var visMark = cell.querySelector('.safety-mark');
     cell.textContent = L(item, 'text');
+    if (srMark) {
+      // оновити sr-текст під поточну мову
+      srMark.textContent = T('sr_safety');
+      cell.appendChild(srMark);
+    }
+    if (visMark) cell.appendChild(visMark);
   });
 }
 
@@ -558,7 +639,7 @@ function updateProgress() {
   document.getElementById('btn-score').disabled = (n < 60);
 }
 
-// ---------- draft persistence ----------
+// ---------- draft persistence (sessionStorage + 1h TTL) ----------
 function saveDraft() {
   try {
     var meta = {
@@ -566,37 +647,53 @@ function saveDraft() {
       dob: document.getElementById('meta-dob').value,
       date: document.getElementById('meta-date').value
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ responses: RESPONSES, meta: meta }));
+    sessionStorage.setItem(DRAFT_KEY, JSON.stringify({
+      responses: RESPONSES,
+      meta: meta,
+      savedAt: Date.now()
+    }));
   } catch (e) { /* ignore */ }
 }
 function loadDraft() {
   try {
-    var raw = localStorage.getItem(STORAGE_KEY);
+    var raw = sessionStorage.getItem(DRAFT_KEY);
     if (!raw) return;
     var obj = JSON.parse(raw);
-    if (obj && obj.responses) {
+    if (!obj) return;
+    if (typeof obj.savedAt === 'number' && (Date.now() - obj.savedAt) > DRAFT_TTL_MS) {
+      sessionStorage.removeItem(DRAFT_KEY);
+      return;
+    }
+    if (obj.responses) {
       Object.keys(obj.responses).forEach(function (k) {
         var id = parseInt(k, 10);
         var v = obj.responses[k];
+        if (typeof v !== 'number' || v < 0 || v > 10) return;
         RESPONSES[id] = v;
         var radio = document.querySelector('input[name="i' + id + '"][value="' + v + '"]');
         if (radio) radio.checked = true;
       });
     }
-    if (obj && obj.meta) {
-      if (obj.meta.client) document.getElementById('meta-client').value = obj.meta.client;
-      if (obj.meta.dob) document.getElementById('meta-dob').value = obj.meta.dob;
-      if (obj.meta.date) document.getElementById('meta-date').value = obj.meta.date;
+    if (obj.meta) {
+      // string-length guard на випадок підкинутих даних
+      var safeStr = function (s) { return typeof s === 'string' && s.length < 200 ? s : ''; };
+      if (obj.meta.client) document.getElementById('meta-client').value = safeStr(obj.meta.client);
+      if (obj.meta.dob) document.getElementById('meta-dob').value = safeStr(obj.meta.dob);
+      if (obj.meta.date) document.getElementById('meta-date').value = safeStr(obj.meta.date);
     }
   } catch (e) { /* ignore */ }
 }
 function clearDraft() {
   if (!confirm(T('confirm_clear'))) return;
-  localStorage.removeItem(STORAGE_KEY);
+  sessionStorage.removeItem(DRAFT_KEY);
   RESPONSES = {};
   document.querySelectorAll('#items-tbody input[type="radio"]').forEach(function (r) { r.checked = false; });
   document.getElementById('meta-client').value = '';
   document.getElementById('meta-dob').value = '';
+  // meta-date — назад на сьогодні (а не порожній рядок попереднього пацієнта)
+  var d = new Date();
+  document.getElementById('meta-date').value =
+    d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   updateProgress();
 }
 
@@ -616,7 +713,8 @@ function showReport() {
 
   document.getElementById('rep-classification').textContent = R.classification.name;
   var nCutoff = Object.values(R.raw.atCutoff).filter(Boolean).length;
-  document.getElementById('rep-cutoff-count').textContent = nCutoff + ' ' + T('rep_of') + ' 12';
+  var totalSubscales = Object.keys(DATA.subscales).length;
+  document.getElementById('rep-cutoff-count').textContent = nCutoff + ' ' + T('rep_of') + ' ' + totalSubscales;
   document.getElementById('rep-total').textContent = Math.round(R.raw.totalMean);
   document.getElementById('rep-pct-comm').textContent = R.percentiles.community;
   document.getElementById('rep-pct-clin').textContent = R.percentiles.clinical;
@@ -630,7 +728,7 @@ function showReport() {
 
   document.getElementById('form-view').classList.add('hidden');
   document.getElementById('report-view').classList.remove('hidden');
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  window.scrollTo(0, 0);
 }
 
 function renderSafety(R) {
@@ -721,18 +819,9 @@ function renderSubscaleBlock(entry) {
 function round1(x) { return Math.round(x * 10) / 10; }
 
 function renderSubscaleTable(R) {
-  var groupsEN = [
-    ['Dissociative Identity Disorder', ['Amnesia']],
-    ['DID and OSDD-1', ['AlterPerson', 'AngryIntrusion', 'PersecIntrusion']],
-    ['Depersonalisation / Derealisation Disorder', ['DeperDereal']],
-    ['Dissociative Amnesia', ['DistressMemory', 'AutoMemory']],
-    ['Post-Traumatic Stress Disorder', ['Flashbacks']],
-    ['Conversion Disorder', ['BodySymptoms', 'Seizures']],
-    ['General Subscales', ['Trance', 'SelfConfusion']]
-  ];
   var diag = T('diag_groups');
   var html = '';
-  groupsEN.forEach(function (grp) {
+  DIAG_GROUPS.forEach(function (grp) {
     var grpName = diag[grp[0]] || grp[0];
     grp[1].forEach(function (key, idx) {
       var sub = DATA.subscales[key];
@@ -753,11 +842,8 @@ function renderSubscaleTable(R) {
 }
 
 function renderBarChart(R) {
-  var orderedKeys = ['Amnesia', 'AlterPerson', 'AngryIntrusion', 'PersecIntrusion',
-    'DeperDereal', 'DistressMemory', 'AutoMemory', 'Flashbacks',
-    'BodySymptoms', 'Seizures', 'Trance', 'SelfConfusion'];
   var html = '';
-  orderedKeys.forEach(function (key) {
+  SUBSCALE_ORDER.forEach(function (key) {
     var sub = DATA.subscales[key];
     var score = R.raw.subscaleMeans[key];
     var pct = Math.min(100, score);
@@ -772,18 +858,15 @@ function renderBarChart(R) {
 }
 
 function renderResponses(R) {
-  var groups = ['Amnesia', 'AlterPerson', 'AngryIntrusion', 'PersecIntrusion',
-    'DeperDereal', 'DistressMemory', 'AutoMemory', 'Flashbacks',
-    'BodySymptoms', 'Seizures', 'Trance', 'SelfConfusion'];
   var html = '';
-  groups.forEach(function (key) {
+  SUBSCALE_ORDER.forEach(function (key) {
     var sub = DATA.subscales[key];
     html += '<h4 style="margin:1rem 0 .25rem;">' + L(sub, 'display_name') + '</h4>';
     html += '<table class="responses-table"><thead><tr>';
     html += '<th style="width:2.5rem;">#</th><th>' + T('item_col') + '</th><th style="width:3rem;">' + T('response_short') + '</th>';
     html += '</tr></thead><tbody>';
     sub.items.forEach(function (id) {
-      var item = DATA.items.find(function (x) { return x.id === id; });
+      var item = ITEMS_BY_ID[id];
       var v = RESPONSES[id];
       var shadedClass = (typeof v === 'number' && v * 10 >= sub.cutoff) ? ' shaded' : '';
       html += '<tr><td class="value">' + id + '</td><td class="text-col">' +
@@ -810,13 +893,21 @@ function setLang(newLang) {
 // ---------- wiring ----------
 window.addEventListener('DOMContentLoaded', function () {
   try { LANG = localStorage.getItem(LANG_KEY) || 'uk'; } catch (e) {}
+  document.documentElement.lang = LANG;
+
+  // Debug-кнопка прихована за замовчуванням. Відкривається через ?debug=1
+  // (щоб клінік випадково не клікнув у режимі прийому й не затер реальну
+  // чернетку пацієнта).
+  if (/[?&]debug=1\b/.test(window.location.search)) {
+    document.getElementById('btn-sample').classList.remove('hidden');
+  }
 
   loadAll().then(function () {
     applyUiStrings();
     renderForm();
     loadDraft();
     updateProgress();
-  });
+  }).catch(showLoadError);
 
   document.getElementById('lang-uk').addEventListener('click', function () { setLang('uk'); });
   document.getElementById('lang-en').addEventListener('click', function () { setLang('en'); });

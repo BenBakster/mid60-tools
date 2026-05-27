@@ -90,11 +90,45 @@ result.ranked_subscales.additional.forEach(function (e) {
               ' items=' + e.items_at_threshold + '/' + e.total_items);
 });
 
-var totalOk = Math.abs(Math.round(result.raw.totalMean) - expected.total_mean) <= 1;
+var totalOk = Math.abs(result.raw.totalMean - expected.total_mean) < 0.05;
 var classOk = result.classification.name.indexOf('Dissociative Identity Disorder') >= 0;
 var cutoffOk = nAtCutoff === 12;
 var commOk = Math.abs(result.percentiles.community - expected.community_percentile) < 0.1;
 var clinOk = Math.abs(result.percentiles.clinical - expected.clinical_percentile) < 0.5;
+
+// ---------- edge case: all zeros ----------
+console.log('\n=== Edge case: all zeros ===');
+var zeros = {};
+for (var i = 1; i <= 60; i++) zeros[i] = 0;
+var Z = MID60.scoreAssessment(zeros, dataPack);
+var zeroOk =
+  Z.raw.totalMean === 0 &&
+  Object.values(Z.raw.atCutoff).every(function (b) { return b === false; }) &&
+  Z.classification.id === 16 &&  // Non-Clinical
+  Z.safety_flags.length === 0;
+console.log('  total=' + Z.raw.totalMean + ' cutoffs=' + Object.values(Z.raw.atCutoff).filter(Boolean).length +
+            ' class=' + Z.classification.id + ' safety=' + Z.safety_flags.length);
+
+// ---------- edge case: all tens ----------
+console.log('=== Edge case: all tens ===');
+var tens = {};
+for (var j = 1; j <= 60; j++) tens[j] = 10;
+var Tt = MID60.scoreAssessment(tens, dataPack);
+var tenOk =
+  Tt.raw.totalMean === 100 &&
+  Object.values(Tt.raw.atCutoff).every(function (b) { return b === true; }) &&
+  Tt.classification.id === 1 &&  // DID
+  Tt.safety_flags.length === 3 &&
+  Tt.descriptor.toLowerCase().indexOf('severe') >= 0;
+console.log('  total=' + Tt.raw.totalMean + ' cutoffs=' + Object.values(Tt.raw.atCutoff).filter(Boolean).length +
+            ' class=' + Tt.classification.id + ' safety=' + Tt.safety_flags.length + ' descriptor=' + Tt.descriptor);
+
+// ---------- edge case: out-of-range total ----------
+console.log('=== Edge case: out-of-range clamp ===');
+var clampOk = MID60.getDescriptor(-5, dataPack.percentiles.descriptor_bands, 'en') === 'None' &&
+              MID60.getDescriptor(150, dataPack.percentiles.descriptor_bands, 'en').indexOf('Severe') >= 0;
+console.log('  desc(-5) =', MID60.getDescriptor(-5, dataPack.percentiles.descriptor_bands, 'en'));
+console.log('  desc(150) =', MID60.getDescriptor(150, dataPack.percentiles.descriptor_bands, 'en'));
 
 console.log('\n=== Summary ===');
 console.log('  total      :', totalOk ? 'PASS' : 'FAIL');
@@ -103,5 +137,8 @@ console.log('  clin pct   :', clinOk ? 'PASS' : 'FAIL');
 console.log('  subscales  :', subErrors === 0 ? 'PASS' : 'FAIL (' + subErrors + ' errors)');
 console.log('  cutoffs    :', cutoffOk ? 'PASS' : 'FAIL');
 console.log('  class      :', classOk ? 'PASS' : 'FAIL');
+console.log('  all-zeros  :', zeroOk ? 'PASS' : 'FAIL');
+console.log('  all-tens   :', tenOk ? 'PASS' : 'FAIL');
+console.log('  clamp      :', clampOk ? 'PASS' : 'FAIL');
 
-process.exit(totalOk && classOk && cutoffOk && commOk && clinOk && subErrors === 0 ? 0 : 1);
+process.exit(totalOk && classOk && cutoffOk && commOk && clinOk && subErrors === 0 && zeroOk && tenOk && clampOk ? 0 : 1);

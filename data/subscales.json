@@ -23,7 +23,7 @@
       "items": [3, 36, 39, 49, 57],
       "cutoff": 20,
       "interpretive_text_en": "The client reports awareness of distinct self-states or 'parts' that feel as if they act independently and are 'not me.' This may include hearing child voices internally, sensing other people inside who can speak or take control, or experiencing themselves as having multiple personalities.",
-      "interpretive_text_uk": "Пацієнт повідомляє про усвідомлення окремих самостанів або «частин», які сприймаються як такі, що діють самостійно і є «не я». Це може включати внутрішнє чутно дитячих голосів, відчуття всередині інших людей, які можуть говорити або брати контроль, або переживання себе як такого, що має декілька особистостей."
+      "interpretive_text_uk": "Пацієнт повідомляє про усвідомлення окремих самостанів або «частин», які сприймаються як такі, що діють самостійно і є «не я». Це може включати чутність дитячих голосів усередині, відчуття інших людей всередині, які можуть говорити або брати контроль, або переживання себе як такого, що має декілька особистостей."
     },
     "AngryIntrusion": {
       "display_name_en": "DID / OSDD-1: Angry intrusions",
@@ -35,7 +35,7 @@
       "items": [28, 33, 35, 46, 60],
       "cutoff": 18,
       "interpretive_text_en": "The client experiences sudden, strong intrusions of anger that feel outside their control, as if an angry part 'takes over' their speech and behaviour and feels separate from their usual sense of self. During these episodes, they may or do things they would not ordinarily do.",
-      "interpretive_text_uk": "Пацієнт переживає раптові сильні інтрузії гніву, які відчуваються поза його контролем, ніби гнівна частина «бере гору» над його мовленням і поведінкою та сприймається як відокремлена від звичного відчуття себе. Під час таких епізодів він може говорити або робити речі, яких зазвичай не робив би."
+      "interpretive_text_uk": "Пацієнт переживає раптові сильні інтрузії гніву, які відчуваються поза його контролем, ніби гнівна частина «перебирає контроль» над його мовленням і поведінкою та сприймається як відокремлена від звичного відчуття себе. Під час таких епізодів він може говорити або робити речі, яких зазвичай не робив би."
     },
     "PersecIntrusion": {
       "display_name_en": "DID / OSDD-1: Persecutory intrusions",
@@ -47,11 +47,11 @@
       "items": [22, 37, 44, 56, 59],
       "cutoff": 18,
       "interpretive_text_en": "The client experiences persecutory intrusions in the form of critical, hostile internal voices that forcefully enter their mind and harshly criticise, belittle, or censor them. Voices that command self-harm or express a wish for the client to be dead are flagged for clinical attention.",
-      "interpretive_text_uk": "Пацієнт переживає переслідувальні інтрузії у формі критичних, ворожих внутрішніх голосів, які наполегливо проникають у його свідомість і жорстко критикують, принижують або змушують замовкнути. Голоси, які наказують завдати собі шкоди або висловлюють бажання, щоб пацієнт помер, потребують особливої клінічної уваги."
+      "interpretive_text_uk": "Пацієнт переживає переслідувальні інтрузії у формі критичних, ворожих внутрішніх голосів, які наполегливо проникають у його свідомість і жорстко критикують, принижують або цензурують. Голоси, які наказують завдати собі шкоди або висловлюють бажання, щоб пацієнт помер, потребують особливої клінічної уваги."
     },
     "DeperDereal": {
       "display_name_en": "Derealisation / Depersonalisation",
-      "display_name_uk": "Дереалізація / Деперсоналізація",
+      "display_name_uk": "Деперсоналізація / Дереалізація",
       "short_name_en": "Depersonalisation / Derealisation",
       "short_name_uk": "Деперсоналізація / Дереалізація",
       "diagnostic_family_en": "Depersonalisation/Derealisation Disorder",
@@ -131,7 +131,7 @@
       "items": [21, 27, 30, 32, 41, 51],
       "cutoff": 11.7,
       "interpretive_text_en": "The client frequently enters prolonged trance states characterised by markedly reduced awareness of their surroundings and disconnection from present reality. During these episodes, they may be intensely focused on internal experience, which may range from focusing on traumatic events, engaging in enjoyable daydreams, to experiencing a state of total emptiness.",
-      "interpretive_text_uk": "Пацієнт часто впадає у тривалі трансові стани, які характеризуються помітно зниженим усвідомленням оточення та відірваністю від теперішньої реальності. Під час таких епізодів він може бути інтенсивно зосереджений на внутрішньому переживанні, яке може коливатися від зосередження на травматичних подіях, через приємні мрії наяву, до відчуття стану повної порожнечі."
+      "interpretive_text_uk": "Пацієнт часто впадає у тривалі трансові стани, які характеризуються помітно зниженим усвідомленням оточення та відірваністю від теперішньої реальності. Під час таких епізодів він може бути інтенсивно зосереджений на внутрішньому переживанні: від зосередження на травматичних подіях до приємних мрій наяву чи відчуття повної порожнечі."
     },
     "SelfConfusion": {
       "display_name_en": "General: Self-Confusion",

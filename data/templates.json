@@ -2,7 +2,7 @@
   "_source": "Kate & Hegarty 2026 OSF Technical Paper, pp. 12-14. UK — робочий клінічний переклад (неофіційний).",
   "opening": {
     "base_en": "The Multidimensional Inventory of Dissociation 60-item version (MID-60) was administered on {DATE}. The client obtained a total mean score of {SCORE}, which falls in the '{DESCRIPTOR}' range.",
-    "base_uk": "Багатовимірний опитувальник дисоціації, 60-пунктова версія (MID-60), був проведений {DATE}. Пацієнт отримав загальний середній бал {SCORE}, що відповідає діапазону «{DESCRIPTOR}».",
+    "base_uk": "Багатовимірний опитувальник дисоціації, 60-пунктова версія (MID-60), проведено {DATE}. Пацієнт отримав загальний середній бал {SCORE}, що відповідає діапазону «{DESCRIPTOR}».",
     "with_community_percentile_en": " (at the {PCT}th percentile of the community population).",
     "with_community_percentile_uk": " ({PCT}-й перцентиль за загальнопопуляційною вибіркою).",
     "with_profile_en": " Based on the pattern of responses and subscale elevations, the probable profile classification is {PROFILE}.",
@@ -24,17 +24,17 @@
     "one_en": "The probable profile classification of {PROFILE} is based upon the pattern of responses and subscale elevations. There was one subscale contributing to this classification that exceeded its clinical cutoff. See below for details.",
     "one_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. Одна підшкала, що формує цю класифікацію, перевищила клінічну межу. Деталі нижче.",
     "many_en": "The probable profile classification of {PROFILE} is based upon the pattern of responses and subscale elevations. There were {N} subscales contributing to this classification that exceeded their respective clinical cutoffs. See below for details.",
-    "many_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. {N} підшкал(и), що формують цю класифікацію, перевищили відповідні клінічні межі. Деталі нижче."
+    "many_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. Кількість підшкал, що формують цю класифікацію та перевищили клінічну межу: {N}. Деталі нижче."
   },
   "additional_section": {
     "header_one_en": "One Additional Clinically Significant Symptom Domain",
-    "header_one_uk": "Одна додаткова клінічно значуща доменна область",
+    "header_one_uk": "Один додатковий клінічно значущий симптомний домен",
     "header_many_en": "Top {N} Additional Clinically Significant Symptom Domains",
-    "header_many_uk": "Топ-{N} додаткових клінічно значущих доменів",
+    "header_many_uk": "Додаткові клінічно значущі симптомні домени (топ-{N})",
     "one_en": "One additional subscale exceeded its clinical cutoff. See below for details.",
     "one_uk": "Одна додаткова підшкала перевищила свою клінічну межу. Деталі нижче.",
     "many_en": "{N} additional subscales exceeded their respective clinical cutoffs. See below for details.",
-    "many_uk": "{N} додаткових підшкал перевищили відповідні клінічні межі. Деталі нижче."
+    "many_uk": "Кількість додаткових підшкал, що перевищили клінічну межу: {N}. Деталі нижче."
   },
   "subscale_block": {
     "header_en": "{DISPLAY_NAME} (Score: {SCORE}, Cutoff: {CUTOFF}, Items at clinical threshold: {N_ITEMS}/{TOTAL_ITEMS})",
@@ -53,6 +53,6 @@
     "uk": "MID-60 — це виключно скринінговий інструмент. Він не призначений бути єдиною підставою для встановлення діагнозу й завжди має інтерпретуватися в поєднанні з клінічним судженням. Клінічно значущі підвищення слід уточнювати цілеспрямованими запитаннями, щоб з'ясувати, чи дійсно характер і ступінь тяжкості симптому відповідають змісту пункту. За показаннями подальша оцінка може бути здійснена за допомогою валідованих структурованих клінічних інтерв'ю, таких як SCID-D (Structured Clinical Interview for DSM-5 Dissociative Disorders), DDIS (Dissociative Disorders Interview Schedule) або TADS-I (Trauma and Dissociative Symptoms Interview)."
   },
   "translation_disclaimer": {
-    "uk": "Український переклад — робочий клінічний (не валідований у популяційному дослідженні). Англійська залишається первинною мовою для звітування."
+    "uk": "Український переклад — робочий клінічний (не валідований у популяційному дослідженні). Призначений для полегшення скринінгу україномовних пацієнтів. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовувати англійську версію (валідовано Kate et al. 2021)."
   }
 }

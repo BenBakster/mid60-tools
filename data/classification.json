@@ -132,7 +132,7 @@
       "name_uk": "Функціональний неврологічний розлад",
       "family_en": "Conversion",
       "family_uk": "Конверсійні розлади",
-      "criteria": {"has_conversion": true, "dissoc_relevant_min": 0, "not_at_cutoff": ["Flashbacks"]}
+      "criteria": {"has_conversion": true, "dissoc_relevant_max": 0, "not_at_cutoff": ["Flashbacks"]}
     },
     {
       "id": 16,

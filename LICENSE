@@ -18,11 +18,26 @@ and distributed under an open source licence." The MID-60 itself was
 developed by Kate, M.-A., Jamieson, G., Dorahy, M. J., & Middleton, W.
 (2021), J Trauma & Dissociation 22(3): 265-287
 (https://doi.org/10.1080/15299732.2020.1792024), as a short version of the
-218-item MID (Dell, 2006).
+218-item MID:
+
+  Dell, P. F. (2006). The Multidimensional Inventory of Dissociation
+  (MID): A comprehensive measure of pathological dissociation.
+  Journal of Trauma & Dissociation, 7(2), 77-106.
+  https://doi.org/10.1300/J229v07n02_06
+
+Non-affiliation: This is an independent open-source implementation.
+It is not affiliated with, endorsed by, or derived from NovoPsych Pty Ltd.
+Content from the OSF technical paper is reused under the open-source
+licence granted by its authors. The NovoPsych report layout, branding,
+and proprietary software are NOT copied; this tool generates its own
+report from the same underlying psychometric rules.
 
 This is a screening instrument only. It is not designed to be the sole
 basis for diagnosis and should always be interpreted alongside clinical
 judgment by a qualified clinician.
+
+For a page-by-page mapping of reused content to its OSF source, see
+docs/SOURCE.md.
 
 ----------------------------------------------------------------------------
 MIT License

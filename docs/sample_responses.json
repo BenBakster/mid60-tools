@@ -1,7 +1,8 @@
 {
   "_source": "Kate & Hegarty 2026 OSF Technical Paper, Sample Result, pp. 22-33 (circled responses for 'Generic Client' Dr David Hegarty 26 Nov 2025)",
   "_expected": {
-    "total_mean": 53,
+    "total_mean": 52.67,
+    "total_mean_rounded": 53,
     "community_percentile": 99.8,
     "clinical_percentile": 42,
     "classification": "Dissociative Identity Disorder (DID)",

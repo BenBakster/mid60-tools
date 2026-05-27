@@ -117,7 +117,9 @@
 
   function getDescriptor(totalMean, bands, lang) {
     lang = lang || 'en';
-    var s = Math.round(totalMean);
+    // Clamp у валідний діапазон 0–100; інакше негативні / зашкальні значення
+    // повертатимуть «Ext. Severe» (баг знайдений в аудиті).
+    var s = Math.max(0, Math.min(100, Math.round(totalMean)));
     for (var i = 0; i < bands.length; i++) {
       if (s >= bands[i].min && s <= bands[i].max) return L(bands[i], 'label', lang);
     }
@@ -126,7 +128,7 @@
 
   function getTotalScoreInterpretation(totalMean, ranges, lang) {
     lang = lang || 'en';
-    var s = Math.round(totalMean);
+    var s = Math.max(0, Math.min(100, Math.round(totalMean)));
     for (var i = 0; i < ranges.length; i++) {
       if (s >= ranges[i].min && s <= ranges[i].max) return L(ranges[i], 'text', lang);
     }
@@ -190,7 +192,9 @@
     if (criteria.any_at_cutoff && !anyAt(ctx.atCutoff, criteria.any_at_cutoff)) return false;
     if (typeof criteria.identity_count_min === 'number' && ctx.identityCount < criteria.identity_count_min) return false;
     if (typeof criteria.dissoc_relevant_min === 'number' && criteria.dissoc_relevant_min >= 1 && !ctx.anyDissocRelevant) return false;
-    if (criteria.dissoc_relevant_min === 0 && ctx.anyDissocRelevant) return false;
+    // Семантика "немає жодної relevant @cutoff" — спец-флаг (раніше тут був
+    // оманливий `dissoc_relevant_min: 0`, що формально завжди true).
+    if (criteria.dissoc_relevant_max === 0 && ctx.anyDissocRelevant) return false;
     if (criteria.has_conversion === true && !ctx.hasConversion) return false;
     if (criteria.no_conversion === true && ctx.hasConversion) return false;
     if (criteria.ocsd_met === true && !ctx.ocsdMet) return false;
