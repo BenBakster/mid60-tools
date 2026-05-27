@@ -205,7 +205,7 @@
     <div class="top-bar">
       <div>
         <h1 data-i18n="title">MID-60 — Багатовимірний опитувальник дисоціації, 60-пунктова версія</h1>
-        <div class="subtitle" data-i18n="subtitle">Локальний скоринг (Kate &amp; Hegarty 2026, відкрита ліцензія). PHI не залишає цей браузер.</div>
+        <div class="subtitle" data-i18n="subtitle">Локальний підрахунок (Kate &amp; Hegarty 2026, відкрита ліцензія). Персональні дані не залишають цей браузер.</div>
       </div>
       <div class="lang-switch no-print" role="tablist" aria-label="Language">
         <button id="lang-uk" type="button" class="active">УКР</button>
@@ -215,8 +215,8 @@
   </header>
 
   <div class="disclaimer" data-i18n="clinical_disclaimer">
-    MID-60 — це <b>лише скринінговий інструмент</b>. Він не може слугувати єдиною підставою для встановлення діагнозу
-    й завжди має інтерпретуватися в поєднанні з клінічним судженням кваліфікованого фахівця.
+    MID-60 — це <b>лише скринінговий інструмент</b>. Він не може бути єдиною підставою для діагнозу;
+    його завжди слід інтерпретувати разом із клінічним судженням кваліфікованого фахівця.
     Якщо спрацьовують пункти безпеки 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.
   </div>
 
@@ -319,15 +319,15 @@
     </div>
 
     <div class="buttons no-print">
-      <button id="btn-print" class="primary" data-i18n="btn_print">Друк / зберегти в PDF</button>
-      <button id="btn-back" data-i18n="btn_back">Повернутися до форми</button>
+      <button id="btn-print" class="primary" data-i18n="btn_print">Надрукувати / зберегти в PDF</button>
+      <button id="btn-back" data-i18n="btn_back">Повернутися до опитувальника</button>
     </div>
 
     <div class="footer-note" data-i18n="footer">
-      Скоринговий рушій та зміст інструменту відтворено з Kate &amp; Hegarty (2026),
+      Алгоритм підрахунку та зміст інструменту відтворено з Kate &amp; Hegarty (2026),
       <i>A Review of the Clinical Utility and Psychometric Properties of the MID-60</i>.
       <a href="https://doi.org/10.17605/OSF.IO/E83KC">doi.org/10.17605/OSF.IO/E83KC</a>.
-      Відкрита ліцензія. Софт під MIT.
+      Відкрита ліцензія. Програма — за ліцензією MIT.
     </div>
   </section>
 
@@ -372,8 +372,8 @@ var LANG = 'uk';
 var UI = {
   uk: {
     title: 'MID-60 — Багатовимірний опитувальник дисоціації, 60-пунктова версія',
-    subtitle: 'Локальний скоринг (Kate & Hegarty 2026, відкрита ліцензія). PHI не залишає цей браузер.',
-    clinical_disclaimer: 'MID-60 — це <b>лише скринінговий інструмент</b>. Він не може слугувати єдиною підставою для встановлення діагнозу й завжди має інтерпретуватися в поєднанні з клінічним судженням кваліфікованого фахівця. Якщо спрацьовують пункти безпеки 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.',
+    subtitle: 'Локальний підрахунок (Kate & Hegarty 2026, відкрита ліцензія). Персональні дані не залишають цей браузер.',
+    clinical_disclaimer: 'MID-60 — це <b>лише скринінговий інструмент</b>. Він не може бути єдиною підставою для діагнозу; його завжди слід інтерпретувати разом із клінічним судженням кваліфікованого фахівця. Якщо спрацьовують пункти безпеки 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.',
     administration: 'Адміністрування',
     meta_client: 'Пацієнт (ініціали / код)',
     meta_dob: 'Дата народження',
@@ -389,7 +389,7 @@ var UI = {
     btn_clear: 'Очистити всі відповіді',
     btn_sample: 'Завантажити приклад (debug)',
     sr_safety: 'пункт безпеки',
-    btn_print: 'Друк / зберегти в PDF',
+    btn_print: 'Надрукувати / зберегти в PDF',
     btn_back: 'Повернутися до опитувальника',
     confirm_clear: 'Очистити всі відповіді та метадані?',
     report_header: 'Звіт MID-60',
@@ -416,11 +416,11 @@ var UI = {
     responses_header: 'Відповіді пацієнта, згруповані за підшкалами',
     response_short: 'Бал',
     clinical_use_h: 'Клінічне застосування',
-    footer: 'Скоринговий рушій та зміст інструменту відтворено з Kate &amp; Hegarty (2026), <i>A Review of the Clinical Utility and Psychometric Properties of the MID-60</i>. <a href="https://doi.org/10.17605/OSF.IO/E83KC">doi.org/10.17605/OSF.IO/E83KC</a>. Відкрита ліцензія. Софт під MIT.',
+    footer: 'Алгоритм підрахунку та зміст інструменту відтворено з Kate &amp; Hegarty (2026), <i>A Review of the Clinical Utility and Psychometric Properties of the MID-60</i>. <a href="https://doi.org/10.17605/OSF.IO/E83KC">doi.org/10.17605/OSF.IO/E83KC</a>. Відкрита ліцензія. Програма — за ліцензією MIT.',
     response_label: 'Відповідь',
     diag_groups: {
       'Dissociative Identity Disorder': 'Дисоціативний розлад ідентичності',
-      'DID and OSDD-1': 'ДРІ та ІУДР-1',
+      'DID and OSDD-1': 'ДРІ та OSDD-1',
       'Depersonalisation / Derealisation Disorder': 'Розлад деперсоналізації / дереалізації',
       'Dissociative Amnesia': 'Дисоціативна амнезія',
       'Post-Traumatic Stress Disorder': 'Посттравматичний стресовий розлад',

@@ -2,7 +2,7 @@
   "_source": "Kate & Hegarty 2026 OSF Technical Paper, pp. 12-14. UK — робочий клінічний переклад (неофіційний).",
   "opening": {
     "base_en": "The Multidimensional Inventory of Dissociation 60-item version (MID-60) was administered on {DATE}. The client obtained a total mean score of {SCORE}, which falls in the '{DESCRIPTOR}' range.",
-    "base_uk": "Багатовимірний опитувальник дисоціації, 60-пунктова версія (MID-60), проведено {DATE}. Пацієнт отримав загальний середній бал {SCORE}, що відповідає діапазону «{DESCRIPTOR}».",
+    "base_uk": "Багатовимірний опитувальник дисоціації, 60-пунктова версія (MID-60), проведено {DATE}. Загальний середній бал пацієнта становить {SCORE}, що відповідає діапазону «{DESCRIPTOR}».",
     "with_community_percentile_en": " (at the {PCT}th percentile of the community population).",
     "with_community_percentile_uk": " ({PCT}-й перцентиль за загальнопопуляційною вибіркою).",
     "with_profile_en": " Based on the pattern of responses and subscale elevations, the probable profile classification is {PROFILE}.",
@@ -14,7 +14,7 @@
     "header_en": "Risk of Self-Harm or Suicide",
     "header_uk": "Ризик самоушкодження або суїциду",
     "intro_en": "The respondent indicated risk of self-harm or suicide based upon the following item{S}:",
-    "intro_uk": "Пацієнт вказав на ризик самоушкодження або суїциду за такими пунктами:",
+    "intro_uk": "Пацієнт дав ствердні відповіді щодо ризику самоушкодження або суїциду за такими пунктами:",
     "outro_en": "It is recommended to follow suicide risk assessment protocols to determine the nature, severity, and immediacy of the risk.",
     "outro_uk": "Рекомендується застосувати протокол оцінки суїцидального ризику для визначення характеру, ступеня тяжкості та невідкладності ризику."
   },
@@ -24,7 +24,7 @@
     "one_en": "The probable profile classification of {PROFILE} is based upon the pattern of responses and subscale elevations. There was one subscale contributing to this classification that exceeded its clinical cutoff. See below for details.",
     "one_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. Одна підшкала, що формує цю класифікацію, перевищила клінічну межу. Деталі нижче.",
     "many_en": "The probable profile classification of {PROFILE} is based upon the pattern of responses and subscale elevations. There were {N} subscales contributing to this classification that exceeded their respective clinical cutoffs. See below for details.",
-    "many_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. Кількість підшкал, що формують цю класифікацію та перевищили клінічну межу: {N}. Деталі нижче."
+    "many_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. Цю класифікацію формують {N} підшкал, що перевищили клінічну межу. Деталі нижче."
   },
   "additional_section": {
     "header_one_en": "One Additional Clinically Significant Symptom Domain",
@@ -34,7 +34,7 @@
     "one_en": "One additional subscale exceeded its clinical cutoff. See below for details.",
     "one_uk": "Одна додаткова підшкала перевищила свою клінічну межу. Деталі нижче.",
     "many_en": "{N} additional subscales exceeded their respective clinical cutoffs. See below for details.",
-    "many_uk": "Кількість додаткових підшкал, що перевищили клінічну межу: {N}. Деталі нижче."
+    "many_uk": "{N} додаткових підшкал перевищили клінічну межу. Деталі нижче."
   },
   "subscale_block": {
     "header_en": "{DISPLAY_NAME} (Score: {SCORE}, Cutoff: {CUTOFF}, Items at clinical threshold: {N_ITEMS}/{TOTAL_ITEMS})",
@@ -50,9 +50,9 @@
   },
   "clinical_use_disclaimer": {
     "en": "The MID-60 is a screening instrument only. It is not designed to be the sole basis for diagnosis and should always be interpreted alongside clinical judgment. Clinically significant elevations should be followed up by asking targeted questions to clarify whether the nature and severity of the symptom truly match the item content. Where indicated, further evaluation can be undertaken using validated structured clinical interviews, such as the Structured Clinical Interview for DSM-5 Dissociative Disorders (SCID-D), the Dissociative Disorders Interview Schedule (DDIS), or the Trauma and Dissociative Symptoms Interview (TADS-I).",
-    "uk": "MID-60 — це виключно скринінговий інструмент. Він не призначений бути єдиною підставою для встановлення діагнозу й завжди має інтерпретуватися в поєднанні з клінічним судженням. Клінічно значущі підвищення слід уточнювати цілеспрямованими запитаннями, щоб з'ясувати, чи дійсно характер і ступінь тяжкості симптому відповідають змісту пункту. За показаннями подальша оцінка може бути здійснена за допомогою валідованих структурованих клінічних інтерв'ю, таких як SCID-D (Structured Clinical Interview for DSM-5 Dissociative Disorders), DDIS (Dissociative Disorders Interview Schedule) або TADS-I (Trauma and Dissociative Symptoms Interview)."
+    "uk": "MID-60 — це виключно скринінговий інструмент. Він не може бути єдиною підставою для діагнозу; його завжди слід інтерпретувати разом із клінічним судженням. Клінічно значущі підвищення треба далі з'ясовувати цілеспрямованими запитаннями, щоб переконатися, що характер і ступінь тяжкості симптому відповідають змісту пункту. За показаннями подальша оцінка можлива за валідованими структурованими клінічними інтерв'ю, такими як SCID-D (Structured Clinical Interview for DSM-5 Dissociative Disorders), DDIS (Dissociative Disorders Interview Schedule) або TADS-I (Trauma and Dissociative Symptoms Interview)."
   },
   "translation_disclaimer": {
-    "uk": "Український переклад — робочий клінічний (не валідований у популяційному дослідженні). Призначений для полегшення скринінгу україномовних пацієнтів. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовувати англійську версію (валідовано Kate et al. 2021)."
+    "uk": "Український переклад — робочий клінічний; психометричної валідації не проходив. Призначений для полегшення скринінгу україномовних пацієнтів. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовуйте англомовну версію (валідовано Kate et al. 2021)."
   }
 }

@@ -19,7 +19,7 @@
     {
       "id": 2,
       "name_en": "Other Specified Dissociative Disorder (OSDD-1)",
-      "name_uk": "Інший уточнений дисоціативний розлад (ІУДР-1)",
+      "name_uk": "Інший уточнений дисоціативний розлад (OSDD-1)",
       "family_en": "Dissociative",
       "family_uk": "Дисоціативні розлади",
       "criteria": {
@@ -57,7 +57,7 @@
     {
       "id": 6,
       "name_en": "Dissociative Amnesia (DA only)",
-      "name_uk": "Дисоціативна амнезія (ізольована)",
+      "name_uk": "Дисоціативна амнезія (без супутніх симптомів)",
       "family_en": "Dissociative",
       "family_uk": "Дисоціативні розлади",
       "criteria": {"total_min": 15, "at_cutoff": ["AutoMemory"], "not_at_cutoff": ["Flashbacks", "DeperDereal"]}

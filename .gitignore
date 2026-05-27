@@ -5,7 +5,7 @@ node_modules/
 .env
 .env.local
 
-# PHI — никогда не коммитим ответы пациентов
+# PHI — ніколи не комітимо відповіді пацієнтів
 responses/
 *.responses.json
 *.session.json

@@ -6,7 +6,7 @@
 
 **Kate, M.-A., & Hegarty, D. L. (2026).** *A Review of the Clinical Utility and Psychometric Properties of the Multidimensional Inventory of Dissociation – 60-item Version (MID-60): Norms, Percentile Rankings, and Qualitative Descriptors.* OSF. <https://doi.org/10.17605/OSF.IO/E83KC>
 
-**Ліцензія (OSF document p. 2):** «*The information in this document can be used without permission by researchers and clinicians and distributed under an open source licence.*» — формулювання без явного SPDX-ідентифікатора; **точний URL гіперлінку «open source» на стор. 2 потребує верифікації в браузері OSF** (TODO для Антона — відкрити PDF, клікнути на слово "open source" на стор. 2, зафіксувати URL і записати тут). Ми трактуємо як «attribution-required, redistribution-allowed» до уточнення.
+**Ліцензія (OSF document p. 2):** «*The information in this document can be used without permission by researchers and clinicians and distributed under an open source licence.*» Документ не вказує явний SPDX-ідентифікатор; ми трактуємо ліцензію як **attribution-required, redistribution-allowed** на підставі прямого формулювання авторів.
 
 ## Mapping JSON ↔ OSF pages
 
@@ -29,22 +29,24 @@
 | `no_elevated_subscales` | `data/templates.json` | стор. 14 (No Elevated Subscales) |
 | `instructions` | `data/templates.json` | стор. 18 (форма p. 1) |
 | `clinical_use_disclaimer` | `data/templates.json` | стор. 7 (MID-60 Clinical Use) |
-| Composite ranking formula `0.5 × prop_excess + 0.5 × item_prop` | `mid60-engine.js:225` | стор. 13 (Subscale Selection and Ranking) |
+| Composite ranking formula `0.5 × prop_excess + 0.5 × item_prop` | `mid60-engine.js` → `rankSubscales()` | стор. 13 (Subscale Selection and Ranking) |
 
 ## Known approximations (deviations from NovoPsych)
 
 NovoPsych's exact algorithm is not fully public. Our `mid60-engine.js` mirrors OSF Technical Paper rules where they're explicit, and approximates where they're not. Known approximations:
 
-1. **Item-level clinical threshold** (`mid60-engine.js:46`). OSF p. 13 calls for "respective item-level clinical thresholds" but doesn't define them numerically. We use `response * 10 >= subscale_cutoff`. Verified against OSF Sample Report (12 subscales):
+1. **Item-level clinical threshold** (`mid60-engine.js` → `computeRawScores()`). OSF p. 13 calls for "respective item-level clinical thresholds" but doesn't define them numerically. We use `response * 10 >= subscale_cutoff`. Verified against OSF Sample Report (12 subscales):
    - **8/12 subscales match exactly**: Amnesia, AlterPerson, AngryIntrusion, PersecIntrusion, DistressMemory, Flashbacks, BodySymptoms, Seizures.
    - **4/12 differ by 1 item**: DeperDereal (we count 6, NovoPsych 5), AutoMemory (we 3, they 2), Trance (we 5, they 6), SelfConfusion (we 5, they 6).
    - Impact: only `items_at_threshold` field and the `breadth` component of the composite ranking. Subscale means, `atCutoff`, classification — all unaffected.
 
-2. **Composite ranking sort order** (`mid60-engine.js:230`). OSF p. 13: «sorted by composite score in descending order, formula `0.5 × proportional_excess + 0.5 × item_proportion`». We follow the formula literally; NovoPsych's Sample Report sorts Persecutory before Amnesia despite Amnesia having higher composite. Our output diverges by sort order only — the same subscales appear, just rearranged.
+2. **Composite ranking sort order** (`mid60-engine.js` → `rankSubscales()`). OSF p. 13: «sorted by composite score in descending order, formula `0.5 × proportional_excess + 0.5 × item_proportion`». We follow the formula literally; NovoPsych's Sample Report sorts Persecutory before Amnesia despite Amnesia having higher composite. Our output diverges by sort order only — the same subscales appear, just rearranged.
+
+Verification: `docs/test-engine.js` runs the engine against the OSF Sample Report response set; asserts 8/12 exact item-threshold match, 4/12 within ±1 item, identical classification and total score.
 
 ## Derived works (not from OSF)
 
-- **`text_uk` усіх 60 items + UA-переклад interpretive_text/templates/UI** — Claude Opus 4.7 + MD Psychiatrist Vilenchyk Anton, UA. Неофіційний, НЕ валідований у популяційному дослідженні. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовувати EN (Kate et al. 2021).
+- **`text_uk` усіх 60 items + UA-переклад interpretive_text/templates/UI** — Claude Opus 4.7 + MD Psychiatrist Vilenchyk Anton, UA. Неофіційний; психометричної валідації не проходив. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовуйте EN (Kate et al. 2021).
 - **Architecture, HTML/CSS/JS UI, report renderer** — original work, MIT licensed.
 
 ## Secondary references (cited, no content reused)
