@@ -106,18 +106,29 @@
     };
   }
 
-  function getDescriptor(totalMean, bands) {
-    var s = Math.round(totalMean);
-    for (var i = 0; i < bands.length; i++) {
-      if (s >= bands[i].min && s <= bands[i].max) return bands[i].label;
-    }
-    return bands[bands.length - 1].label;
+  function L(obj, field, lang) {
+    if (!obj) return '';
+    var v = obj[field + '_' + lang];
+    if (v !== undefined && v !== null) return v;
+    var en = obj[field + '_en'];
+    if (en !== undefined && en !== null) return en;
+    return obj[field] || '';
   }
 
-  function getTotalScoreInterpretation(totalMean, ranges) {
+  function getDescriptor(totalMean, bands, lang) {
+    lang = lang || 'en';
+    var s = Math.round(totalMean);
+    for (var i = 0; i < bands.length; i++) {
+      if (s >= bands[i].min && s <= bands[i].max) return L(bands[i], 'label', lang);
+    }
+    return L(bands[bands.length - 1], 'label', lang);
+  }
+
+  function getTotalScoreInterpretation(totalMean, ranges, lang) {
+    lang = lang || 'en';
     var s = Math.round(totalMean);
     for (var i = 0; i < ranges.length; i++) {
-      if (s >= ranges[i].min && s <= ranges[i].max) return ranges[i].text;
+      if (s >= ranges[i].min && s <= ranges[i].max) return L(ranges[i], 'text', lang);
     }
     return '';
   }
@@ -125,13 +136,14 @@
   // ---------- safety flags ----------
 
   // Items 22, 44, 58 — any response >= 1 raises a flag.
-  function safetyFlags(responses, items) {
+  function safetyFlags(responses, items, lang) {
+    lang = lang || 'en';
     var flags = [];
     items.forEach(function (item) {
       if (item.safety_flag) {
         var v = responses[item.id];
         if (typeof v === 'number' && v >= 1) {
-          flags.push({ id: item.id, text: item.text_en, response: v });
+          flags.push({ id: item.id, text: L(item, 'text', lang), response: v });
         }
       }
     });
@@ -191,7 +203,8 @@
     return true;
   }
 
-  function classify(totalMean, atCutoff, classificationData) {
+  function classify(totalMean, atCutoff, classificationData, lang) {
+    lang = lang || 'en';
     var key = computeKeyVars(atCutoff);
     var ocsdMet = (totalMean >= 15) && key.anyDissocRelevant;
     var ctx = {
@@ -203,14 +216,22 @@
       ocsdMet: ocsdMet
     };
 
+    function pack(p) {
+      return {
+        id: p.id,
+        name: L(p, 'name', lang),
+        name_en: p.name_en,
+        family: L(p, 'family', lang),
+        key: key,
+        ocsdMet: ocsdMet
+      };
+    }
+
     for (var i = 0; i < classificationData.profiles.length; i++) {
       var p = classificationData.profiles[i];
-      if (evalCriteria(p.criteria, ctx)) {
-        return { id: p.id, name: p.name, family: p.family, key: key, ocsdMet: ocsdMet };
-      }
+      if (evalCriteria(p.criteria, ctx)) return pack(p);
     }
-    var fallback = classificationData.profiles[classificationData.profiles.length - 1];
-    return { id: fallback.id, name: fallback.name, family: fallback.family, key: key, ocsdMet: ocsdMet };
+    return pack(classificationData.profiles[classificationData.profiles.length - 1]);
   }
 
   // ---------- composite ranking ----------
@@ -260,14 +281,15 @@
 
   // ---------- highest-endorsed items per subscale ----------
 
-  function highestEndorsedItems(subKey, responses, items, subscales, limit) {
+  function highestEndorsedItems(subKey, responses, items, subscales, limit, lang) {
+    lang = lang || 'en';
     var ids = subscales[subKey].items;
     var rows = [];
     ids.forEach(function (id) {
       var item = items.find(function (x) { return x.id === id; });
       var v = responses[id];
       if (typeof v !== 'number' || isNaN(v)) v = 0;
-      rows.push({ id: id, response: v, text: item ? item.text_en : '' });
+      rows.push({ id: id, response: v, text: item ? L(item, 'text', lang) : '' });
     });
     rows.sort(function (a, b) {
       if (b.response !== a.response) return b.response - a.response;
@@ -278,13 +300,14 @@
 
   // ---------- top-level convenience ----------
 
-  function scoreAssessment(responses, dataPack) {
+  function scoreAssessment(responses, dataPack, lang) {
+    lang = lang || 'en';
     var raw = computeRawScores(responses, dataPack.items, dataPack.subscales);
     var perc = computePercentiles(raw.totalMean, dataPack.percentiles);
-    var descriptor = getDescriptor(raw.totalMean, dataPack.percentiles.descriptor_bands);
-    var interp = getTotalScoreInterpretation(raw.totalMean, dataPack.percentiles.total_score_interpretation);
-    var flags = safetyFlags(responses, dataPack.items);
-    var classification = classify(raw.totalMean, raw.atCutoff, dataPack.classification);
+    var descriptor = getDescriptor(raw.totalMean, dataPack.percentiles.descriptor_bands, lang);
+    var interp = getTotalScoreInterpretation(raw.totalMean, dataPack.percentiles.total_score_interpretation, lang);
+    var flags = safetyFlags(responses, dataPack.items, lang);
+    var classification = classify(raw.totalMean, raw.atCutoff, dataPack.classification, lang);
 
     var diagSubs = dataPack.classification._diagnostic_subscales[String(classification.id)] || [];
     var ranked = rankElevatedSubscales(raw.atCutoff, raw.subscaleMeans, dataPack.subscales, raw.itemsAtThreshold, diagSubs);

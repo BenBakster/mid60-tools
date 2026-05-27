@@ -4,7 +4,7 @@ Self-hosted scoring engine for the **Multidimensional Inventory of Dissociation 
 
 ## Что внутри
 
-- 60-пунктовая форма заполнения (EN валидированный, UA рабочий перевод)
+- 60-пунктовая форма заполнения (UK за замовчуванням — літературний клінічний переклад; EN валідований — переключач у верхньому правому куті)
 - Скоринг: total mean × 10, 12 subscale means, severity bands
 - Перцентили: community (Φ(z), μ=12.94 σ=13.32) + clinical (μ=56.8 σ=18.8)
 - 16-категорийная Probable Profile Classification (Kate 2025)
@@ -40,6 +40,11 @@ mid60-tools/
 
 ## Roadmap
 
-- [ ] v0.1 — single-page HTML, локальный self-administration
-- [ ] v0.2 — Telegram-бот gate в стиле ampd-tools (whitelist + PHI ≤ 1ч)
-- [ ] v0.3 — мультиадминистрационный line plot для лонгитюда
+- [x] v0.1 — single-page HTML, локальный self-administration
+- [x] v0.2 — літературний український переклад 60 items + UI, переключач EN/UK
+- [ ] v0.3 — Telegram-бот gate в стилі ampd-tools (whitelist + PHI ≤ 1ч)
+- [ ] v0.4 — мультиадміністраційний line plot для лонгітюду
+
+## Український переклад
+
+Робочий клінічний переклад (Vilenchyk 2026, неофіційний — не валідований у популяційному дослідженні). Стиль: друге лице «ви» з активним дієсловом, як у DASS/PHQ-UA. Safety items 22/44/58 — без пом'якшення. Для офіційного звіту досі рекомендовано EN-первинна мова (вона валідована Kate et al. 2021), але для скринінгу україномовних пацієнтів — UA дає природніше читання.

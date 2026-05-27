@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MID-60 — Multidimensional Inventory of Dissociation</title>
+<title>MID-60 — Багатовимірний опитувальник дисоціації</title>
 <style>
   :root {
     --bg: #f6f5f1;
@@ -29,6 +29,15 @@
   .wrap { max-width: 980px; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
   header.title h1 { font-size: 1.55rem; margin: 0 0 .25rem; }
   header.title .subtitle { color: var(--muted); font-size: .9rem; }
+  .top-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+  .lang-switch {
+    display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden;
+    background: var(--card); font-size: .85rem;
+  }
+  .lang-switch button {
+    border: none; background: transparent; padding: .35rem .7rem; cursor: pointer; font: inherit;
+  }
+  .lang-switch button.active { background: var(--accent); color: white; }
   .disclaimer {
     background: var(--card);
     border: 1px solid var(--line);
@@ -37,6 +46,10 @@
     margin: 1rem 0;
     font-size: .88rem;
     color: var(--muted);
+  }
+  .disclaimer.uk-translation {
+    border-left-color: #b88a3e;
+    background: #fbf6ec;
   }
   .card {
     background: var(--card);
@@ -70,7 +83,6 @@
   .items td.num { width: 1.6rem; text-align: center; color: var(--muted); }
   .items td.radio-col { text-align: center; width: 2.1rem; }
   .items td.radio-col input { transform: scale(1.05); cursor: pointer; }
-  .items tr.unanswered td.num { color: var(--warn-ink); font-weight: 700; }
   .items tr.safety td.text-col::after {
     content: " ⚠";
     color: var(--warn-ink);
@@ -126,7 +138,7 @@
 
   .bar-chart { margin: 1rem 0; }
   .bar-row {
-    display: grid; grid-template-columns: 13rem 1fr 4rem;
+    display: grid; grid-template-columns: 14rem 1fr 4rem;
     align-items: center; gap: .5rem;
     font-size: .85rem;
     padding: .15rem 0;
@@ -141,15 +153,6 @@
   }
   .bar-row .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); }
   .bar-row .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
-
-  .severity-bands {
-    display: grid; grid-template-columns: 7fr 8fr 6fr 10fr 10fr 23fr 16fr 21fr;
-    height: 18px;
-    border: 1px solid var(--line);
-    margin: .3rem 0 .15rem;
-    font-size: .65rem;
-  }
-  .severity-bands div { display:flex; align-items:center; justify-content:center; }
 
   .interpretive { font-size: .92rem; }
   .interpretive p { margin: .4rem 0; }
@@ -184,52 +187,62 @@
 <div class="wrap">
 
   <header class="title">
-    <h1>MID-60 — Multidimensional Inventory of Dissociation, 60-item version</h1>
-    <div class="subtitle">Self-hosted scoring (Kate &amp; Hegarty 2026, open licence). No PHI leaves this browser.</div>
+    <div class="top-bar">
+      <div>
+        <h1 data-i18n="title">MID-60 — Багатовимірний опитувальник дисоціації, 60-пунктова версія</h1>
+        <div class="subtitle" data-i18n="subtitle">Локальний скоринг (Kate &amp; Hegarty 2026, відкрита ліцензія). PHI не залишає цей браузер.</div>
+      </div>
+      <div class="lang-switch no-print" role="tablist" aria-label="Language">
+        <button id="lang-uk" type="button" class="active">УКР</button>
+        <button id="lang-en" type="button">EN</button>
+      </div>
+    </div>
   </header>
 
-  <div class="disclaimer">
-    The MID-60 is a <b>screening instrument only</b>. It is not designed to be the sole basis for diagnosis and should
-    always be interpreted alongside clinical judgment by a qualified clinician.
-    If safety items 22 / 44 / 58 are endorsed, follow standard suicide risk assessment protocols.
+  <div class="disclaimer" data-i18n="clinical_disclaimer">
+    MID-60 — це <b>лише скринінговий інструмент</b>. Він не призначений бути єдиною підставою для встановлення діагнозу
+    й завжди має інтерпретуватися в поєднанні з клінічним судженням кваліфікованого фахівця.
+    Якщо спрацьовують safety items 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.
   </div>
+
+  <div id="uk-translation-note" class="disclaimer uk-translation"></div>
 
   <!-- ============== FORM VIEW ============== -->
   <section id="form-view" class="no-print">
 
     <div class="card">
-      <h2>Administration</h2>
+      <h2 data-i18n="administration">Адміністрування</h2>
       <div class="client-meta">
-        <label>Client (initials / code)<input id="meta-client" type="text" placeholder="optional"></label>
-        <label>Date of birth<input id="meta-dob" type="date"></label>
-        <label>Date administered<input id="meta-date" type="date"></label>
+        <label data-i18n-key="meta_client">Пацієнт (ініціали / код)<input id="meta-client" type="text" placeholder="необов'язково"></label>
+        <label data-i18n-key="meta_dob">Дата народження<input id="meta-dob" type="date"></label>
+        <label data-i18n-key="meta_date">Дата проведення<input id="meta-date" type="date"></label>
       </div>
     </div>
 
     <div class="card">
-      <h2>Instructions</h2>
+      <h2 data-i18n="instructions_header">Інструкція</h2>
       <p class="instructions" id="instructions-text"></p>
     </div>
 
     <div class="card items">
-      <h2>60 items</h2>
+      <h2 data-i18n="items_header">60 пунктів</h2>
       <table>
         <thead>
           <tr>
             <th class="num">#</th>
-            <th class="text-col">Item</th>
-            <th>0<br><span style="font-weight:400;font-size:.7rem;">Never</span></th>
+            <th class="text-col" data-i18n="item_col">Пункт</th>
+            <th>0<br><span style="font-weight:400;font-size:.7rem;" data-i18n="never">Ніколи</span></th>
             <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th>
-            <th>10<br><span style="font-weight:400;font-size:.7rem;">Always</span></th>
+            <th>10<br><span style="font-weight:400;font-size:.7rem;" data-i18n="always">Завжди</span></th>
           </tr>
         </thead>
         <tbody id="items-tbody"></tbody>
       </table>
-      <div class="progress">Answered: <strong id="progress-count">0</strong> / 60</div>
+      <div class="progress"><span data-i18n="answered">Відповідей:</span> <strong id="progress-count">0</strong> / 60</div>
       <div class="buttons">
-        <button id="btn-score" class="primary" disabled>Score &amp; show report</button>
-        <button id="btn-clear" class="warn">Clear all responses</button>
-        <button id="btn-sample" type="button" title="Load OSF sample for testing">Load sample (debug)</button>
+        <button id="btn-score" class="primary" disabled data-i18n="btn_score">Підрахувати й показати звіт</button>
+        <button id="btn-clear" class="warn" data-i18n="btn_clear">Очистити всі відповіді</button>
+        <button id="btn-sample" type="button" data-i18n="btn_sample">Завантажити приклад (debug)</button>
       </div>
     </div>
   </section>
@@ -237,20 +250,20 @@
   <!-- ============== REPORT VIEW ============== -->
   <section id="report-view" class="hidden">
     <div class="card">
-      <h2>MID-60 Report</h2>
+      <h2 data-i18n="report_header">Звіт MID-60</h2>
       <div class="report-meta">
-        <div><b>Client</b> <span id="rep-client">—</span></div>
-        <div><b>Date of birth</b> <span id="rep-dob">—</span></div>
-        <div><b>Date administered</b> <span id="rep-date">—</span></div>
+        <div><b data-i18n="rep_client">Пацієнт</b> <span id="rep-client">—</span></div>
+        <div><b data-i18n="rep_dob">Дата народження</b> <span id="rep-dob">—</span></div>
+        <div><b data-i18n="rep_date">Дата проведення</b> <span id="rep-date">—</span></div>
       </div>
 
       <div class="classification-row">
-        <div class="field"><b>Probable Profile Classification</b><span id="rep-classification">—</span></div>
-        <div class="field"><b>Subscales at clinical cutoff</b><span id="rep-cutoff-count">—</span></div>
-        <div class="field"><b>Mean Score (0–100)</b><span id="rep-total">—</span></div>
-        <div class="field"><b>Community Percentile</b><span id="rep-pct-comm">—</span></div>
-        <div class="field"><b>Clinical Percentile</b><span id="rep-pct-clin">—</span></div>
-        <div class="field"><b>Descriptor</b><span id="rep-descriptor">—</span></div>
+        <div class="field"><b data-i18n="rep_classification">Ймовірна класифікація профілю</b><span id="rep-classification">—</span></div>
+        <div class="field"><b data-i18n="rep_cutoff_count">Підшкал у клінічному діапазоні</b><span id="rep-cutoff-count">—</span></div>
+        <div class="field"><b data-i18n="rep_total">Загальний середній бал (0–100)</b><span id="rep-total">—</span></div>
+        <div class="field"><b data-i18n="rep_pct_comm">Перцентиль (загальна популяція)</b><span id="rep-pct-comm">—</span></div>
+        <div class="field"><b data-i18n="rep_pct_clin">Перцентиль (клінічна вибірка)</b><span id="rep-pct-clin">—</span></div>
+        <div class="field"><b data-i18n="rep_descriptor">Тяжкість</b><span id="rep-descriptor">—</span></div>
       </div>
 
       <div id="rep-safety" class="safety-block hidden"></div>
@@ -259,45 +272,45 @@
     </div>
 
     <div class="card">
-      <h3>Subscale results</h3>
+      <h3 data-i18n="subscale_results">Результати за підшкалами</h3>
       <table class="subscale-table">
         <thead>
           <tr>
-            <th>Diagnostic family</th>
-            <th>Subscale</th>
-            <th>Mean (0–100)</th>
-            <th>Cutoff</th>
-            <th>In clinical range?</th>
-            <th>Items in clinical range</th>
+            <th data-i18n="col_family">Діагностична група</th>
+            <th data-i18n="col_subscale">Підшкала</th>
+            <th data-i18n="col_mean">Середній бал (0–100)</th>
+            <th data-i18n="col_cutoff">Межа</th>
+            <th data-i18n="col_in_range">У клінічному діапазоні?</th>
+            <th data-i18n="col_items">Пункти у клін. діапазоні</th>
           </tr>
         </thead>
         <tbody id="rep-subscale-tbody"></tbody>
       </table>
 
-      <h3>Subscale bar chart</h3>
+      <h3 data-i18n="bar_chart">Стовпчикова діаграма</h3>
       <div class="bar-chart" id="rep-bar-chart"></div>
     </div>
 
     <div class="card">
-      <h3>Client responses, grouped by subscale</h3>
+      <h3 data-i18n="responses_header">Відповіді пацієнта, згруповані за підшкалами</h3>
       <div id="rep-responses"></div>
     </div>
 
     <div class="card">
-      <h3>Clinical use</h3>
+      <h3 data-i18n="clinical_use_h">Клінічне застосування</h3>
       <p style="font-size:.85rem;color:var(--muted);" id="clinical-use-text"></p>
     </div>
 
     <div class="buttons no-print">
-      <button id="btn-print" class="primary">Print / save as PDF</button>
-      <button id="btn-back">Back to form</button>
+      <button id="btn-print" class="primary" data-i18n="btn_print">Друк / зберегти в PDF</button>
+      <button id="btn-back" data-i18n="btn_back">Повернутися до форми</button>
     </div>
 
-    <div class="footer-note">
-      Scoring engine and instrument content reproduced from Kate &amp; Hegarty (2026), <i>A Review of the Clinical Utility and
-      Psychometric Properties of the Multidimensional Inventory of Dissociation – 60-item Version</i>.
+    <div class="footer-note" data-i18n="footer">
+      Скоринговий рушій та зміст інструменту відтворено з Kate &amp; Hegarty (2026),
+      <i>A Review of the Clinical Utility and Psychometric Properties of the MID-60</i>.
       <a href="https://doi.org/10.17605/OSF.IO/E83KC">doi.org/10.17605/OSF.IO/E83KC</a>.
-      Open-source licence. Software MIT-licensed.
+      Відкрита ліцензія. Софт під MIT.
     </div>
   </section>
 
@@ -310,6 +323,134 @@
 var DATA = {};
 var RESPONSES = {};
 var STORAGE_KEY = 'mid60-draft-v1';
+var LANG_KEY = 'mid60-lang-v1';
+var LANG = 'uk';
+
+// ---------- UI string dictionary ----------
+var UI = {
+  uk: {
+    title: 'MID-60 — Багатовимірний опитувальник дисоціації, 60-пунктова версія',
+    subtitle: 'Локальний скоринг (Kate & Hegarty 2026, відкрита ліцензія). PHI не залишає цей браузер.',
+    clinical_disclaimer: 'MID-60 — це <b>лише скринінговий інструмент</b>. Він не призначений бути єдиною підставою для встановлення діагнозу й завжди має інтерпретуватися в поєднанні з клінічним судженням кваліфікованого фахівця. Якщо спрацьовують safety items 22 / 44 / 58 — застосувати стандартний протокол оцінки суїцидального ризику.',
+    administration: 'Адміністрування',
+    meta_client: 'Пацієнт (ініціали / код)',
+    meta_dob: 'Дата народження',
+    meta_date: 'Дата проведення',
+    meta_placeholder: "необов'язково",
+    instructions_header: 'Інструкція',
+    items_header: '60 пунктів',
+    item_col: 'Пункт',
+    never: 'Ніколи',
+    always: 'Завжди',
+    answered: 'Відповідей:',
+    btn_score: 'Підрахувати й показати звіт',
+    btn_clear: 'Очистити всі відповіді',
+    btn_sample: 'Завантажити приклад (debug)',
+    btn_print: 'Друк / зберегти в PDF',
+    btn_back: 'Повернутися до форми',
+    confirm_clear: 'Очистити всі відповіді та метадані?',
+    report_header: 'Звіт MID-60',
+    rep_client: 'Пацієнт',
+    rep_dob: 'Дата народження',
+    rep_date: 'Дата проведення',
+    rep_classification: 'Ймовірна класифікація профілю',
+    rep_cutoff_count: 'Підшкал у клінічному діапазоні',
+    rep_of: 'з',
+    rep_total: 'Загальний середній бал (0–100)',
+    rep_pct_comm: 'Перцентиль (загальна популяція)',
+    rep_pct_clin: 'Перцентиль (клінічна вибірка)',
+    rep_descriptor: 'Тяжкість',
+    subscale_results: 'Результати за підшкалами',
+    col_family: 'Діагностична група',
+    col_subscale: 'Підшкала',
+    col_mean: 'Середній бал (0–100)',
+    col_cutoff: 'Межа',
+    col_in_range: 'У клінічному діапазоні?',
+    col_items: 'Пункти у клін. діапазоні',
+    yes: 'Так',
+    no: 'Ні',
+    bar_chart: 'Стовпчикова діаграма',
+    responses_header: 'Відповіді пацієнта, згруповані за підшкалами',
+    response_short: 'Бал',
+    clinical_use_h: 'Клінічне застосування',
+    footer: 'Скоринговий рушій та зміст інструменту відтворено з Kate &amp; Hegarty (2026), <i>A Review of the Clinical Utility and Psychometric Properties of the MID-60</i>. <a href="https://doi.org/10.17605/OSF.IO/E83KC">doi.org/10.17605/OSF.IO/E83KC</a>. Відкрита ліцензія. Софт під MIT.',
+    response_label: 'Відповідь',
+    diag_groups: {
+      'Dissociative Identity Disorder': 'Дисоціативний розлад ідентичності',
+      'DID and OSDD-1': 'ДРІ та ІВДР-1',
+      'Depersonalisation / Derealisation Disorder': 'Розлад деперсоналізації / дереалізації',
+      'Dissociative Amnesia': 'Дисоціативна амнезія',
+      'Post-Traumatic Stress Disorder': 'Посттравматичний стресовий розлад',
+      'Conversion Disorder': 'Конверсійний розлад',
+      'General Subscales': 'Загальні підшкали'
+    }
+  },
+  en: {
+    title: 'MID-60 — Multidimensional Inventory of Dissociation, 60-item version',
+    subtitle: 'Self-hosted scoring (Kate & Hegarty 2026, open licence). No PHI leaves this browser.',
+    clinical_disclaimer: 'The MID-60 is a <b>screening instrument only</b>. It is not designed to be the sole basis for diagnosis and should always be interpreted alongside clinical judgment by a qualified clinician. If safety items 22 / 44 / 58 are endorsed, follow standard suicide risk assessment protocols.',
+    administration: 'Administration',
+    meta_client: 'Client (initials / code)',
+    meta_dob: 'Date of birth',
+    meta_date: 'Date administered',
+    meta_placeholder: 'optional',
+    instructions_header: 'Instructions',
+    items_header: '60 items',
+    item_col: 'Item',
+    never: 'Never',
+    always: 'Always',
+    answered: 'Answered:',
+    btn_score: 'Score & show report',
+    btn_clear: 'Clear all responses',
+    btn_sample: 'Load sample (debug)',
+    btn_print: 'Print / save as PDF',
+    btn_back: 'Back to form',
+    confirm_clear: 'Clear all responses and metadata?',
+    report_header: 'MID-60 Report',
+    rep_client: 'Client',
+    rep_dob: 'Date of birth',
+    rep_date: 'Date administered',
+    rep_classification: 'Probable Profile Classification',
+    rep_cutoff_count: 'Subscales at clinical cutoff',
+    rep_of: 'of',
+    rep_total: 'Mean Score (0–100)',
+    rep_pct_comm: 'Community Percentile',
+    rep_pct_clin: 'Clinical Percentile',
+    rep_descriptor: 'Descriptor',
+    subscale_results: 'Subscale results',
+    col_family: 'Diagnostic family',
+    col_subscale: 'Subscale',
+    col_mean: 'Mean (0–100)',
+    col_cutoff: 'Cutoff',
+    col_in_range: 'In clinical range?',
+    col_items: 'Items in clinical range',
+    yes: 'Yes',
+    no: 'No',
+    bar_chart: 'Subscale bar chart',
+    responses_header: 'Client responses, grouped by subscale',
+    response_short: 'Resp',
+    clinical_use_h: 'Clinical use',
+    footer: 'Scoring engine and instrument content reproduced from Kate &amp; Hegarty (2026), <i>A Review of the Clinical Utility and Psychometric Properties of the MID-60</i>. <a href="https://doi.org/10.17605/OSF.IO/E83KC">doi.org/10.17605/OSF.IO/E83KC</a>. Open-source licence. Software MIT-licensed.',
+    response_label: 'Response',
+    diag_groups: {
+      'Dissociative Identity Disorder': 'Dissociative Identity Disorder',
+      'DID and OSDD-1': 'DID and OSDD-1',
+      'Depersonalisation / Derealisation Disorder': 'Depersonalisation / Derealisation Disorder',
+      'Dissociative Amnesia': 'Dissociative Amnesia',
+      'Post-Traumatic Stress Disorder': 'Post-Traumatic Stress Disorder',
+      'Conversion Disorder': 'Conversion Disorder',
+      'General Subscales': 'General Subscales'
+    }
+  }
+};
+
+function L(obj, field) {
+  if (!obj) return '';
+  var v = obj[field + '_' + LANG];
+  if (v !== undefined && v !== null) return v;
+  return obj[field + '_en'] || obj[field] || '';
+}
+function T(key) { return (UI[LANG] && UI[LANG][key] !== undefined) ? UI[LANG][key] : (UI.en[key] || ''); }
 
 // ---------- data loading ----------
 async function loadAll() {
@@ -325,15 +466,52 @@ async function loadAll() {
   DATA.templates = tpl;
 }
 
+// ---------- i18n for static labels ----------
+function applyUiStrings() {
+  document.documentElement.lang = LANG;
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    var key = el.getAttribute('data-i18n');
+    var val = T(key);
+    if (key === 'clinical_disclaimer' || key === 'footer' || key === 'subtitle') el.innerHTML = val;
+    else el.textContent = val;
+  });
+  document.querySelectorAll('[data-i18n-key]').forEach(function (el) {
+    var key = el.getAttribute('data-i18n-key');
+    var label = T(key);
+    var input = el.querySelector('input');
+    // replace text node before the input
+    el.firstChild && (el.firstChild.nodeValue = label);
+    if (input && input.type === 'text') input.placeholder = T('meta_placeholder');
+  });
+  // active button
+  document.getElementById('lang-uk').classList.toggle('active', LANG === 'uk');
+  document.getElementById('lang-en').classList.toggle('active', LANG === 'en');
+
+  // translation note
+  var note = document.getElementById('uk-translation-note');
+  if (LANG === 'uk') {
+    note.textContent = DATA.templates ? DATA.templates.translation_disclaimer.uk : '';
+    note.classList.remove('hidden');
+  } else {
+    note.classList.add('hidden');
+  }
+
+  if (DATA.templates) {
+    document.getElementById('instructions-text').textContent = DATA.templates.instructions[LANG] || DATA.templates.instructions.en;
+    document.getElementById('clinical-use-text').textContent = DATA.templates.clinical_use_disclaimer[LANG] || DATA.templates.clinical_use_disclaimer.en;
+  }
+}
+
 // ---------- form rendering ----------
 function renderForm() {
   var tbody = document.getElementById('items-tbody');
   var html = '';
   DATA.items.forEach(function (item) {
     var rowClass = item.safety_flag ? 'safety' : '';
+    var text = L(item, 'text');
     html += '<tr id="row-' + item.id + '" class="' + rowClass + '">';
     html += '<td class="num">' + item.id + '</td>';
-    html += '<td class="text-col">' + escapeHtml(item.text_en) + '</td>';
+    html += '<td class="text-col" data-item-text="' + item.id + '">' + escapeHtml(text) + '</td>';
     for (var v = 0; v <= 10; v++) {
       html += '<td class="radio-col"><input type="radio" name="i' + item.id + '" value="' + v + '" aria-label="' + v + '"></td>';
     }
@@ -341,10 +519,6 @@ function renderForm() {
   });
   tbody.innerHTML = html;
 
-  document.getElementById('instructions-text').textContent = DATA.templates.instructions.en;
-  document.getElementById('clinical-use-text').textContent = DATA.templates.clinical_use_disclaimer;
-
-  // bind change handlers
   tbody.addEventListener('change', function (ev) {
     var t = ev.target;
     if (t.tagName !== 'INPUT' || t.type !== 'radio') return;
@@ -352,17 +526,23 @@ function renderForm() {
     if (!m) return;
     var id = parseInt(m[1], 10);
     RESPONSES[id] = parseInt(t.value, 10);
-    document.getElementById('row-' + id).classList.remove('unanswered');
     saveDraft();
     updateProgress();
   });
 
-  // set today's date as default
   var d = new Date();
   var iso = d.getFullYear() + '-' +
     String(d.getMonth() + 1).padStart(2, '0') + '-' +
     String(d.getDate()).padStart(2, '0');
-  document.getElementById('meta-date').value = iso;
+  if (!document.getElementById('meta-date').value) document.getElementById('meta-date').value = iso;
+}
+
+function relabelItems() {
+  document.querySelectorAll('[data-item-text]').forEach(function (cell) {
+    var id = parseInt(cell.getAttribute('data-item-text'), 10);
+    var item = DATA.items.find(function (x) { return x.id === id; });
+    cell.textContent = L(item, 'text');
+  });
 }
 
 function escapeHtml(s) {
@@ -387,7 +567,7 @@ function saveDraft() {
       date: document.getElementById('meta-date').value
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ responses: RESPONSES, meta: meta }));
-  } catch (e) { /* quota / private mode — ignore */ }
+  } catch (e) { /* ignore */ }
 }
 function loadDraft() {
   try {
@@ -408,10 +588,10 @@ function loadDraft() {
       if (obj.meta.dob) document.getElementById('meta-dob').value = obj.meta.dob;
       if (obj.meta.date) document.getElementById('meta-date').value = obj.meta.date;
     }
-  } catch (e) { /* corrupt — ignore */ }
+  } catch (e) { /* ignore */ }
 }
 function clearDraft() {
-  if (!confirm('Clear all responses and metadata?')) return;
+  if (!confirm(T('confirm_clear'))) return;
   localStorage.removeItem(STORAGE_KEY);
   RESPONSES = {};
   document.querySelectorAll('#items-tbody input[type="radio"]').forEach(function (r) { r.checked = false; });
@@ -428,7 +608,7 @@ function showReport() {
     classification: DATA.classification,
     percentiles: DATA.percentiles
   };
-  var R = MID60.scoreAssessment(RESPONSES, dataPack);
+  var R = MID60.scoreAssessment(RESPONSES, dataPack, LANG);
 
   document.getElementById('rep-client').textContent = document.getElementById('meta-client').value || '—';
   document.getElementById('rep-dob').textContent = document.getElementById('meta-dob').value || '—';
@@ -436,7 +616,7 @@ function showReport() {
 
   document.getElementById('rep-classification').textContent = R.classification.name;
   var nCutoff = Object.values(R.raw.atCutoff).filter(Boolean).length;
-  document.getElementById('rep-cutoff-count').textContent = nCutoff + ' of 12';
+  document.getElementById('rep-cutoff-count').textContent = nCutoff + ' ' + T('rep_of') + ' 12';
   document.getElementById('rep-total').textContent = Math.round(R.raw.totalMean);
   document.getElementById('rep-pct-comm').textContent = R.percentiles.community;
   document.getElementById('rep-pct-clin').textContent = R.percentiles.clinical;
@@ -458,13 +638,12 @@ function renderSafety(R) {
   if (!R.safety_flags.length) { el.classList.add('hidden'); el.innerHTML = ''; return; }
   el.classList.remove('hidden');
   var tpl = DATA.templates.safety;
-  var s = R.safety_flags.length === 1 ? '' : 's';
-  var html = '<h3>' + tpl.header + '</h3>';
-  html += '<p>' + tpl.intro.replace('{S}', s) + '</p><ul>';
+  var html = '<h3>' + L(tpl, 'header') + '</h3>';
+  html += '<p>' + L(tpl, 'intro').replace('{S}', LANG === 'en' && R.safety_flags.length === 1 ? '' : (LANG === 'en' ? 's' : '')) + '</p><ul>';
   R.safety_flags.forEach(function (f) {
-    html += '<li>Item ' + f.id + ' — “' + escapeHtml(f.text) + '” (Response: ' + f.response + '/10)</li>';
+    html += '<li>' + (LANG === 'uk' ? 'Пункт ' : 'Item ') + f.id + ' — «' + escapeHtml(f.text) + '» (' + T('response_label') + ': ' + f.response + '/10)</li>';
   });
-  html += '</ul><p>' + tpl.outro + '</p>';
+  html += '</ul><p>' + L(tpl, 'outro') + '</p>';
   el.innerHTML = html;
 }
 
@@ -473,48 +652,45 @@ function renderInterpretive(R) {
   var tpl = DATA.templates;
   var dateStr = document.getElementById('meta-date').value || '—';
   var profile = R.classification.name;
-  var opening = tpl.opening.base
+  var opening = L(tpl.opening, 'base')
     .replace('{DATE}', dateStr)
     .replace('{SCORE}', Math.round(R.raw.totalMean))
     .replace('{DESCRIPTOR}', R.descriptor);
   if (R.percentiles.community >= 90) {
-    opening += tpl.opening.with_community_percentile.replace('{PCT}', R.percentiles.community);
+    opening += L(tpl.opening, 'with_community_percentile').replace('{PCT}', R.percentiles.community);
   }
   if (R.classification.id === 16) {
-    opening += tpl.opening.no_disorder;
+    opening += L(tpl.opening, 'no_disorder');
   } else {
-    opening += tpl.opening.with_profile.replace('{PROFILE}', profile);
+    opening += L(tpl.opening, 'with_profile').replace('{PROFILE}', profile);
   }
   var html = '<p>' + opening + '</p>';
 
-  // diagnostic section
   if (R.classification.id !== 16 && R.ranked_subscales.diagnostic.length) {
-    html += '<p class="sub-header">' + tpl.diagnostic_section.header + '</p>';
+    html += '<p class="sub-header">' + L(tpl.diagnostic_section, 'header') + '</p>';
     var n = R.ranked_subscales.diagnostic.length;
     var p = n === 1
-      ? tpl.diagnostic_section.one.replace('{PROFILE}', profile)
-      : tpl.diagnostic_section.many.replace('{PROFILE}', profile).replace('{N}', n);
+      ? L(tpl.diagnostic_section, 'one').replace('{PROFILE}', profile)
+      : L(tpl.diagnostic_section, 'many').replace('{PROFILE}', profile).replace('{N}', n);
     html += '<p>' + p + '</p>';
     R.ranked_subscales.diagnostic.forEach(function (e) {
       html += renderSubscaleBlock(e);
     });
   }
 
-  // additional section
   if (R.ranked_subscales.additional.length) {
     var n2 = R.ranked_subscales.additional.length;
-    var hdr = n2 === 1 ? tpl.additional_section.header_one : tpl.additional_section.header_many.replace('{N}', n2);
+    var hdr = n2 === 1 ? L(tpl.additional_section, 'header_one') : L(tpl.additional_section, 'header_many').replace('{N}', n2);
     html += '<p class="sub-header">' + hdr + '</p>';
-    var p2 = n2 === 1 ? tpl.additional_section.one : tpl.additional_section.many.replace('{N}', n2);
+    var p2 = n2 === 1 ? L(tpl.additional_section, 'one') : L(tpl.additional_section, 'many').replace('{N}', n2);
     html += '<p>' + p2 + '</p>';
     R.ranked_subscales.additional.forEach(function (e) {
       html += renderSubscaleBlock(e);
     });
   }
 
-  // no subscales at cutoff
   if (!R.ranked_subscales.diagnostic.length && !R.ranked_subscales.additional.length) {
-    html += '<p>' + tpl.no_elevated_subscales + '</p>';
+    html += '<p>' + L(tpl, 'no_elevated_subscales') + '</p>';
   }
 
   el.innerHTML = html;
@@ -523,19 +699,19 @@ function renderInterpretive(R) {
 function renderSubscaleBlock(entry) {
   var sub = DATA.subscales[entry.key];
   var tpl = DATA.templates.subscale_block;
-  var header = tpl.header
-    .replace('{DISPLAY_NAME}', sub.display_name)
+  var header = L(tpl, 'header')
+    .replace('{DISPLAY_NAME}', L(sub, 'display_name'))
     .replace('{SCORE}', round1(entry.score))
     .replace('{CUTOFF}', sub.cutoff)
     .replace('{N_ITEMS}', entry.items_at_threshold)
     .replace('{TOTAL_ITEMS}', entry.total_items);
   var html = '<p><b>' + header + '</b></p>';
-  html += '<p>' + sub.interpretive_text + '</p>';
-  var top = MID60.highestEndorsedItems(entry.key, RESPONSES, DATA.items, DATA.subscales, 3);
+  html += '<p>' + L(sub, 'interpretive_text') + '</p>';
+  var top = MID60.highestEndorsedItems(entry.key, RESPONSES, DATA.items, DATA.subscales, 3, LANG);
   if (top.length) {
-    html += '<p>' + DATA.templates.subscale_block.endorsed_intro + '</p><ul class="endorsed">';
+    html += '<p>' + L(tpl, 'endorsed_intro') + '</p><ul class="endorsed">';
     top.forEach(function (t) {
-      html += '<li>' + t.id + '. ' + escapeHtml(t.text) + ' <i>(Response: ' + t.response + '/10)</i></li>';
+      html += '<li>' + t.id + '. ' + escapeHtml(t.text) + ' <i>(' + T('response_label') + ': ' + t.response + '/10)</i></li>';
     });
     html += '</ul>';
   }
@@ -545,8 +721,7 @@ function renderSubscaleBlock(entry) {
 function round1(x) { return Math.round(x * 10) / 10; }
 
 function renderSubscaleTable(R) {
-  // Group subscales by diagnostic family in OSF order.
-  var groups = [
+  var groupsEN = [
     ['Dissociative Identity Disorder', ['Amnesia']],
     ['DID and OSDD-1', ['AlterPerson', 'AngryIntrusion', 'PersecIntrusion']],
     ['Depersonalisation / Derealisation Disorder', ['DeperDereal']],
@@ -555,21 +730,22 @@ function renderSubscaleTable(R) {
     ['Conversion Disorder', ['BodySymptoms', 'Seizures']],
     ['General Subscales', ['Trance', 'SelfConfusion']]
   ];
+  var diag = T('diag_groups');
   var html = '';
-  groups.forEach(function (grp) {
-    var grpName = grp[0];
+  groupsEN.forEach(function (grp) {
+    var grpName = diag[grp[0]] || grp[0];
     grp[1].forEach(function (key, idx) {
       var sub = DATA.subscales[key];
       var score = R.raw.subscaleMeans[key];
       var atCut = R.raw.atCutoff[key];
-      var inRange = atCut ? 'Yes' : 'No';
+      var inRange = atCut ? T('yes') : T('no');
       html += '<tr>';
       html += '<td>' + (idx === 0 ? grpName : '') + '</td>';
-      html += '<td>' + sub.short_name + '</td>';
+      html += '<td>' + L(sub, 'short_name') + '</td>';
       html += '<td>' + round1(score) + '</td>';
       html += '<td>' + sub.cutoff + '</td>';
       html += '<td' + (atCut ? ' class="cutoff-yes"' : '') + '>' + inRange + '</td>';
-      html += '<td>' + R.raw.itemsAtThreshold[key] + ' of ' + sub.items.length + '</td>';
+      html += '<td>' + R.raw.itemsAtThreshold[key] + ' ' + T('rep_of') + ' ' + sub.items.length + '</td>';
       html += '</tr>';
     });
   });
@@ -585,9 +761,9 @@ function renderBarChart(R) {
     var sub = DATA.subscales[key];
     var score = R.raw.subscaleMeans[key];
     var pct = Math.min(100, score);
-    var shadeStop = (sub.cutoff / 100 * 100) + '%';
+    var shadeStop = sub.cutoff + '%';
     html += '<div class="bar-row" style="--shade-stop: ' + shadeStop + ';">';
-    html += '<div class="name">' + sub.short_name + '</div>';
+    html += '<div class="name">' + L(sub, 'short_name') + '</div>';
     html += '<div class="track"><div class="fill" style="width: ' + pct + '%"></div></div>';
     html += '<div class="val">' + round1(score) + '</div>';
     html += '</div>';
@@ -602,16 +778,16 @@ function renderResponses(R) {
   var html = '';
   groups.forEach(function (key) {
     var sub = DATA.subscales[key];
-    html += '<h4 style="margin:1rem 0 .25rem;">' + sub.display_name + '</h4>';
+    html += '<h4 style="margin:1rem 0 .25rem;">' + L(sub, 'display_name') + '</h4>';
     html += '<table class="responses-table"><thead><tr>';
-    html += '<th style="width:2.5rem;">#</th><th>Item</th><th style="width:3rem;">Resp</th>';
+    html += '<th style="width:2.5rem;">#</th><th>' + T('item_col') + '</th><th style="width:3rem;">' + T('response_short') + '</th>';
     html += '</tr></thead><tbody>';
     sub.items.forEach(function (id) {
       var item = DATA.items.find(function (x) { return x.id === id; });
       var v = RESPONSES[id];
       var shadedClass = (typeof v === 'number' && v * 10 >= sub.cutoff) ? ' shaded' : '';
       html += '<tr><td class="value">' + id + '</td><td class="text-col">' +
-              escapeHtml(item.text_en) + '</td><td class="value' + shadedClass + '">' +
+              escapeHtml(L(item, 'text')) + '</td><td class="value' + shadedClass + '">' +
               (typeof v === 'number' ? v : '–') + '</td></tr>';
     });
     html += '</tbody></table>';
@@ -619,13 +795,31 @@ function renderResponses(R) {
   document.getElementById('rep-responses').innerHTML = html;
 }
 
+// ---------- language switching ----------
+function setLang(newLang) {
+  LANG = newLang;
+  try { localStorage.setItem(LANG_KEY, LANG); } catch (e) {}
+  applyUiStrings();
+  if (DATA.items) relabelItems();
+  // If report is visible, re-render it
+  if (!document.getElementById('report-view').classList.contains('hidden')) {
+    showReport();
+  }
+}
+
 // ---------- wiring ----------
 window.addEventListener('DOMContentLoaded', function () {
+  try { LANG = localStorage.getItem(LANG_KEY) || 'uk'; } catch (e) {}
+
   loadAll().then(function () {
+    applyUiStrings();
     renderForm();
     loadDraft();
     updateProgress();
   });
+
+  document.getElementById('lang-uk').addEventListener('click', function () { setLang('uk'); });
+  document.getElementById('lang-en').addEventListener('click', function () { setLang('en'); });
 
   document.getElementById('btn-score').addEventListener('click', showReport);
   document.getElementById('btn-clear').addEventListener('click', clearDraft);

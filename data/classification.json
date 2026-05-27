@@ -1,5 +1,5 @@
 {
-  "_source": "Kate & Hegarty 2026 OSF Technical Paper, Supporting Information, pp. 8-9. Original rules: Kate (2025).",
+  "_source": "Kate & Hegarty 2026 OSF Technical Paper, Supporting Information, pp. 8-9. Original rules: Kate (2025). UK names — робочий клінічний переклад.",
   "_evaluation_order": "Hierarchical (descending clinical severity). Respondent is assigned to the first category for which criteria are met.",
   "_key_variables": {
     "IdentityCount": "count of {AlterPerson, AngryIntrusion, PersecIntrusion} at cutoff (range 0-3)",
@@ -10,18 +10,18 @@
   "profiles": [
     {
       "id": 1,
-      "name": "Dissociative Identity Disorder (DID)",
-      "family": "Dissociative",
-      "criteria": {
-        "total_min": 21,
-        "at_cutoff": ["Amnesia"],
-        "identity_count_min": 2
-      }
+      "name_en": "Dissociative Identity Disorder (DID)",
+      "name_uk": "Дисоціативний розлад ідентичності (ДРІ)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
+      "criteria": {"total_min": 21, "at_cutoff": ["Amnesia"], "identity_count_min": 2}
     },
     {
       "id": 2,
-      "name": "Other Specified Dissociative Disorder (OSDD-1)",
-      "family": "Dissociative",
+      "name_en": "Other Specified Dissociative Disorder (OSDD-1)",
+      "name_uk": "Інший визначений дисоціативний розлад (ІВДР-1)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
       "criteria": {
         "not_at_cutoff": ["Amnesia"],
         "any_of": [
@@ -32,142 +32,115 @@
     },
     {
       "id": 3,
-      "name": "Dissociative Subtype of PTSD with Dissociative Amnesia (dPTSD with DA)",
-      "family": "Dissociative",
-      "criteria": {
-        "total_min": 15,
-        "at_cutoff": ["Flashbacks", "DeperDereal", "AutoMemory"]
-      }
+      "name_en": "Dissociative Subtype of PTSD with Dissociative Amnesia (dPTSD with DA)",
+      "name_uk": "Дисоціативний підтип ПТСР з дисоціативною амнезією (дПТСР + ДА)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
+      "criteria": {"total_min": 15, "at_cutoff": ["Flashbacks", "DeperDereal", "AutoMemory"]}
     },
     {
       "id": 4,
-      "name": "Dissociative Amnesia with Depersonalisation/Derealisation (DA with DP/DR)",
-      "family": "Dissociative",
-      "criteria": {
-        "total_min": 15,
-        "at_cutoff": ["AutoMemory", "DeperDereal"],
-        "not_at_cutoff": ["Flashbacks"]
-      }
+      "name_en": "Dissociative Amnesia with Depersonalisation/Derealisation (DA with DP/DR)",
+      "name_uk": "Дисоціативна амнезія з деперсоналізацією/дереалізацією (ДА + ДП/ДР)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
+      "criteria": {"total_min": 15, "at_cutoff": ["AutoMemory", "DeperDereal"], "not_at_cutoff": ["Flashbacks"]}
     },
     {
       "id": 5,
-      "name": "Dissociative Amnesia with PTSD (DA with PTSD)",
-      "family": "Dissociative",
-      "criteria": {
-        "total_min": 15,
-        "at_cutoff": ["AutoMemory", "Flashbacks"],
-        "not_at_cutoff": ["DeperDereal"]
-      }
+      "name_en": "Dissociative Amnesia with PTSD (DA with PTSD)",
+      "name_uk": "Дисоціативна амнезія з ПТСР (ДА + ПТСР)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
+      "criteria": {"total_min": 15, "at_cutoff": ["AutoMemory", "Flashbacks"], "not_at_cutoff": ["DeperDereal"]}
     },
     {
       "id": 6,
-      "name": "Dissociative Amnesia (DA only)",
-      "family": "Dissociative",
-      "criteria": {
-        "total_min": 15,
-        "at_cutoff": ["AutoMemory"],
-        "not_at_cutoff": ["Flashbacks", "DeperDereal"]
-      }
+      "name_en": "Dissociative Amnesia (DA only)",
+      "name_uk": "Дисоціативна амнезія (ізольована)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
+      "criteria": {"total_min": 15, "at_cutoff": ["AutoMemory"], "not_at_cutoff": ["Flashbacks", "DeperDereal"]}
     },
     {
       "id": 7,
-      "name": "Dissociative Subtype of PTSD (dPTSD)",
-      "family": "Dissociative",
-      "criteria": {
-        "total_min": 15,
-        "at_cutoff": ["Flashbacks", "DeperDereal"],
-        "not_at_cutoff": ["AutoMemory"]
-      }
+      "name_en": "Dissociative Subtype of PTSD (dPTSD)",
+      "name_uk": "Дисоціативний підтип ПТСР (дПТСР)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
+      "criteria": {"total_min": 15, "at_cutoff": ["Flashbacks", "DeperDereal"], "not_at_cutoff": ["AutoMemory"]}
     },
     {
       "id": 8,
-      "name": "Depersonalisation/Derealisation Disorder (DP/DR disorder)",
-      "family": "Dissociative",
-      "criteria": {
-        "total_min": 15,
-        "at_cutoff": ["DeperDereal"],
-        "not_at_cutoff": ["Flashbacks", "AutoMemory"]
-      }
+      "name_en": "Depersonalisation/Derealisation Disorder (DP/DR disorder)",
+      "name_uk": "Розлад деперсоналізації/дереалізації (ДП/ДР)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
+      "criteria": {"total_min": 15, "at_cutoff": ["DeperDereal"], "not_at_cutoff": ["Flashbacks", "AutoMemory"]}
     },
     {
       "id": 9,
-      "name": "Other Clinically Significant Dissociative Symptoms (OCSD)",
-      "family": "Dissociative",
-      "criteria": {
-        "total_min": 15,
-        "dissoc_relevant_min": 1,
-        "not_at_cutoff": ["Flashbacks"],
-        "no_conversion": true
-      }
+      "name_en": "Other Clinically Significant Dissociative Symptoms (OCSD)",
+      "name_uk": "Інші клінічно значущі дисоціативні симптоми (ІКЗДС)",
+      "family_en": "Dissociative",
+      "family_uk": "Дисоціативні розлади",
+      "criteria": {"total_min": 15, "dissoc_relevant_min": 1, "not_at_cutoff": ["Flashbacks"], "no_conversion": true}
     },
     {
       "id": 10,
-      "name": "PTSD with Other Clinically Significant Dissociative Symptoms (PTSD + OCSD)",
-      "family": "PTSD",
-      "criteria": {
-        "at_cutoff": ["Flashbacks"],
-        "ocsd_met": true,
-        "no_conversion": true
-      }
+      "name_en": "PTSD with Other Clinically Significant Dissociative Symptoms (PTSD + OCSD)",
+      "name_uk": "ПТСР з іншими клінічно значущими дисоціативними симптомами (ПТСР + ІКЗДС)",
+      "family_en": "PTSD",
+      "family_uk": "ПТСР",
+      "criteria": {"at_cutoff": ["Flashbacks"], "ocsd_met": true, "no_conversion": true}
     },
     {
       "id": 11,
-      "name": "PTSD with Functional Neurological Symptoms and OCSD (PTSD + Conversion + OCSD)",
-      "family": "PTSD",
-      "criteria": {
-        "at_cutoff": ["Flashbacks"],
-        "ocsd_met": true,
-        "has_conversion": true
-      }
+      "name_en": "PTSD with Functional Neurological Symptoms and OCSD (PTSD + Conversion + OCSD)",
+      "name_uk": "ПТСР з функціональними неврологічними симптомами та ІКЗДС (ПТСР + конверсія + ІКЗДС)",
+      "family_en": "PTSD",
+      "family_uk": "ПТСР",
+      "criteria": {"at_cutoff": ["Flashbacks"], "ocsd_met": true, "has_conversion": true}
     },
     {
       "id": 12,
-      "name": "PTSD with Functional Neurological Symptom Disorder (PTSD + Conversion)",
-      "family": "PTSD",
-      "criteria": {
-        "at_cutoff": ["Flashbacks"],
-        "has_conversion": true,
-        "ocsd_met": false
-      }
+      "name_en": "PTSD with Functional Neurological Symptom Disorder (PTSD + Conversion)",
+      "name_uk": "ПТСР з функціональним неврологічним розладом (ПТСР + конверсія)",
+      "family_en": "PTSD",
+      "family_uk": "ПТСР",
+      "criteria": {"at_cutoff": ["Flashbacks"], "has_conversion": true, "ocsd_met": false}
     },
     {
       "id": 13,
-      "name": "PTSD",
-      "family": "PTSD",
-      "criteria": {
-        "at_cutoff": ["Flashbacks"],
-        "not_at_cutoff": ["DeperDereal", "AutoMemory"],
-        "no_conversion": true,
-        "ocsd_met": false
-      }
+      "name_en": "PTSD",
+      "name_uk": "ПТСР",
+      "family_en": "PTSD",
+      "family_uk": "ПТСР",
+      "criteria": {"at_cutoff": ["Flashbacks"], "not_at_cutoff": ["DeperDereal", "AutoMemory"], "no_conversion": true, "ocsd_met": false}
     },
     {
       "id": 14,
-      "name": "Functional Neurological Disorder with OCSD",
-      "family": "Conversion",
-      "criteria": {
-        "has_conversion": true,
-        "ocsd_met": true,
-        "not_at_cutoff": ["Flashbacks"]
-      }
+      "name_en": "Functional Neurological Disorder with OCSD",
+      "name_uk": "Функціональний неврологічний розлад з ІКЗДС",
+      "family_en": "Conversion",
+      "family_uk": "Конверсійні розлади",
+      "criteria": {"has_conversion": true, "ocsd_met": true, "not_at_cutoff": ["Flashbacks"]}
     },
     {
       "id": 15,
-      "name": "Functional Neurological Disorder",
-      "family": "Conversion",
-      "criteria": {
-        "has_conversion": true,
-        "dissoc_relevant_min": 0,
-        "not_at_cutoff": ["Flashbacks"]
-      }
+      "name_en": "Functional Neurological Disorder",
+      "name_uk": "Функціональний неврологічний розлад",
+      "family_en": "Conversion",
+      "family_uk": "Конверсійні розлади",
+      "criteria": {"has_conversion": true, "dissoc_relevant_min": 0, "not_at_cutoff": ["Flashbacks"]}
     },
     {
       "id": 16,
-      "name": "No Dissociative Disorder Indicated",
-      "family": "Non-Clinical",
-      "criteria": {
-        "default": true
-      }
+      "name_en": "No Dissociative Disorder Indicated",
+      "name_uk": "Дисоціативного розладу не виявлено",
+      "family_en": "Non-Clinical",
+      "family_uk": "Без клінічних ознак",
+      "criteria": {"default": true}
     }
   ],
   "_diagnostic_subscales": {
