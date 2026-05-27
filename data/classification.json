@@ -84,7 +84,8 @@
       "name_uk": "Інші клінічно значущі дисоціативні симптоми (ІКЗДС)",
       "family_en": "Dissociative",
       "family_uk": "Дисоціативні розлади",
-      "criteria": {"total_min": 15, "dissoc_relevant_min": 1, "not_at_cutoff": ["Flashbacks"], "no_conversion": true}
+      "_note": "OCSD-definition сама = total>=15 AND >=1 dissoc-relevant @cutoff (див. _key_variables.OCSDMet). Цей профіль = OCSD + Flashbacks NOT @cutoff + no conversion (відрізняє від #10-14).",
+      "criteria": {"ocsd_met": true, "not_at_cutoff": ["Flashbacks"], "no_conversion": true}
     },
     {
       "id": 10,

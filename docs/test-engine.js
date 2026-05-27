@@ -123,6 +123,30 @@ var tenOk =
 console.log('  total=' + Tt.raw.totalMean + ' cutoffs=' + Object.values(Tt.raw.atCutoff).filter(Boolean).length +
             ' class=' + Tt.classification.id + ' safety=' + Tt.safety_flags.length + ' descriptor=' + Tt.descriptor);
 
+// ---------- edge case: OCSD profile (#9) ----------
+// Має класифікуватися як #9: total>=15 AND >=1 dissoc-relevant @cutoff
+// AND Flashbacks NOT @cutoff AND no conversion AND не потрапив у #1-8.
+// Конструкція: Amnesia at cutoff (без identity → не DID/OSDD) +
+// Trance (підкручує total, але Trance не dissoc-relevant і не gate).
+console.log('=== Edge case: OCSD (profile #9) ===');
+var ocsd = {};
+for (var ki = 1; ki <= 60; ki++) ocsd[ki] = 0;
+[42, 45, 48, 58].forEach(function (id) { ocsd[id] = 10; });      // Amnesia
+[21, 27, 30, 32, 41, 51].forEach(function (id) { ocsd[id] = 10; }); // Trance — щоб total>=15
+var O = MID60.scoreAssessment(ocsd, dataPack);
+var ocsdOk = O.classification.id === 9;
+console.log('  total=' + O.raw.totalMean.toFixed(1) + ' class=' + O.classification.id + ' (' + O.classification.name_en + ')');
+
+// ---------- edge case: pure DP/DR (#8) ----------
+console.log('=== Edge case: DP/DR disorder (#8) ===');
+var dp = {};
+for (var di = 1; di <= 60; di++) dp[di] = 0;
+[2, 7, 9, 13, 25, 47, 50, 53].forEach(function (id) { dp[id] = 10; });
+dp[6] = 10;  // щоб total >= 15
+var D = MID60.scoreAssessment(dp, dataPack);
+var dpOk = D.classification.id === 8;
+console.log('  total=' + D.raw.totalMean.toFixed(1) + ' class=' + D.classification.id + ' (' + D.classification.name_en + ')');
+
 // ---------- edge case: out-of-range total ----------
 console.log('=== Edge case: out-of-range clamp ===');
 var clampOk = MID60.getDescriptor(-5, dataPack.percentiles.descriptor_bands, 'en') === 'None' &&
@@ -140,5 +164,7 @@ console.log('  class      :', classOk ? 'PASS' : 'FAIL');
 console.log('  all-zeros  :', zeroOk ? 'PASS' : 'FAIL');
 console.log('  all-tens   :', tenOk ? 'PASS' : 'FAIL');
 console.log('  clamp      :', clampOk ? 'PASS' : 'FAIL');
+console.log('  ocsd #9    :', ocsdOk ? 'PASS' : 'FAIL');
+console.log('  dp/dr #8   :', dpOk ? 'PASS' : 'FAIL');
 
-process.exit(totalOk && classOk && cutoffOk && commOk && clinOk && subErrors === 0 && zeroOk && tenOk && clampOk ? 0 : 1);
+process.exit(totalOk && classOk && cutoffOk && commOk && clinOk && subErrors === 0 && zeroOk && tenOk && clampOk && ocsdOk && dpOk ? 0 : 1);
