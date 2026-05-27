@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://worker-production-ede9.up.railway.app; img-src 'self' data:; base-uri 'none'; form-action 'none'">
 <title>MID-60 — Багатовимірний опитувальник дисоціації</title>
 <style>
   :root {
@@ -116,6 +116,17 @@
   button.primary { background: var(--accent); color: white; border-color: var(--accent); }
   button.primary:disabled { background: #9bb6c0; border-color: #9bb6c0; cursor: not-allowed; }
   button.warn { color: var(--warn-ink); border-color: var(--warn-ink); background: #fff; }
+  button.bot { background: #2aabee; color: #fff; border-color: #2aabee; }
+  button.bot:disabled { background: #92ccea; border-color: #92ccea; cursor: not-allowed; }
+  button.bot.ok { background: #27ae60; border-color: #27ae60; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%);
+    background: #1b1d23; color: #fff; padding: .55rem 1.1rem; border-radius: 4px;
+    font-size: .9rem; opacity: 0; pointer-events: none; transition: opacity .2s;
+    z-index: 200; box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  }
+  .toast.show { opacity: 1; }
 
   .progress { font-size: .85rem; color: var(--muted); margin-top: .5rem; }
   .progress strong { color: var(--ink); }
@@ -320,6 +331,7 @@
 
     <div class="buttons no-print">
       <button id="btn-print" class="primary" data-i18n="btn_print">Надрукувати / зберегти в PDF</button>
+      <button id="btn-send-bot" class="bot hidden" data-i18n="btn_send_bot">Надіслати лікарю</button>
       <button id="btn-back" data-i18n="btn_back">Повернутися до опитувальника</button>
     </div>
 
@@ -331,6 +343,7 @@
     </div>
   </section>
 
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </div>
 
 <script src="mid60-engine.js"></script>
@@ -368,6 +381,16 @@ var DRAFT_TTL_MS = 60 * 60 * 1000;  // 1 година
 var LANG_KEY = 'mid60-lang-v1';
 var LANG = 'uk';
 
+// Endpoint бота для приёма результатов MID-60. Пустая строка = кнопка
+// «Надіслати лікарю» не показывается (graceful degradation, когда бот
+// недоступен или ещё не задеплоен). Адрес тот же, что у ampd-tools —
+// единый бот @vilenchyk_booking_bot обслуживает обе шкалы.
+var MID60_BOT_ENDPOINT = 'https://worker-production-ede9.up.railway.app/mid60/submit';
+// Кэш последнего отчёта (объект R от MID60.scoreAssessment). Заполняется
+// в showReport, читается в buildEmojiSummary при шере. Иначе пришлось бы
+// либо парсить DOM в обратку (хрупко), либо пересчитывать (тратит CPU).
+var LAST_REPORT = null;
+
 // ---------- UI string dictionary ----------
 var UI = {
   uk: {
@@ -391,6 +414,11 @@ var UI = {
     sr_safety: 'пункт безпеки',
     btn_print: 'Надрукувати / зберегти в PDF',
     btn_back: 'Повернутися до опитувальника',
+    btn_send_bot: 'Надіслати лікарю',
+    send_bot_sending: 'Надсилаю…',
+    send_bot_opening: 'Відкриваю Telegram…',
+    send_bot_err: 'Помилка надсилання: ',
+    send_bot_encode_err: 'Не вдалося закодувати результат',
     confirm_clear: 'Очистити всі відповіді та метадані?',
     report_header: 'Звіт MID-60',
     rep_client: 'Пацієнт',
@@ -449,6 +477,11 @@ var UI = {
     sr_safety: 'safety item',
     btn_print: 'Print / save as PDF',
     btn_back: 'Back to form',
+    btn_send_bot: 'Send to clinician',
+    send_bot_sending: 'Sending…',
+    send_bot_opening: 'Opening Telegram…',
+    send_bot_err: 'Send error: ',
+    send_bot_encode_err: 'Failed to encode result',
     confirm_clear: 'Clear all responses and metadata?',
     report_header: 'MID-60 Report',
     rep_client: 'Client',
@@ -726,6 +759,8 @@ function showReport() {
   renderBarChart(R);
   renderResponses(R);
 
+  LAST_REPORT = R;
+
   document.getElementById('form-view').classList.add('hidden');
   document.getElementById('report-view').classList.remove('hidden');
   window.scrollTo(0, 0);
@@ -878,6 +913,178 @@ function renderResponses(R) {
   document.getElementById('rep-responses').innerHTML = html;
 }
 
+// ---------- bot share ----------
+
+// btoa() работает только с byte-string. encodeURIComponent → unescape —
+// безопасный способ закодировать UTF-8 (на случай если в RESPONSES
+// окажутся не-ASCII значения, хотя по схеме они int 0-10). Бекенд
+// валидирует payload по base64-charset, эта обёртка гарантирует совпадение.
+function b64utf8(s) {
+  return btoa(unescape(encodeURIComponent(s)));
+}
+
+// Сериализация ответов под /mid60/submit. JSON компактнее, чем sparse
+// массив на 60 пунктов: при ~5-10 пропусках экономия ~30%, а при
+// полностью заполненной форме разница невелика. Поле версии нужно,
+// чтобы будущее изменение схемы (например, добавление шкал валидности)
+// не сломало backward-парсинг старых ссылок.
+function packResponses() {
+  try {
+    var meta = {
+      client: document.getElementById('meta-client').value || '',
+      dob: document.getElementById('meta-dob').value || '',
+      date: document.getElementById('meta-date').value || ''
+    };
+    return b64utf8(JSON.stringify({ v: 1, r: RESPONSES, m: meta }));
+  } catch (e) {
+    return '';
+  }
+}
+
+// Компактный emoji-summary под лимит 3500 chars бекенда. Структура
+// зеркалит порядок чтения звіту: безопасность → общая тяжесть → профиль
+// → топ-подшкалы → дисклеймер. Без HTML-эскейпа здесь — он происходит в
+// handlers_mid60 при esc(report_text), мы шлём plain-text.
+function buildEmojiSummary(R) {
+  if (!R) return '';
+  var lines = [];
+  var name = document.getElementById('meta-client').value || '';
+  var date = document.getElementById('meta-date').value || '';
+  lines.push('🧠 MID-60' + (name ? ' — ' + name : '') + (date ? ' (' + date + ')' : ''));
+  lines.push('');
+  if (R.safety_flags && R.safety_flags.length) {
+    lines.push('⚠️ Пункти безпеки: ' + R.safety_flags.map(function (f) { return '#' + f.id + ' (' + f.response + '/10)'; }).join(', '));
+    lines.push('');
+  }
+  lines.push('📊 Загальний бал: ' + Math.round(R.raw.totalMean) + ' (' + R.descriptor + ')');
+  lines.push('📈 Перцентиль (норма/клін.): ' + R.percentiles.community + '% / ' + R.percentiles.clinical + '%');
+  lines.push('🎯 Профіль: ' + R.classification.name);
+  var nCutoff = Object.values(R.raw.atCutoff).filter(Boolean).length;
+  var total = Object.keys(DATA.subscales).length;
+  lines.push('📉 Підшкал у клін. діапазоні: ' + nCutoff + '/' + total);
+  var diag = (R.ranked_subscales && R.ranked_subscales.diagnostic) || [];
+  var add = (R.ranked_subscales && R.ranked_subscales.additional) || [];
+  var top = diag.concat(add).slice(0, 8);
+  if (top.length) {
+    lines.push('');
+    lines.push('🔝 Найбільш виражені підшкали:');
+    top.forEach(function (e) {
+      var sub = DATA.subscales[e.key];
+      var nm = L(sub, 'short_name') || e.key;
+      lines.push('• ' + nm + ': ' + round1(e.score) + ' (cutoff ' + sub.cutoff + ', ' + e.items_at_threshold + '/' + e.total_items + ')');
+    });
+  }
+  // Near-miss блок — підшкала НЕ at-cutoff, але композитний бал
+  // Kate & Hegarty (`0.5 × (score-cutoff)/cutoff + 0.5 × items/N`) ≥ 0.1.
+  // Та сама формула, яку автори використовують для ранжування at-cutoff
+  // підшкал (див. docs/INTERPRETATION.md Крок 4), розширена нижче межі.
+  // Поріг 0.1 емпірично відсікає неспецифічний Trance (composite ~0.09)
+  // — який автори окремо позначають як confound (highway hypnosis,
+  // daydreaming) — і ловить OSDD/PersecIntrusion-warning (composite ≥ 0.14).
+  // Це методологічна екстраполяція оригіналу, не самостійний конструкт.
+  // У оригінальній Kate & Hegarty 2026 below-cutoff блока немає; цей
+  // блок — додатковий клінічний шар для emoji-summary (бо клініцист
+  // інакше пропускає warning без відкриття HTML-вкладення).
+  var nearMiss = [];
+  Object.keys(DATA.subscales).forEach(function (k) {
+    if (R.raw.atCutoff[k]) return;
+    var sub = DATA.subscales[k];
+    var score = R.raw.subscaleMeans[k];
+    var n = R.raw.itemsAtThreshold[k];
+    var composite = 0.5 * (score - sub.cutoff) / sub.cutoff + 0.5 * n / sub.items.length;
+    if (composite >= 0.1) {
+      nearMiss.push({ key: k, score: score, items: n, cutoff: sub.cutoff, composite: composite });
+    }
+  });
+  if (nearMiss.length) {
+    nearMiss.sort(function (a, b) { return b.composite - a.composite; });
+    lines.push('');
+    lines.push('🟡 Близько до межі (subclinical warning):');
+    nearMiss.slice(0, 5).forEach(function (e) {
+      var sub = DATA.subscales[e.key];
+      var nm = L(sub, 'short_name') || e.key;
+      lines.push('• ' + nm + ': ' + round1(e.score) + ' (cutoff ' + e.cutoff + ', ' + e.items + '/' + sub.items.length + ' пунктів)');
+    });
+  }
+  lines.push('');
+  lines.push('💡 Скринінг, не діагноз. Верифікувати клінічним інтерв\'ю + SCID-D/DDIS/TADS-I за показаннями.');
+  return lines.join('\n');
+}
+
+// Полный HTML-звіт с inline CSS — рендерится у клиента 1:1 как на странице.
+// Клонируем секцию report-view, выкидываем кнопки/toast, вставляем
+// собранные <style> тэги. Файл уходит админу send_document вложением,
+// открывается в браузере одним кликом — идентично AMPD-share.
+function buildHtmlReport() {
+  if (!LAST_REPORT) return '';
+  var re = document.getElementById('report-view');
+  if (!re) return '';
+  var clone = re.cloneNode(true);
+  var btns = clone.querySelector('.buttons');
+  if (btns) btns.parentNode.removeChild(btns);
+  clone.classList.remove('hidden');
+  clone.removeAttribute('id');
+  var styles = '';
+  var styleEls = document.getElementsByTagName('style');
+  for (var i = 0; i < styleEls.length; i++) styles += styleEls[i].textContent;
+  var nameRaw = document.getElementById('meta-client').value || '';
+  var nameEsc = nameRaw.replace(/[<>&"]/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; });
+  var title = 'MID-60' + (nameEsc ? ' — ' + nameEsc : '');
+  return '<!DOCTYPE html><html lang="' + LANG + '"><head><meta charset="utf-8">' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<title>' + title + '</title><style>' + styles +
+    'body{padding:1rem;background:#fff;}.wrap{max-width:980px;margin:0 auto;}' +
+    '</style></head><body><div class="wrap">' + clone.outerHTML + '</div></body></html>';
+}
+
+var _toastTimer = null;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  if (_toastTimer) clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2400);
+}
+
+function sendToBot() {
+  if (!MID60_BOT_ENDPOINT) return;
+  var enc = packResponses();
+  if (!enc) { showToast(T('send_bot_encode_err')); return; }
+  var btn = document.getElementById('btn-send-bot');
+  if (btn) btn.disabled = true;
+  showToast(T('send_bot_sending'));
+  var body = {
+    payload: enc,
+    name: document.getElementById('meta-client').value || null,
+    report_text: buildEmojiSummary(LAST_REPORT) || null,
+    report_html: buildHtmlReport() || null
+  };
+  fetch(MID60_BOT_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+    .then(function (resp) {
+      if (!resp.ok) {
+        return resp.json().then(
+          function (e) { throw new Error(e.error || String(resp.status)); },
+          function () { throw new Error(String(resp.status)); }
+        );
+      }
+      return resp.json();
+    })
+    .then(function (d) {
+      showToast(T('send_bot_opening'));
+      if (btn) btn.classList.add('ok');
+      window.location.href = d.deep_link;
+    })
+    .catch(function (e) {
+      showToast(T('send_bot_err') + (e.message || 'connection'));
+      if (btn) btn.disabled = false;
+    });
+}
+
 // ---------- language switching ----------
 function setLang(newLang) {
   LANG = newLang;
@@ -919,6 +1126,14 @@ window.addEventListener('DOMContentLoaded', function () {
     document.getElementById('form-view').classList.remove('hidden');
   });
   document.getElementById('btn-print').addEventListener('click', function () { window.print(); });
+
+  if (MID60_BOT_ENDPOINT) {
+    var sendBtn = document.getElementById('btn-send-bot');
+    if (sendBtn) {
+      sendBtn.classList.remove('hidden');
+      sendBtn.addEventListener('click', sendToBot);
+    }
+  }
 
   document.getElementById('btn-sample').addEventListener('click', function () {
     fetch('docs/sample_responses.json').then(function (r) { return r.json(); }).then(function (obj) {

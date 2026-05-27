@@ -22,6 +22,7 @@ python3 -m http.server 8080
 - Композитне ранжування `0.5 × ((score-cutoff)/cutoff) + 0.5 × (items_at_threshold/N)` для відбору найбільш виражених підшкал
 - Дослівні інтерпретативні абзаци з OSF Technical Paper
 - Звіт для друку / збереження в PDF
+- Кнопка «Надіслати лікарю» — share через Telegram-бот @vilenchyk_booking_bot (whitelist + PHI ≤ 1 год; той же patern, що в [ampd-tools](https://github.com/BenBakster/ampd-tools))
 
 ## PHI та приватність
 
@@ -75,9 +76,22 @@ mid60-tools/
 - **Зміст інструменту** — відкрита ліцензія Kate & Hegarty 2026 ([OSF E83KC](https://doi.org/10.17605/OSF.IO/E83KC)). Пункти, прив'язка до підшкал, межі, правила класифікації, норми, інтерпретативний текст — усе дослівно з цього документа.
 - MID-60 developer paper: Kate, Jamieson, Dorahy & Middleton, 2021. *J Trauma & Dissociation* 22(3): 265-287.
 
+## Share через Telegram-бот
+
+На сторінці звіту з'являється кнопка **«Надіслати лікарю»** (`🧠`). Натиснувши:
+
+1. Фронт POST'ить `{payload, name, report_text, report_html}` на `https://worker-production-ede9.up.railway.app/mid60/submit` (CORS — лише `benbakster.github.io`).
+2. Endpoint валідує (rate-limit, payload charset, ліміти розмірів), кладе результат у `mid60_pending_results` з TTL=1 год, повертає `{token, deep_link}`.
+3. Фронт відкриває `t.me/vilenchyk_booking_bot?start=mid60_<token>`.
+4. Бот атомарно забирає payload (`consume_pending_mid60`):
+   - якщо пацієнт уже є в `bookings` (whitelist) → пуш адміну emoji-summary + повний HTML-звіт як вкладення;
+   - інакше → мʼяке «запис тут», адміну нічого не йде.
+5. PHI: payload не задерживається довше TTL; `mid60_log` хранить тільки `{tg_id, sent_to_admin, ts}`.
+
+Emoji-summary містить блок **«🟡 Близько до межі»** для підшкал, які не at-cutoff, але мають композитний бал (`0.5 × tightness + 0.5 × breadth` за Kate & Hegarty) ≥ 0.1 — клінічно значущі subclinical warnings (OSDD-1-індикатори, злоякісні голоси), які інакше пропустилися б у короткому повідомленні. Це методологічна екстраполяція оригінальної формули нижче cutoff, не самостійний конструкт.
+
 ## Плани
 
-- [ ] v0.5 — Telegram-бот доступу за прикладом ampd-tools (допустимий список + персональні дані ≤ 1 год)
 - [ ] v0.6 — графік динаміки балів для багаторазового адміністрування
 
 ## Внесок
