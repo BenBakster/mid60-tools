@@ -5,186 +5,246 @@
   "_safety_items": [22, 44, 58],
   "items": [
     {"id": 1,  "subscale": "DistressMemory",   "text_en": "Forgetting what you did earlier in the day",
-     "text_uk": "Ви забуваєте, що робили раніше того ж дня"},
+     "text_uk": "Ви забуваєте, що робили раніше того ж дня",
+     "text_ru": "Вы забываете, что делали ранее в течение дня"},
 
     {"id": 2,  "subscale": "DeperDereal",      "text_en": "Having an emotion (e.g., fear, sadness, anger, happiness) that doesn't feel like it is \"yours\"",
-     "text_uk": "Ви відчуваєте емоцію (наприклад, страх, сум, гнів, радість), яку не сприймаєте як свою"},
+     "text_uk": "Ви відчуваєте емоцію (наприклад, страх, сум, гнів, радість), яку не сприймаєте як свою",
+     "text_ru": "Вы испытываете эмоцию (например, страх, грусть, гнев, радость), которую не воспринимаете как свою"},
 
     {"id": 3,  "subscale": "AlterPerson",      "text_en": "Hearing the voice of a child in your head",
-     "text_uk": "Ви чуєте голос дитини у своїй голові"},
+     "text_uk": "Ви чуєте голос дитини у своїй голові",
+     "text_ru": "Вы слышите голос ребёнка в своей голове"},
 
     {"id": 4,  "subscale": "Flashbacks",       "text_en": "Reliving a traumatic event so vividly that you totally lose contact with where you actually are (that is, you think that you are \"back there and then\")",
-     "text_uk": "Ви переживаєте травматичну подію настільки яскраво, що повністю втрачаєте зв'язок із тим, де насправді перебуваєте (вам здається, що ви знову «там і тоді»)"},
+     "text_uk": "Ви переживаєте травматичну подію настільки яскраво, що повністю втрачаєте зв'язок із тим, де насправді перебуваєте (вам здається, що ви знову «там і тоді»)",
+     "text_ru": "Вы переживаете травматическое событие настолько ярко, что полностью теряете связь с тем, где находитесь на самом деле (вам кажется, что вы снова «там и тогда»)"},
 
     {"id": 5,  "subscale": "BodySymptoms",     "text_en": "Having difficulty swallowing (for no known medical reason)",
-     "text_uk": "Вам стає важко ковтати (без відомої медичної причини)"},
+     "text_uk": "Вам стає важко ковтати (без відомої медичної причини)",
+     "text_ru": "Вам становится трудно глотать (без известной медицинской причины)"},
 
     {"id": 6,  "subscale": "SelfConfusion",    "text_en": "Having trance-like episodes where you stare off into space and lose awareness of what is going on around you",
-     "text_uk": "У вас бувають епізоди, коли ви ніби «вимикаєтеся» — дивитеся в порожнечу й втрачаєте усвідомлення того, що відбувається навколо"},
+     "text_uk": "У вас бувають епізоди, коли ви ніби «вимикаєтеся» — дивитеся в порожнечу й втрачаєте усвідомлення того, що відбувається навколо",
+     "text_ru": "У вас бывают эпизоды, когда вы будто «выключаетесь» — смотрите в пустоту и теряете осознание того, что происходит вокруг"},
 
     {"id": 7,  "subscale": "DeperDereal",      "text_en": "Being told of things that you had recently done, but with absolutely no memory of having done those things",
-     "text_uk": "Вам розповідають про речі, які ви нещодавно зробили, але ви абсолютно цього не пам'ятаєте"},
+     "text_uk": "Вам розповідають про речі, які ви нещодавно зробили, але ви абсолютно цього не пам'ятаєте",
+     "text_ru": "Вам рассказывают о том, что вы недавно делали, но вы совершенно этого не помните"},
 
     {"id": 8,  "subscale": "DistressMemory",   "text_en": "Not remembering what you ate at your last meal — or even whether you ate",
-     "text_uk": "Ви не пам'ятаєте, що їли востаннє — або навіть чи взагалі їли"},
+     "text_uk": "Ви не пам'ятаєте, що їли востаннє — або навіть чи взагалі їли",
+     "text_ru": "Вы не помните, что ели в последний раз, — или даже ели ли вообще"},
 
     {"id": 9,  "subscale": "DeperDereal",      "text_en": "Things around you feeling unreal",
-     "text_uk": "Усе навколо вас здається нереальним"},
+     "text_uk": "Усе навколо вас здається нереальним",
+     "text_ru": "Всё вокруг вас кажется нереальным"},
 
     {"id": 10, "subscale": "BodySymptoms",     "text_en": "Not being able to see for a while (as if you are blind) for no known medical reason",
-     "text_uk": "Ви на якийсь час не можете бачити — ніби втратили зір — без відомої медичної причини"},
+     "text_uk": "Ви на якийсь час не можете бачити — ніби втратили зір — без відомої медичної причини",
+     "text_ru": "Вы на какое-то время не можете видеть — будто потеряли зрение — без известной медицинской причины"},
 
     {"id": 11, "subscale": "SelfConfusion",    "text_en": "Feeling very detached from your behaviour as you \"go through the motions\" of daily life",
-     "text_uk": "Ви глибоко відсторонені від власної поведінки — ніби «механічно» проживаєте кожен день"},
+     "text_uk": "Ви глибоко відсторонені від власної поведінки — ніби «механічно» проживаєте кожен день",
+     "text_ru": "Вы глубоко отстранены от собственного поведения — будто «механически» проживаете каждый день"},
 
     {"id": 12, "subscale": "SelfConfusion",    "text_en": "Feeling uncertain about who you really are",
-     "text_uk": "Ви не впевнені, ким ви насправді є"},
+     "text_uk": "Ви не впевнені, ким ви насправді є",
+     "text_ru": "Вы не уверены в том, кто вы есть на самом деле"},
 
     {"id": 13, "subscale": "DeperDereal",      "text_en": "Feeling that other people, objects, or the world around you are not real",
-     "text_uk": "Вам здається, що інші люди, предмети або світ навколо вас несправжні"},
+     "text_uk": "Вам здається, що інші люди, предмети або світ навколо вас несправжні",
+     "text_ru": "Вам кажется, что другие люди, предметы или мир вокруг вас ненастоящие"},
 
     {"id": 14, "subscale": "BodySymptoms",     "text_en": "Being paralysed or unable to move (for no known medical reason)",
-     "text_uk": "Ви раптом не можете рухатися — ніби вас паралізувало (без відомої медичної причини)"},
+     "text_uk": "Ви раптом не можете рухатися — ніби вас паралізувало (без відомої медичної причини)",
+     "text_ru": "Вы вдруг не можете двигаться — будто вас парализовало (без известной медицинской причины)"},
 
     {"id": 15, "subscale": "Flashbacks",       "text_en": "Being so bothered by flashbacks that it was hard to get out of bed and face the day",
-     "text_uk": "Травматичні спогади настільки не дають вам спокою, що вам важко встати з ліжка й узятися за день"},
+     "text_uk": "Травматичні спогади настільки не дають вам спокою, що вам важко встати з ліжка й узятися за день",
+     "text_ru": "Травматические воспоминания настолько не дают вам покоя, что вам трудно встать с постели и начать день"},
 
     {"id": 16, "subscale": "AutoMemory",       "text_en": "Not remembering large parts of your childhood after age 5",
-     "text_uk": "Ви не пам'ятаєте значних періодів свого дитинства після п'ятирічного віку"},
+     "text_uk": "Ви не пам'ятаєте значних періодів свого дитинства після п'ятирічного віку",
+     "text_ru": "Вы не помните значительных периодов своего детства после пяти лет"},
 
     {"id": 17, "subscale": "SelfConfusion",    "text_en": "Feeling disconnected from everything around you",
-     "text_uk": "Ви відчуваєте відірваність від усього, що вас оточує"},
+     "text_uk": "Ви відчуваєте відірваність від усього, що вас оточує",
+     "text_ru": "Вы чувствуете оторванность от всего, что вас окружает"},
 
     {"id": 18, "subscale": "BodySymptoms",     "text_en": "Not being able to hear for a while (as if you are deaf) (for no known medical reason)",
-     "text_uk": "Ви на якийсь час не можете чути — ніби втратили слух — без відомої медичної причини"},
+     "text_uk": "Ви на якийсь час не можете чути — ніби втратили слух — без відомої медичної причини",
+     "text_ru": "Вы на какое-то время не можете слышать — будто потеряли слух — без известной медицинской причины"},
 
     {"id": 19, "subscale": "AutoMemory",       "text_en": "Feeling that pieces of your past are missing",
-     "text_uk": "Вам здається, що окремі частини вашого минулого випали з пам'яті"},
+     "text_uk": "Вам здається, що окремі частини вашого минулого випали з пам'яті",
+     "text_ru": "Вам кажется, что отдельные части вашего прошлого выпали из памяти"},
 
     {"id": 20, "subscale": "DistressMemory",   "text_en": "Immediately forgetting what other people tell you",
-     "text_uk": "Ви одразу забуваєте те, що вам кажуть"},
+     "text_uk": "Ви одразу забуваєте те, що вам кажуть",
+     "text_ru": "Вы сразу забываете то, что вам говорят"},
 
     {"id": 21, "subscale": "Trance",           "text_en": "Having difficulty walking (for no known medical reason)",
-     "text_uk": "Вам стає важко ходити (без відомої медичної причини)"},
+     "text_uk": "Вам стає важко ходити (без відомої медичної причини)",
+     "text_ru": "Вам становится трудно ходить (без известной медицинской причины)"},
 
     {"id": 22, "subscale": "PersecIntrusion",  "safety_flag": true,
      "text_en": "Hearing a voice in your head that wants you to hurt yourself",
-     "text_uk": "Ви чуєте голос у своїй голові, який хоче, щоб ви зробили собі боляче"},
+     "text_uk": "Ви чуєте голос у своїй голові, який хоче, щоб ви зробили собі боляче",
+     "text_ru": "Вы слышите голос в своей голове, который хочет, чтобы вы причинили себе боль"},
 
     {"id": 23, "subscale": "SelfConfusion",    "text_en": "Feeling very confused about who you really are",
-     "text_uk": "Ви дуже розгублені щодо того, ким є насправді"},
+     "text_uk": "Ви дуже розгублені щодо того, ким є насправді",
+     "text_ru": "Вы очень растеряны в отношении того, кто вы есть на самом деле"},
 
     {"id": 24, "subscale": "AutoMemory",       "text_en": "Feeling that important things happened to you earlier in your life, but you cannot remember them",
-     "text_uk": "Ви відчуваєте, що колись у житті з вами сталися важливі події, але не можете їх пригадати"},
+     "text_uk": "Ви відчуваєте, що колись у житті з вами сталися важливі події, але не можете їх пригадати",
+     "text_ru": "Вы чувствуете, что когда-то в жизни с вами произошли важные события, но вы не можете их вспомнить"},
 
     {"id": 25, "subscale": "DeperDereal",      "text_en": "Feeling as if you were looking at the world through a fog so that people and objects felt far away or unclear",
-     "text_uk": "Вам здається, ніби ви дивитеся на світ крізь туман, і люди та предмети сприймаються далекими або нечіткими"},
+     "text_uk": "Вам здається, ніби ви дивитеся на світ крізь туман, і люди та предмети сприймаються далекими або нечіткими",
+     "text_ru": "Вам кажется, будто вы смотрите на мир сквозь туман, и люди и предметы кажутся далёкими или нечёткими"},
 
     {"id": 26, "subscale": "Seizures",         "text_en": "Having seizures for which your doctor can find no reason",
-     "text_uk": "У вас бувають напади / судоми, причини яких ваш лікар не може встановити"},
+     "text_uk": "У вас бувають напади / судоми, причини яких ваш лікар не може встановити",
+     "text_ru": "У вас бывают приступы / судороги, причину которых ваш врач не может установить"},
 
     {"id": 27, "subscale": "Trance",           "text_en": "Going into trance so much (or for so long) that it interferes with your daily activities and responsibilities",
-     "text_uk": "Ви настільки часто (або так надовго) відключаєтеся від реальності, що це заважає вам у повсякденних справах та обов'язках"},
+     "text_uk": "Ви настільки часто (або так надовго) відключаєтеся від реальності, що це заважає вам у повсякденних справах та обов'язках",
+     "text_ru": "Вы настолько часто (или так надолго) отключаетесь от реальности, что это мешает вам в повседневных делах и обязанностях"},
 
     {"id": 28, "subscale": "AngryIntrusion",   "text_en": "Words just flowing from your mouth as if they were not in your control",
-     "text_uk": "Слова самі вилітають з вас, ніби ви ними не керуєте"},
+     "text_uk": "Слова самі вилітають з вас, ніби ви ними не керуєте",
+     "text_ru": "Слова сами вылетают у вас изо рта, будто вы ими не управляете"},
 
     {"id": 29, "subscale": "AutoMemory",       "text_en": "Feeling that there are large gaps in your memory",
-     "text_uk": "Вам здається, що у вашій пам'яті є великі прогалини"},
+     "text_uk": "Вам здається, що у вашій пам'яті є великі прогалини",
+     "text_ru": "Вам кажется, что в вашей памяти есть большие пробелы"},
 
     {"id": 30, "subscale": "Trance",           "text_en": "Going into trance for hours",
-     "text_uk": "Ви відключаєтеся від реальності на цілі години"},
+     "text_uk": "Ви відключаєтеся від реальності на цілі години",
+     "text_ru": "Вы отключаетесь от реальности на целые часы"},
 
     {"id": 31, "subscale": "Flashbacks",       "text_en": "Bad memories coming into your mind and you can't get rid of them",
-     "text_uk": "Погані спогади спливають у вашій свідомості, і ви не можете їх позбутися"},
+     "text_uk": "Погані спогади спливають у вашій свідомості, і ви не можете їх позбутися",
+     "text_ru": "Плохие воспоминания всплывают у вас в сознании, и вы не можете от них избавиться"},
 
     {"id": 32, "subscale": "Trance",           "text_en": "Drifting into trance without even realising that it is happening",
-     "text_uk": "Ви відключаєтеся від реальності, навіть не помічаючи цього"},
+     "text_uk": "Ви відключаєтеся від реальності, навіть не помічаючи цього",
+     "text_ru": "Вы отключаетесь от реальности, даже не замечая этого"},
 
     {"id": 33, "subscale": "AngryIntrusion",   "text_en": "Words come out of your mouth, but you didn't say them; you don't know where those words came from",
-     "text_uk": "З вас вилітають слова, які ви не збиралися казати; ви не знаєте, звідки вони взялися"},
+     "text_uk": "З вас вилітають слова, які ви не збиралися казати; ви не знаєте, звідки вони взялися",
+     "text_ru": "У вас изо рта вылетают слова, но это не вы их говорите; вы не знаете, откуда они взялись"},
 
     {"id": 34, "subscale": "AutoMemory",       "text_en": "Being able to remember very little of your past",
-     "text_uk": "Ви пам'ятаєте дуже мало зі свого минулого"},
+     "text_uk": "Ви пам'ятаєте дуже мало зі свого минулого",
+     "text_ru": "Вы помните очень мало из своего прошлого"},
 
     {"id": 35, "subscale": "AngryIntrusion",   "text_en": "When you are angry, doing or saying things that you don't remember (after you calm down)",
-     "text_uk": "Коли ви розгнівані, ви робите або говорите речі, яких потім (коли заспокоїтеся) не пам'ятаєте"},
+     "text_uk": "Коли ви розгнівані, ви робите або говорите речі, яких потім (коли заспокоїтеся) не пам'ятаєте",
+     "text_ru": "Когда вы разгневаны, вы делаете или говорите то, чего потом (когда успокоитесь) не помните"},
 
     {"id": 36, "subscale": "AlterPerson",      "text_en": "Feeling that you have multiple personalities",
-     "text_uk": "Ви відчуваєте, що у вас декілька особистостей"},
+     "text_uk": "Ви відчуваєте, що у вас декілька особистостей",
+     "text_ru": "Вы чувствуете, что у вас несколько личностей"},
 
     {"id": 37, "subscale": "PersecIntrusion",  "text_en": "Hearing a voice in your head that calls you names (e.g., wimp, stupid, whore, slut, bitch, etc.)",
-     "text_uk": "Ви чуєте голос у своїй голові, який обзиває вас (наприклад, слабак, дурень, повія, шльондра, сука тощо)"},
+     "text_uk": "Ви чуєте голос у своїй голові, який обзиває вас (наприклад, слабак, дурень, повія, шльондра, сука тощо)",
+     "text_ru": "Вы слышите голос в своей голове, который обзывает вас (например, «слабак», «дура», «шлюха», «потаскуха», «сука» и т. п.)"},
 
     {"id": 38, "subscale": "DistressMemory",   "text_en": "Poor memory causing serious difficulty for you",
-     "text_uk": "Погана пам'ять спричиняє вам серйозні труднощі"},
+     "text_uk": "Погана пам'ять спричиняє вам серйозні труднощі",
+     "text_ru": "Плохая память создаёт вам серьёзные трудности"},
 
     {"id": 39, "subscale": "AlterPerson",      "text_en": "Having other people (or parts) inside you who have their own names",
-     "text_uk": "Усередині вас є інші люди (або частини) зі своїми іменами"},
+     "text_uk": "Усередині вас є інші люди (або частини) зі своїми іменами",
+     "text_ru": "Внутри вас есть другие люди (или части) со своими именами"},
 
     {"id": 40, "subscale": "Flashbacks",       "text_en": "Reliving a past trauma so vividly that you see it, hear it, smell it, etc.",
-     "text_uk": "Ви переживаєте минулу травму настільки яскраво, що бачите її, чуєте, відчуваєте її запах тощо"},
+     "text_uk": "Ви переживаєте минулу травму настільки яскраво, що бачите її, чуєте, відчуваєте її запах тощо",
+     "text_ru": "Вы переживаете прошлую травму настолько ярко, что видите её, слышите, чувствуете её запах и т. п."},
 
     {"id": 41, "subscale": "Trance",           "text_en": "Going into trance several days in a row",
-     "text_uk": "Ви відключаєтеся від реальності декілька днів поспіль"},
+     "text_uk": "Ви відключаєтеся від реальності декілька днів поспіль",
+     "text_ru": "Вы отключаетесь от реальности несколько дней подряд"},
 
     {"id": 42, "subscale": "Amnesia",          "text_en": "Discovering that you have changed your appearance (e.g., cut your hair, or changed your hairstyle, or changed what you are wearing, or put on cosmetics, etc.) with no memory of having done so",
-     "text_uk": "Ви виявляєте, що змінили зовнішність (наприклад, постриглися, змінили зачіску, перевдягнулися, нафарбувалися тощо), не пам'ятаючи, що робили це"},
+     "text_uk": "Ви виявляєте, що змінили зовнішність (наприклад, постриглися, змінили зачіску, перевдягнулися, нафарбувалися тощо), не пам'ятаючи, що робили це",
+     "text_ru": "Вы обнаруживаете, что изменили внешность (например, подстриглись, сменили причёску, переоделись, накрасились и т. п.), не помня, что делали это"},
 
     {"id": 43, "subscale": "DistressMemory",   "text_en": "Being bothered or upset by how much you forget",
-     "text_uk": "Вас турбує або засмучує те, скільки всього ви забуваєте"},
+     "text_uk": "Вас турбує або засмучує те, скільки всього ви забуваєте",
+     "text_ru": "Вас беспокоит или расстраивает то, как много вы забываете"},
 
     {"id": 44, "subscale": "PersecIntrusion",  "safety_flag": true,
      "text_en": "Hearing a voice in your head that wants you to die",
-     "text_uk": "Ви чуєте голос у своїй голові, який хоче, щоб ви померли"},
+     "text_uk": "Ви чуєте голос у своїй голові, який хоче, щоб ви померли",
+     "text_ru": "Вы слышите голос в своей голове, который хочет, чтобы вы умерли"},
 
     {"id": 45, "subscale": "Amnesia",          "text_en": "Suddenly finding yourself somewhere odd at home (e.g., inside the closet, under a bed, curled up on the floor, etc.) with no knowledge of how you got there",
-     "text_uk": "Ви раптом опиняєтеся у незвичному місці вдома (наприклад, у шафі, під ліжком, скрутившись на підлозі тощо), не знаючи, як туди потрапили"},
+     "text_uk": "Ви раптом опиняєтеся у незвичному місці вдома (наприклад, у шафі, під ліжком, скрутившись на підлозі тощо), не знаючи, як туди потрапили",
+     "text_ru": "Вы вдруг оказываетесь в необычном месте дома (например, в шкафу, под кроватью, свернувшись на полу и т. п.), не зная, как туда попали"},
 
     {"id": 46, "subscale": "AngryIntrusion",   "text_en": "Feeling as if there is something inside you that takes control of your behaviour and speech",
-     "text_uk": "У вас відчуття, ніби всередині щось перебирає контроль над тим, як ви поводитеся й говорите"},
+     "text_uk": "У вас відчуття, ніби всередині щось перебирає контроль над тим, як ви поводитеся й говорите",
+     "text_ru": "У вас ощущение, будто внутри что-то перехватывает контроль над тем, как вы ведёте себя и говорите"},
 
     {"id": 47, "subscale": "DeperDereal",      "text_en": "Totally forgetting how to do something that you know very well how to do (e.g., how to drive, how to read, how to use the computer, how to play the piano, etc.)",
-     "text_uk": "Ви повністю забуваєте, як робити те, що вмієте дуже добре (наприклад, водити машину, читати, користуватися комп'ютером, грати на фортепіано тощо)"},
+     "text_uk": "Ви повністю забуваєте, як робити те, що вмієте дуже добре (наприклад, водити машину, читати, користуватися комп'ютером, грати на фортепіано тощо)",
+     "text_ru": "Вы полностью забываете, как делать то, что умеете очень хорошо (например, водить машину, читать, пользоваться компьютером, играть на фортепиано и т. п.)"},
 
     {"id": 48, "subscale": "Amnesia",          "text_en": "Suddenly finding yourself somewhere (e.g., at the beach, at work, in a nightclub, in your car, etc.) with no memory of how you got there",
-     "text_uk": "Ви раптом опиняєтеся десь (наприклад, на пляжі, на роботі, в нічному клубі, у власному авто тощо), не пам'ятаючи, як туди потрапили"},
+     "text_uk": "Ви раптом опиняєтеся десь (наприклад, на пляжі, на роботі, в нічному клубі, у власному авто тощо), не пам'ятаючи, як туди потрапили",
+     "text_ru": "Вы вдруг оказываетесь где-то (например, на пляже, на работе, в ночном клубе, в собственной машине и т. п.), не помня, как туда попали"},
 
     {"id": 49, "subscale": "AlterPerson",      "text_en": "Feeling that there is another person inside who can come out and speak if it wants",
-     "text_uk": "У вас відчуття, що всередині є інша людина, яка може проявитися й заговорити, коли захоче"},
+     "text_uk": "У вас відчуття, що всередині є інша людина, яка може проявитися й заговорити, коли захоче",
+     "text_ru": "У вас ощущение, что внутри есть другой человек, который может проявиться и заговорить, когда захочет"},
 
     {"id": 50, "subscale": "DeperDereal",      "text_en": "\"Coming to\" and finding that you have done something you don't remember doing (e.g., smashed something, cut yourself, cleaned the whole house, etc.)",
-     "text_uk": "Ви «отямлюєтеся» й виявляєте, що зробили щось, чого не пам'ятаєте (наприклад, щось розбили, порізали себе, прибрали весь будинок тощо)"},
+     "text_uk": "Ви «отямлюєтеся» й виявляєте, що зробили щось, чого не пам'ятаєте (наприклад, щось розбили, порізали себе, прибрали весь будинок тощо)",
+     "text_ru": "Вы «приходите в себя» и обнаруживаете, что сделали что-то, чего не помните (например, что-то разбили, порезали себя, убрали весь дом и т. п.)"},
 
     {"id": 51, "subscale": "Trance",           "text_en": "Having difficulty staying out of trance",
-     "text_uk": "Вам важко не відключатися від реальності"},
+     "text_uk": "Вам важко не відключатися від реальності",
+     "text_ru": "Вам трудно не отключаться от реальности"},
 
     {"id": 52, "subscale": "DistressMemory",   "text_en": "Suddenly not knowing how to do your job",
-     "text_uk": "Ви раптом не знаєте, як виконувати свою роботу"},
+     "text_uk": "Ви раптом не знаєте, як виконувати свою роботу",
+     "text_ru": "Вы вдруг не знаете, как выполнять свою работу"},
 
     {"id": 53, "subscale": "DeperDereal",      "text_en": "Your body suddenly feeling as if it isn't really yours",
-     "text_uk": "Ви раптом відчуваєте, ніби ваше тіло — не зовсім ваше"},
+     "text_uk": "Ви раптом відчуваєте, ніби ваше тіло — не зовсім ваше",
+     "text_ru": "Вы вдруг чувствуете, будто ваше тело — не совсем ваше"},
 
     {"id": 54, "subscale": "Flashbacks",       "text_en": "Being bothered by flashbacks for several days in a row",
-     "text_uk": "Травматичні спогади не дають вам спокою декілька днів поспіль"},
+     "text_uk": "Травматичні спогади не дають вам спокою декілька днів поспіль",
+     "text_ru": "Травматические воспоминания не дают вам покоя несколько дней подряд"},
 
     {"id": 55, "subscale": "SelfConfusion",    "text_en": "Being confused or puzzled by your emotions",
-     "text_uk": "Ви розгублені або спантеличені власними емоціями"},
+     "text_uk": "Ви розгублені або спантеличені власними емоціями",
+     "text_ru": "Вы растеряны или озадачены собственными эмоциями"},
 
     {"id": 56, "subscale": "PersecIntrusion",  "text_en": "Hearing a voice in your head that tells you to \"shut up\"",
-     "text_uk": "Ви чуєте голос у своїй голові, який велить вам «заткнутися»"},
+     "text_uk": "Ви чуєте голос у своїй голові, який велить вам «заткнутися»",
+     "text_ru": "Вы слышите голос в своей голове, который велит вам «заткнуться»"},
 
     {"id": 57, "subscale": "AlterPerson",      "text_en": "Having another part inside that has different memories, behaviors, and feelings than you do",
-     "text_uk": "Усередині вас є інша частина, яка має інші спогади, поведінку та почуття, ніж ви самі"},
+     "text_uk": "Усередині вас є інша частина, яка має інші спогади, поведінку та почуття, ніж ви самі",
+     "text_ru": "Внутри вас есть другая часть, у которой иные воспоминания, поведение и чувства, чем у вас самих"},
 
     {"id": 58, "subscale": "Amnesia",          "safety_flag": true,
      "text_en": "There were times when you \"woke up\" and found pills or a razor blade (or something else to hurt yourself with) in your hand",
-     "text_uk": "Бували випадки, коли ви «прокидалися» й знаходили у своїй руці таблетки чи лезо (або щось інше, чим можна заподіяти собі шкоду)"},
+     "text_uk": "Бували випадки, коли ви «прокидалися» й знаходили у своїй руці таблетки чи лезо (або щось інше, чим можна заподіяти собі шкоду)",
+     "text_ru": "Бывали случаи, когда вы «просыпались» и обнаруживали в своей руке таблетки или лезвие (или что-то ещё, чем можно причинить себе вред)"},
 
     {"id": 59, "subscale": "PersecIntrusion",  "text_en": "Hearing a voice in your head that calls you no good, worthless, or a failure",
-     "text_uk": "Ви чуєте голос у своїй голові, який каже, що ви ні на що не годні, нікчемні або невдаха"},
+     "text_uk": "Ви чуєте голос у своїй голові, який каже, що ви ні на що не годні, нікчемні або невдаха",
+     "text_ru": "Вы слышите голос в своей голове, который говорит, что вы ни на что не годны, никчёмны или что из вас ничего не вышло"},
 
     {"id": 60, "subscale": "AngryIntrusion",   "text_en": "Having a very angry part that \"comes out\" and says and does things that you would never do or say",
-     "text_uk": "У вас є дуже розгнівана частина, яка «виходить назовні» й говорить та робить речі, які ви ніколи б не сказали й не зробили"}
+     "text_uk": "У вас є дуже розгнівана частина, яка «виходить назовні» й говорить та робить речі, які ви ніколи б не сказали й не зробили",
+     "text_ru": "У вас есть очень разгневанная часть, которая «выходит наружу» и говорит и делает то, чего вы никогда бы не сказали и не сделали"}
   ]
 }

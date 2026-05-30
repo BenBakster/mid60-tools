@@ -264,6 +264,7 @@
       <div class="lang-switch no-print" role="tablist" aria-label="Language">
         <button id="lang-uk" type="button" class="active">УКР</button>
         <button id="lang-en" type="button">EN</button>
+        <button id="lang-ru" type="button">РУС</button>
       </div>
     </div>
   </header>
@@ -593,6 +594,70 @@ var UI = {
       'Conversion Disorder': 'Conversion Disorder',
       'General Subscales': 'General Subscales'
     }
+  },
+  ru: {
+    "title": "MID-60 — Многомерный опросник диссоциации, 60-пунктовая версия",
+    "subtitle": "Локальный подсчёт (Kate & Hegarty 2026, открытая лицензия). Данные пациента не сохраняются.",
+    "clinical_disclaimer": "MID-60 — это <b>лишь скрининговый инструмент</b>. Он не может быть единственным основанием для диагноза; его всегда следует интерпретировать вместе с клиническим суждением квалифицированного специалиста. Если срабатывают пункты безопасности 22 / 44 / 58 — применить стандартный протокол оценки суицидального риска.",
+    "clinical_guide_link": "📘 Клиническое руководство для врача (PDF, укр., 22 с.)",
+    "administration": "Администрирование",
+    "meta_client": "Пациент (инициалы / код)",
+    "meta_dob": "Дата рождения",
+    "meta_date": "Дата проведения",
+    "meta_placeholder": "по желанию",
+    "instructions_header": "Инструкция",
+    "items_header": "60 пунктов",
+    "item_col": "Пункт",
+    "never": "Никогда",
+    "always": "Всегда",
+    "answered": "Ответов:",
+    "btn_score": "Подсчитать и показать отчёт",
+    "btn_clear": "Очистить все ответы",
+    "btn_sample": "Загрузить пример (debug)",
+    "sr_safety": "пункт безопасности",
+    "btn_print": "Напечатать / сохранить в PDF",
+    "btn_back": "Вернуться к опроснику",
+    "btn_send_bot": "Отправить врачу",
+    "send_bot_sending": "Отправляю…",
+    "send_bot_opening": "Открываю Telegram…",
+    "send_bot_err": "Ошибка отправки: ",
+    "send_bot_encode_err": "Не удалось закодировать результат",
+    "confirm_clear": "Очистить все ответы и метаданные?",
+    "report_header": "Отчёт MID-60",
+    "rep_client": "Пациент",
+    "rep_dob": "Дата рождения",
+    "rep_date": "Дата проведения",
+    "rep_classification": "Вероятная классификация профиля",
+    "rep_cutoff_count": "Подшкал в клиническом диапазоне",
+    "rep_of": "из",
+    "rep_total": "Общий средний балл (0–100)",
+    "rep_pct_comm": "Перцентиль (общая популяция)",
+    "rep_pct_clin": "Перцентиль (клиническая выборка)",
+    "rep_descriptor": "Степень тяжести",
+    "subscale_results": "Результаты по подшкалам",
+    "col_family": "Диагностическая группа",
+    "col_subscale": "Подшкала",
+    "col_mean": "Средний балл (0–100)",
+    "col_cutoff": "Граница",
+    "col_in_range": "Превышает границу?",
+    "col_items": "Пункты в клин. диапазоне",
+    "yes": "Да",
+    "no": "Нет",
+    "bar_chart": "Профиль подшкал",
+    "responses_header": "Ответы пациента, сгруппированные по подшкалам",
+    "response_short": "Балл",
+    "clinical_use_h": "Клиническое применение",
+    "footer": "Алгоритм подсчёта и содержание инструмента воспроизведены из Kate &amp; Hegarty (2026), <i>A Review of the Clinical Utility and Psychometric Properties of the MID-60</i>. <a href=\"https://doi.org/10.17605/OSF.IO/E83KC\">doi.org/10.17605/OSF.IO/E83KC</a>. Открытая лицензия. Программа — по лицензии MIT.",
+    "response_label": "Ответ",
+    "diag_groups": {
+      "Dissociative Identity Disorder": "Диссоциативное расстройство идентичности",
+      "DID and OSDD-1": "ДРИ и OSDD-1",
+      "Depersonalisation / Derealisation Disorder": "Расстройство деперсонализации / дереализации",
+      "Dissociative Amnesia": "Диссоциативная амнезия",
+      "Post-Traumatic Stress Disorder": "Посттравматическое стрессовое расстройство",
+      "Conversion Disorder": "Конверсионное расстройство",
+      "General Subscales": "Общие подшкалы"
+    }
   }
 };
 
@@ -657,13 +722,14 @@ function applyUiStrings() {
   // active button
   document.getElementById('lang-uk').classList.toggle('active', LANG === 'uk');
   document.getElementById('lang-en').classList.toggle('active', LANG === 'en');
+  document.getElementById('lang-ru').classList.toggle('active', LANG === 'ru');
 
   // translation note + data-driven UI strings — тільки якщо DATA вже готова
   // (захист від race: setLang() може бути викликаний до завершення loadAll).
   var note = document.getElementById('uk-translation-note');
   if (DATA.templates && DATA.templates.translation_disclaimer) {
-    if (LANG === 'uk') {
-      note.textContent = DATA.templates.translation_disclaimer.uk;
+    if (LANG === 'uk' || LANG === 'ru') {
+      note.textContent = DATA.templates.translation_disclaimer[LANG] || DATA.templates.translation_disclaimer.uk;
       note.classList.remove('hidden');
     } else {
       note.classList.add('hidden');
@@ -910,6 +976,16 @@ function showSafetyModal() {
       'This report is <b>not</b> a substitute for in-person consultation. ' +
       'If risk is acute, seek help now — do not wait for the doctor to reply.';
     document.getElementById('safety-modal-ack').textContent = 'I have read this, continue to report';
+  } else if (LANG === 'ru') {
+    document.getElementById('safety-modal-title').textContent = '⚠ Важная информация о безопасности';
+    document.getElementById('safety-modal-body').textContent =
+      'Некоторые из ваших ответов указывают на мысли о самоповреждении или суициде. ' +
+      'Это не диагноз, но это повод прямо сейчас поговорить с тем, кому вы доверяете, ' +
+      'или позвонить на линию помощи.';
+    document.getElementById('safety-modal-footer-text').innerHTML =
+      'Этот отчёт <b>не</b> заменяет очную консультацию. Если риск острый — ' +
+      'обратитесь за помощью сейчас, не ждите ответа врача.';
+    document.getElementById('safety-modal-ack').textContent = 'Я прочитал(а), продолжить к отчёту';
   }
   m.classList.remove('hidden');
 }
@@ -1309,6 +1385,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   document.getElementById('lang-uk').addEventListener('click', function () { setLang('uk'); });
   document.getElementById('lang-en').addEventListener('click', function () { setLang('en'); });
+  document.getElementById('lang-ru').addEventListener('click', function () { setLang('ru'); });
 
   document.getElementById('btn-score').addEventListener('click', showReport);
   document.getElementById('btn-clear').addEventListener('click', clearDraft);

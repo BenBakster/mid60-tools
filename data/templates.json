@@ -3,56 +3,76 @@
   "opening": {
     "base_en": "The Multidimensional Inventory of Dissociation 60-item version (MID-60) was administered on {DATE}. The client obtained a total mean score of {SCORE}, which falls in the '{DESCRIPTOR}' range.",
     "base_uk": "Багатовимірний опитувальник дисоціації, 60-пунктова версія (MID-60), проведено {DATE}. Загальний середній бал пацієнта становить {SCORE}, що відповідає діапазону «{DESCRIPTOR}».",
+    "base_ru": "Многомерный опросник диссоциации, 60-пунктовая версия (MID-60), проведён {DATE}. Общий средний балл пациента составляет {SCORE}, что соответствует диапазону «{DESCRIPTOR}».",
     "with_community_percentile_en": " (at the {PCT}th percentile of the community population).",
     "with_community_percentile_uk": " ({PCT}-й перцентиль за загальнопопуляційною вибіркою).",
+    "with_community_percentile_ru": " ({PCT}-й перцентиль по общепопуляционной выборке).",
     "with_profile_en": " Based on the pattern of responses and subscale elevations, the probable profile classification is {PROFILE}.",
     "with_profile_uk": " На підставі патерну відповідей і підвищень за підшкалами, ймовірна класифікація профілю — {PROFILE}.",
+    "with_profile_ru": " На основании паттерна ответов и повышений по подшкалам вероятная классификация профиля — {PROFILE}.",
     "no_disorder_en": " Based on the pattern of responses, no dissociative disorder is indicated.",
-    "no_disorder_uk": " На підставі патерну відповідей, дисоціативного розладу не виявлено."
+    "no_disorder_uk": " На підставі патерну відповідей, дисоціативного розладу не виявлено.",
+    "no_disorder_ru": " На основании паттерна ответов диссоциативного расстройства не выявлено."
   },
   "safety": {
     "header_en": "Risk of Self-Harm or Suicide",
     "header_uk": "Ризик самоушкодження або суїциду",
+    "header_ru": "Риск самоповреждения или суицида",
     "intro_en": "The respondent indicated risk of self-harm or suicide based upon the following item{S}:",
     "intro_uk": "Пацієнт дав ствердні відповіді щодо ризику самоушкодження або суїциду за такими пунктами:",
+    "intro_ru": "Пациент дал утвердительные ответы относительно риска самоповреждения или суицида по следующим пунктам:",
     "outro_en": "It is recommended to follow suicide risk assessment protocols to determine the nature, severity, and immediacy of the risk.",
-    "outro_uk": "Рекомендується застосувати протокол оцінки суїцидального ризику для визначення характеру, ступеня тяжкості та невідкладності ризику."
+    "outro_uk": "Рекомендується застосувати протокол оцінки суїцидального ризику для визначення характеру, ступеня тяжкості та невідкладності ризику.",
+    "outro_ru": "Рекомендуется применить протокол оценки суицидального риска для определения характера, степени тяжести и неотложности риска."
   },
   "diagnostic_section": {
     "header_en": "Subscales Contributing to Probable Profile Classification",
     "header_uk": "Підшкали, що формують ймовірний профіль",
+    "header_ru": "Подшкалы, формирующие вероятный профиль",
     "one_en": "The probable profile classification of {PROFILE} is based upon the pattern of responses and subscale elevations. There was one subscale contributing to this classification that exceeded its clinical cutoff. See below for details.",
     "one_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. Одна підшкала, що формує цю класифікацію, перевищила клінічну межу. Деталі нижче.",
+    "one_ru": "Вероятная классификация профиля — {PROFILE} — основана на паттерне ответов и повышениях по подшкалам. Одна подшкала, формирующая эту классификацию, превысила клиническую границу. Подробности ниже.",
     "many_en": "The probable profile classification of {PROFILE} is based upon the pattern of responses and subscale elevations. There were {N} subscales contributing to this classification that exceeded their respective clinical cutoffs. See below for details.",
-    "many_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. Цю класифікацію формують {N} підшкал, що перевищили клінічну межу. Деталі нижче."
+    "many_uk": "Ймовірна класифікація профілю — {PROFILE} — базується на патерні відповідей та підвищеннях за підшкалами. Цю класифікацію формують {N} підшкал, що перевищили клінічну межу. Деталі нижче.",
+    "many_ru": "Вероятная классификация профиля — {PROFILE} — основана на паттерне ответов и повышениях по подшкалам. Эту классификацию формируют {N} подшкал, превысивших клиническую границу. Подробности ниже."
   },
   "additional_section": {
     "header_one_en": "One Additional Clinically Significant Symptom Domain",
     "header_one_uk": "Один додатковий клінічно значущий симптомний домен",
+    "header_one_ru": "Один дополнительный клинически значимый симптомный домен",
     "header_many_en": "Top {N} Additional Clinically Significant Symptom Domains",
     "header_many_uk": "Додаткові клінічно значущі симптомні домени (топ-{N})",
+    "header_many_ru": "Дополнительные клинически значимые симптомные домены (топ-{N})",
     "one_en": "One additional subscale exceeded its clinical cutoff. See below for details.",
     "one_uk": "Одна додаткова підшкала перевищила свою клінічну межу. Деталі нижче.",
+    "one_ru": "Одна дополнительная подшкала превысила свою клиническую границу. Подробности ниже.",
     "many_en": "{N} additional subscales exceeded their respective clinical cutoffs. See below for details.",
-    "many_uk": "{N} додаткових підшкал перевищили клінічну межу. Деталі нижче."
+    "many_uk": "{N} додаткових підшкал перевищили клінічну межу. Деталі нижче.",
+    "many_ru": "{N} дополнительных подшкал превысили клиническую границу. Подробности ниже."
   },
   "subscale_block": {
     "header_en": "{DISPLAY_NAME} (Score: {SCORE}, Cutoff: {CUTOFF}, Items at clinical threshold: {N_ITEMS}/{TOTAL_ITEMS})",
     "header_uk": "{DISPLAY_NAME} (Бал: {SCORE}, Межа: {CUTOFF}, Пунктів у клінічному діапазоні: {N_ITEMS}/{TOTAL_ITEMS})",
+    "header_ru": "{DISPLAY_NAME} (Балл: {SCORE}, Граница: {CUTOFF}, Пунктов в клиническом диапазоне: {N_ITEMS}/{TOTAL_ITEMS})",
     "endorsed_intro_en": "In particular, the client endorsed the following items:",
-    "endorsed_intro_uk": "Зокрема, пацієнт підтвердив такі пункти:"
+    "endorsed_intro_uk": "Зокрема, пацієнт підтвердив такі пункти:",
+    "endorsed_intro_ru": "В частности, пациент подтвердил следующие пункты:"
   },
   "no_elevated_subscales_en": "No subscales exceeded their clinical cutoffs, indicating an absence of clinically significant dissociative symptoms across all measured domains.",
   "no_elevated_subscales_uk": "Жодна з підшкал не перевищила клінічної межі, що свідчить про відсутність клінічно значущих дисоціативних симптомів за всіма виміряними доменами.",
+  "no_elevated_subscales_ru": "Ни одна из подшкал не превысила клиническую границу, что свидетельствует об отсутствии клинически значимых диссоциативных симптомов по всем измеренным доменам.",
   "instructions": {
     "en": "How often do you have the following experiences when you are not under the influence of alcohol or drugs? Please select the number that best describes you. Select a \"0\" if the experience never happens to you; select a \"10\" if it is always happening to you. If it happens sometimes, but not all the time, choose a number between 1 and 9 that best describes how often it happens to you.",
-    "uk": "Як часто у вас виникають наведені нижче переживання, коли ви не перебуваєте під впливом алкоголю або наркотичних речовин? Будь ласка, оберіть число, яке найкраще описує вас. Оберіть «0», якщо це переживання ніколи з вами не трапляється; оберіть «10», якщо воно відбувається завжди. Якщо воно трапляється іноді, але не постійно, оберіть число від 1 до 9, яке найкраще відображає частоту."
+    "uk": "Як часто у вас виникають наведені нижче переживання, коли ви не перебуваєте під впливом алкоголю або наркотичних речовин? Будь ласка, оберіть число, яке найкраще описує вас. Оберіть «0», якщо це переживання ніколи з вами не трапляється; оберіть «10», якщо воно відбувається завжди. Якщо воно трапляється іноді, але не постійно, оберіть число від 1 до 9, яке найкраще відображає частоту.",
+    "ru": "Как часто у вас возникают перечисленные ниже переживания, когда вы не находитесь под влиянием алкоголя или наркотических веществ? Пожалуйста, выберите число, которое лучше всего вас описывает. Выберите «0», если это переживание никогда с вами не случается; выберите «10», если оно происходит всегда. Если оно случается иногда, но не постоянно, выберите число от 1 до 9, которое лучше всего отражает частоту."
   },
   "clinical_use_disclaimer": {
     "en": "The MID-60 is a screening instrument only. It is not designed to be the sole basis for diagnosis and should always be interpreted alongside clinical judgment. Clinically significant elevations should be followed up by asking targeted questions to clarify whether the nature and severity of the symptom truly match the item content. Where indicated, further evaluation can be undertaken using validated structured clinical interviews, such as the Structured Clinical Interview for DSM-5 Dissociative Disorders (SCID-D), the Dissociative Disorders Interview Schedule (DDIS), or the Trauma and Dissociative Symptoms Interview (TADS-I).",
-    "uk": "MID-60 — це виключно скринінговий інструмент. Він не може бути єдиною підставою для діагнозу; його завжди слід інтерпретувати разом із клінічним судженням. Клінічно значущі підвищення треба далі з'ясовувати цілеспрямованими запитаннями, щоб переконатися, що характер і ступінь тяжкості симптому відповідають змісту пункту. За показаннями подальша оцінка можлива за валідованими структурованими клінічними інтерв'ю, такими як SCID-D (Structured Clinical Interview for DSM-5 Dissociative Disorders), DDIS (Dissociative Disorders Interview Schedule) або TADS-I (Trauma and Dissociative Symptoms Interview)."
+    "uk": "MID-60 — це виключно скринінговий інструмент. Він не може бути єдиною підставою для діагнозу; його завжди слід інтерпретувати разом із клінічним судженням. Клінічно значущі підвищення треба далі з'ясовувати цілеспрямованими запитаннями, щоб переконатися, що характер і ступінь тяжкості симптому відповідають змісту пункту. За показаннями подальша оцінка можлива за валідованими структурованими клінічними інтерв'ю, такими як SCID-D (Structured Clinical Interview for DSM-5 Dissociative Disorders), DDIS (Dissociative Disorders Interview Schedule) або TADS-I (Trauma and Dissociative Symptoms Interview).",
+    "ru": "MID-60 — это исключительно скрининговый инструмент. Он не может быть единственным основанием для диагноза; его всегда следует интерпретировать вместе с клиническим суждением. Клинически значимые повышения нужно далее уточнять целенаправленными вопросами, чтобы убедиться, что характер и степень тяжести симптома соответствуют содержанию пункта. При наличии показаний дальнейшая оценка возможна с помощью валидированных структурированных клинических интервью, таких как SCID-D (Structured Clinical Interview for DSM-5 Dissociative Disorders), DDIS (Dissociative Disorders Interview Schedule) или TADS-I (Trauma and Dissociative Symptoms Interview)."
   },
   "translation_disclaimer": {
-    "uk": "Український переклад — робочий клінічний; психометричної валідації не проходив. Призначений для полегшення скринінгу україномовних пацієнтів. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовуйте англомовну версію (валідовано Kate et al. 2021)."
+    "uk": "Український переклад — робочий клінічний; психометричної валідації не проходив. Призначений для полегшення скринінгу україномовних пацієнтів. Для діагностичного звіту, дослідження або судово-психіатричної експертизи використовуйте англомовну версію (валідовано Kate et al. 2021).",
+    "ru": "Русский перевод — рабочий клинический; психометрической валидации не проходил. Предназначен для облегчения скрининга русскоязычных пациентов. Для диагностического заключения, исследования или судебно-психиатрической экспертизы используйте англоязычную версию (валидирована Kate et al. 2021)."
   }
 }
